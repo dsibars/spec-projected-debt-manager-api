@@ -10,11 +10,13 @@ Technical mapping for payment data. Inherits [[specs/shared/implementation]].
 
 ### Table: `payments` (Schema: `payments`)
 - `id`: `UUID` (PK)
-- `debt_id`: `UUID` (FK -> `debts.debts.id`)
+- `debt_id`: `UUID` (FK -> `payments.debt_read_model.id`)
 - `amount`: `BIGINT` (Cents)
 - `notes`: `TEXT`
 - `paid_at`: `TIMESTAMP WITH TIME ZONE`
 - `created_at`: `TIMESTAMP`
+- `version`: `INTEGER` (Not Null, Default 0)
+
 
 ## Indexes
 - `idx_payments_debt_id` on `payments(debt_id)`

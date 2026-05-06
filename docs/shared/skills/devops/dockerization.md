@@ -15,6 +15,7 @@ The system must provide a `docker-compose.yml` in each implementation directory 
 
 ### Standard Services:
 - `db`: PostgreSQL 16 image.
+- `broker`: RabbitMQ 3-management image (with management UI enabled).
 - `api`: The implementation being worked on (optional, if running via `make run` outside docker).
 
 ## Makefile Integration

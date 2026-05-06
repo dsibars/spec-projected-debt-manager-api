@@ -10,7 +10,7 @@ Technical mapping for financial data. Inherits [[specs/shared/implementation]].
 
 ### Table: `debts` (Schema: `debts`)
 - `id`: `UUID` (PK)
-- `person_id`: `UUID` (FK -> `people.people.id`)
+- `person_id`: `UUID` (FK -> `debts.person_read_model.id`)
 - `name`: `VARCHAR(255)`
 - `total_amount`: `BIGINT` (Cents)
 - `current_balance`: `BIGINT` (Cents)
@@ -19,8 +19,11 @@ Technical mapping for financial data. Inherits [[specs/shared/implementation]].
 - `due_date`: `TIMESTAMP WITH TIME ZONE`
 - `is_settled`: `BOOLEAN`
 - `is_archived`: `BOOLEAN` (Default False)
-- `created_at`: `TIMESTAMP`
-- `updated_at`: `TIMESTAMP`
+- `created_at`: `TIMESTAMP WITH TIME ZONE`
+- `updated_at`: `TIMESTAMP WITH TIME ZONE`
+- `version`: `INTEGER` (Not Null, Default 0)
+
+
 
 ## Indexes
 - `idx_debts_person_id` on `debts(person_id)`

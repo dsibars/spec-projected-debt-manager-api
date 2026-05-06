@@ -11,8 +11,10 @@
 - Implement a `@ControllerAdvice` for global error handling, mapping Domain Errors to HTTP status codes.
 
 ## Persistence Layer
-- Use Spring Data JPA or Spring Data JDBC.
-- Repositories must be interfaces extending `Repository`.
+- Use Spring Data JPA.
+- **Strictly Forbidden**: Do NOT use `spring.jpa.hibernate.ddl-auto=update`. Schema generation must be disabled.
+- **Mandatory Migrations**: The implementation MUST integrate Flyway or Liquibase to execute the Pure SQL migrations mandated by the `@shared/skills/persistence/postgresql` skill.
+- Repositories must be interfaces extending `JpaRepository`.
 - Logic layers must use the Repository interfaces, not implementations.
 
 ## Configuration

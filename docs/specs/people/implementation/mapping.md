@@ -18,3 +18,5 @@ This document maps the business specifications of the People module to the techn
     - `is_archived`: `BOOLEAN` (Not Null, Default False)
     - `created_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
     - `updated_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
+    - `version`: `INTEGER` (Not Null, Default 0)
+

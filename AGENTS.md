@@ -24,7 +24,8 @@ This layer is purely declarative and agnostic to the final implementation langua
 - **`/specs/[module]/`**: Atomic Business Units. Follows DDD (Domain Driven Design).
     - `definitions/`: The Ubiquitous Language. Glossary, core domain concepts, and explicitly defined **Domain Errors** (e.g., `InsufficientFunds`, `UserSuspended`).
     - `models/`: (Strictly 1 File per Model) Data contracts, properties, and business constraints (e.g., `User`, `Session`).
-    - `logic/`: (Strictly 1 File per Use Case) Step-by-step business flows/services (e.g., `CreateUser`, `Authenticate`).
+    - `logic/`: (Strictly 1 File per Use Case) Step-by-step business flows/services triggered by the presentation layer (e.g., `CreateUser`, `Authenticate`).
+    - `events/`: (Strictly 1 File per Handler) Event Subscribers and Sync handlers triggered by the Event Bus (e.g., `SyncUser`, `ProcessBackfill`).
     - `behaviors/`: Acceptance criteria using Natural Language (e.g., Given/When/Then) to auto-synthesize test suites.
     - `migrations/`: Declarative schema evolutions to safely alter state and models over time.
     - `presentation/`: Interaction contracts (UI descriptions or API Route definitions).

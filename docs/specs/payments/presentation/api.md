@@ -19,7 +19,7 @@ Standard REST interface for managing payments.
     "paidAt": "datetime?"
   }
   ```
-- **Success Response**: `201 Created` with [[models/Payment]] in `data`.
+- **Success Response**: `201 Created` with the generated `id` in `data`.
 - **Error Responses**:
   - `400 Bad Request`: `InvalidAmount`, `PaymentExceedsBalance`.
   - `404 Not Found`: `DebtNotFound`.

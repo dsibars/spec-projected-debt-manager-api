@@ -21,7 +21,7 @@ Interface for managing financial obligations.
     "dueDate": "datetime?"
   }
   ```
-- **Success Response**: `201 Created` with [[models/Debt]] in `data`.
+- **Success Response**: `201 Created` with the generated `id` in `data`.
 
 ### List Debts
 - **Method**: `GET`

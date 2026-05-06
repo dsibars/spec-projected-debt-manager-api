@@ -7,9 +7,16 @@ This skill defines the technical "laws" for persisting data using a PostgreSQL d
 *   **Database Engine**: PostgreSQL 16+.
 *   **Database Name**: `spd_debt_manager`.
 *   **Schema Strategy**: Per-module isolation. Each module in `docs/specs/[module]` maps to a dedicated schema in the database (e.g., `people`, `debts`).
-*   **Migrations**: All schema changes must be declarative and versioned (referencing `docs/specs/[module]/migrations`).
+*   **Migrations & DDL**:
+    *   **Strictly Banned**: Using ORM features like `ddl-auto=update` or `hibernate.hbm2ddl.auto` is strictly forbidden.
+    *   **Mandatory Tooling**: Schema changes must be declarative, explicitly versioned SQL migrations managed by an enterprise migration tool (e.g., Flyway/Liquibase for Java, `golang-migrate` for Go).
+    *   **Format**: All migrations targeting PostgreSQL must be written in **Pure SQL**. Abstract formats (e.g., Liquibase XML/YAML) are forbidden to ensure raw visibility and universal readability.
+    *   **Naming Convention**: All SQL migration scripts must adhere to the standard `V[Version]__[Description].sql` naming format (e.g., `V1__create_people_table.sql`).
+    *   **Execution Strategy**: Migrations must be executed automatically on application startup by the native framework integration (e.g., Spring Boot + Flyway auto-configure), or orchestrated via a pre-deployment CI/CD pipeline step (e.g., a `make migrate` task). This guarantees the schema is ready before the application accepts traffic.
+    *   **Explicit Indexing**: The Builder MUST generate explicit `CREATE INDEX` scripts for any fields that are used in Domain Repository lookup queries (e.g., `email`, `person_id`).
 *   **Naming Convention**: `snake_case` for tables and columns.
 *   **Primary Keys**: UUID (v4) or ULID are required.
+*   **Concurrency Law (Optimistic Locking)**: To prevent race conditions during "Read-Validate-Write" flows (e.g., balance updates), the Builder MUST implement **Optimistic Locking** for all domain entities. Every table MUST include a `version` column (integer), and updates MUST increment this version and fail if the version in the database has changed since the entity was loaded.
 
 ## Integration Patterns
 

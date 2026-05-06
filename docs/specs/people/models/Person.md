@@ -6,7 +6,7 @@ This model represents an individual in the system.
 
 - `id`: Unique identifier (String/UUID).
 - `name`: Full name of the person (String, Required).
-- `email`: Contact email (String, Optional, Must be valid format if provided).
+- `email`: Contact email ([[specs/shared/models/Email]], Optional).
 - `phone`: Contact phone (String, Optional).
 - `isArchived`: Soft deletion flag (Boolean, Defaults to false).
 - `createdAt`: Timestamp of creation (DateTime).

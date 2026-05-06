@@ -1,0 +1,11 @@
+Sync State
+Target Stack: Java 21 / Spring Boot
+Last Global Sync: 1970-01-01T00:00:00Z
+
+Module Status:
+[Debts]: OUTDATED (Pending initialization)
+[Payments]: OUTDATED (Pending initialization)
+[People]: OUTDATED (Pending initialization)
+
+Pending Diffs:
+Awaiting Builder synchronization.

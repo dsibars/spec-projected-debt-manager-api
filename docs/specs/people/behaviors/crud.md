@@ -8,7 +8,7 @@ This document defines the acceptance criteria for managing people via the API.
 - **Given** no person exists with email "alice@example.com".
 - **When** I request to create a person with name "Alice Smith" and email "alice@example.com".
 - **Then** a new person record should be created in the Store.
-- **And** the response should contain the generated ID and "Alice Smith".
+- **And** the response should contain the generated ID.
 
 ### Scenario: Failing registration due to empty name
 - **When** I request to create a person with an empty name.

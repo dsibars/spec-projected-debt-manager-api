@@ -18,7 +18,7 @@ This document defines the RESTful interface for managing people.
     "phone": "string?"
   }
   ```
-- **Success Response**: `201 Created` with [[models/Person]] wrapped in the standard `data` envelope.
+- **Success Response**: `201 Created` with the generated `id` wrapped in the standard `data` envelope.
 - **Error Responses**:
   - `400 Bad Request`: `InvalidName`, `InvalidEmailFormat`.
   - `409 Conflict`: `DuplicateEmail`.

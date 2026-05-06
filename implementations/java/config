@@ -1,10 +1,14 @@
-Target Stack: Java / Spring Boot / Postgres
+Target Stack: Java 21 / Spring Boot / Postgres / RabbitMQ
 Persistence: PostgreSQL
 Platform: Spring Boot
+Base Package: com.dsibars.debtmanager
 Output: target/ (JAR)
 Skills:
 - @shared/skills/languages/java
 - @shared/skills/platforms/spring
 - @shared/skills/persistence/postgresql
+- @shared/skills/persistence/migrations
+- @shared/skills/messaging/rabbitmq
 - @shared/skills/devops/dockerization
+- @shared/skills/devops/maven
 - @shared/skills/testing/strategy

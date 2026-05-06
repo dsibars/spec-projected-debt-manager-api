@@ -1,6 +1,7 @@
 Target Stack: Kotlin / Ktor / Postgres
 Persistence: PostgreSQL
 Platform: Ktor
+Base Package: com.dsibars.debtmanager
 Output: build/libs/ (JAR)
 Skills:
 - @shared/skills/languages/kotlin

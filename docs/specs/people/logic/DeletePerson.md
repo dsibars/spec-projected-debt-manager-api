@@ -10,6 +10,10 @@ Mark a person as archived so they no longer appear in active lists, while preser
 4. Set `isArchived` to `true`.
 5. Set `updatedAt` to the current system time.
 6. Persist the changes to the Store.
+7. Return the `id`.
+
+## Emits
+- `PersonArchived` (payload: `id`)
 
 ## Errors
 - `PersonNotFound`: If the `id` does not match any existing person.

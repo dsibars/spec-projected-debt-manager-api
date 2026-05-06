@@ -9,7 +9,7 @@ Represents a financial obligation.
 - `name`: Short description or reason for the debt (String, Required).
 - `totalAmount`: Original amount in smallest currency unit (Integer, e.g., cents, Required).
 - `currentBalance`: Remaining amount in smallest currency unit (Integer, Required).
-- `currency`: Currency code (String, e.g., "USD", "EUR", Defaults to "USD").
+- `currency`: Currency code ([[specs/shared/models/Currency]], Defaults to "USD").
 - `direction`: The debt flow, either `OWED_TO_ME` or `I_OWE` (Enum, Required).
 - `dueDate`: Optional deadline for settlement (DateTime).
 - `isSettled`: Flag derived from balance, but can be persisted for performance (Boolean).

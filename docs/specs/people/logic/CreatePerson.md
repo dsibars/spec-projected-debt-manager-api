@@ -12,7 +12,10 @@ To register a new person in the system with their basic identity and contact inf
 6. Set `isArchived` to `false`.
 7. Set `createdAt` and `updatedAt` to the current system time.
 8. Persist the new [[models/Person]] to the Store.
-9. Return the newly created [[models/Person]].
+9. Return the newly created `id`.
+
+## Emits
+- `PersonCreated` (payload: `id`, `name`)
 
 ## Errors
 - `InvalidName`: If the name is missing or empty.

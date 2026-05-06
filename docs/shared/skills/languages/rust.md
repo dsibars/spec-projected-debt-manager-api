@@ -12,7 +12,13 @@
 - **Async**: Use `tokio` as the standard runtime.
 - **Serde**: Use `serde` for all serialization/deserialization needs.
 
-## Error Handling
-- Use `Result<T, E>` for all fallible operations.
-- Implement the `std::error::Error` trait for custom error types.
-- Use `thiserror` for library errors and `anyhow` for application-level context if needed.
+## Domain Errors & Handling
+- **No Exceptions**: Rust does not have exceptions. The Builder must NEVER translate DDD "Exceptions" into `panic!` calls.
+- **Algebraic Data Types**: Explicit Domain Errors defined in the specs must be synthesized as a module-specific `Enum` (e.g., `pub enum PersonDomainError { NotFound(Uuid), InvalidEmail }`).
+- **thiserror**: Use the `thiserror` crate to implement the `std::error::Error` trait for these Domain Error enums automatically.
+- **Return Signatures**: Use Cases must return `Result<T, DomainError>`.
+- **Inspection**: The Presentation layer must use `match` statements on the `DomainError` enum to map it to the appropriate HTTP status code.
+
+## Idiomatic Project Structure
+- **Source Root**: `src/`
+- **Module Hierarchy**: The Builder must map each projected module to a Rust module declared explicitly via `pub mod [module];` inside `src/lib.rs` or `src/main.rs`.
