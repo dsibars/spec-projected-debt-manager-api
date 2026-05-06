@@ -15,6 +15,9 @@ Every module in the `docs/specs/` directory automatically inherits the following
     - @shared/skills/standards/data-formats
     - @shared/skills/persistence/migrations
 6.  **Messaging**: `@shared/skills/messaging/rabbitmq`
+7.  **Security**:
+    - `@shared/skills/security/jwt-auth`
+    - `@shared/skills/security/pii-management`
 
 ## Technical Composition Rules
 

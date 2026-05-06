@@ -9,10 +9,12 @@ To adapt incoming Person events to the local synchronization command.
 
 ## Adapts
 - [[../../commands/UpdatePersonReadModel]]
+- [[../../commands/PropagatePersonNameUpdate]]
 
 ## Flow (PersonCreated)
 1. Receive **`EventEnvelope`**. Extract `id` and `name` from `data`.
 2. Call [[../../commands/UpdatePersonReadModel]] with `id`, `name`, and `isArchived: false`.
+3. Call [[../../commands/PropagatePersonNameUpdate]] with `id` and `name`.
 
 ## Flow (PersonArchived)
 1. Receive **`EventEnvelope`**. Extract `id` from `data`.

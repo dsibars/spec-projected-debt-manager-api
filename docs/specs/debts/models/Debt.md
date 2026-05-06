@@ -5,6 +5,7 @@ Represents a financial obligation.
 ## Properties
 
 - `id`: Unique identifier (String/UUID).
+- `tenantId`: The ID of the [[specs/identity/models/User]] who owns this record.
 - `personId`: Reference to [[specs/people/models/Person]].
 - `name`: Short description or reason for the debt (String, Required).
 - `totalAmount`: Original amount in smallest currency unit (Integer, e.g., cents, Required).

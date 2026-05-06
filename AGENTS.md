@@ -23,7 +23,8 @@ This layer is purely declarative and agnostic to the final implementation langua
     - `implementation.md`: The base technical composition rules. Module-specific implementation specs inherit these shared skill assignments.
 - **`/specs/[module]/`**: Atomic Business Units. Follows DDD (Domain Driven Design).
     - `definitions/`: The Ubiquitous Language. Glossary and Domain Errors.
-    - `models/`: Data contracts and properties.
+    - `models/`: Domain Aggregates (The Write Model).
+    - `projections/`: Read Models and denormalized views (The UI Model).
     - `commands/`: State-changing business logic.
     - `queries/`: Side-effect-free data retrieval.
     - `presentation/`: Driving Adapters.
@@ -32,6 +33,7 @@ This layer is purely declarative and agnostic to the final implementation langua
     - `behaviors/`: Acceptance criteria (Given/When/Then).
     - `migrations/`: Declarative schema evolutions.
     - `implementation/`: Composition files mapping Module to Shared Skills.
+
 
 
 

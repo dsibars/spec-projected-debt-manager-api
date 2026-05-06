@@ -5,7 +5,7 @@ To record a payment event for a specific debt.
 
 ## Flow
 1. Receive `debtId`, `amount`, and optional `notes`.
-2. Find the local [[models/DebtReadModel]] using `debtId`.
+2. Find the local [[projections/DebtReadModel]] using `debtId`.
 3. If not found, return `DebtNotFound`.
 4. Validate that `amount` > 0.
 5. Validate that `isSettled` is `false`. If true, return `DebtSettled`.

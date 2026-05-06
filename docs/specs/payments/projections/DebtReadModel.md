@@ -4,6 +4,7 @@ This model is a local, replicated representation of a Debt, maintained entirely 
 
 ## Properties
 - `id`: UUID (Primary Key, matches the original Debt ID)
+- `tenantId`: UUID (The owner of the original Debt)
 - `currentBalance`: Integer (Used to validate that a payment does not exceed the remaining balance)
 - `isSettled`: Boolean (To prevent registering payments against settled debts)
 

@@ -9,9 +9,9 @@ To maintain a local projection of Person data within the Debts context.
 - `isArchived`: `boolean`
 
 ## Flow
-1. Find the [[models/PersonReadModel]] by `id`.
+1. Find the [[projections/PersonReadModel]] by `id`.
 2. If not found:
-   - Create a new [[models/PersonReadModel]].
+   - Create a new [[projections/PersonReadModel]].
 3. Update `name` if provided.
 4. Set `isArchived` to the provided value.
 5. Persist to the store.

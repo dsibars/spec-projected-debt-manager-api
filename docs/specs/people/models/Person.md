@@ -5,6 +5,7 @@ This model represents an individual in the system.
 ## Properties
 
 - `id`: Unique identifier (String/UUID).
+- `tenantId`: The ID of the [[specs/identity/models/User]] who owns this record.
 - `name`: Full name of the person (String, Required).
 - `email`: Contact email ([[specs/shared/models/Email]], Optional).
 - `phone`: Contact phone (String, Optional).
@@ -15,5 +16,5 @@ This model represents an individual in the system.
 ## Constraints
 
 - `name` cannot be empty or solely whitespace.
-- `id` must be unique across all persons.
-- `email` must be unique if provided and not null.
+- `id` must be unique globally.
+- `email` must be unique per `tenantId` if provided.

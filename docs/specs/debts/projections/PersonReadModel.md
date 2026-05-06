@@ -4,6 +4,7 @@ This model is a local, replicated representation of a Person, maintained entirel
 
 ## Properties
 - `id`: UUID (Primary Key, matches the original Person ID)
+- `tenantId`: UUID (The owner of the original Person)
 - `name`: String (Replicated for easy display on Debts)
 - `isArchived`: Boolean (To prevent creating debts for deleted users)
 

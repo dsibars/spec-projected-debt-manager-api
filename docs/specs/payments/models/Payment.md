@@ -5,6 +5,7 @@ Represents a financial transaction reducing a debt.
 ## Properties
 
 - `id`: Unique identifier (String/UUID).
+- `tenantId`: The ID of the [[specs/identity/models/User]] who owns this record.
 - `debtId`: Reference to [[specs/debts/models/Debt]].
 - `amount`: Amount paid in smallest currency unit (Integer, Required).
 - `notes`: Optional description (String).

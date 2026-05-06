@@ -7,7 +7,8 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
 1.  **Ubiquitous Language**: All technical identifiers (classes, variables, tables) must match the terms defined in `docs/specs/[module]/definitions`.
 2.  **Layers & Internal Package Structure**: Each module must be projected into a **Hexagonal (Ports & Adapters)** directory structure:
     *   **Domain Layer** (`domain/`): Pure business logic.
-        *   `models/`: Aggregates and Entities.
+        *   `models/`: Domain Aggregates (Write Model).
+        *   `projections/`: Read Models (UI Model).
         *   `values/`: Value Objects.
         *   `errors/`: Domain Errors.
         *   `events/`: Definitions of Domain Events emitted by this module.
@@ -48,6 +49,16 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
     *   A developer/agent must be able to compile a **Rest-API Binary** (initializing only `presentation/rest/` adapters) and an **Event-Processor Binary** (initializing only `presentation/subscribers/` adapters) by simply toggling adapter registration. 
     *   Domain and Application logic MUST remain perfectly identical across all binaries.
 
+11. **Projection Purity Law**:
+    *   Read Models and Projections MUST be strictly read-only.
+    *   Projections MUST NOT be used to enforce domain invariants or business rules within a Command.
+    *   Commands MUST ONLY rely on the Source of Truth (Aggregates) or specific Outbound Ports.
+
+12. **Multi-Tenancy Isolation Law**:
+    *   Every Domain Aggregate and Projection MUST include a `tenantId` (representing the owning `User`).
+    *   All queries and commands MUST strictly filter by the `tenantId` provided by the authenticated context.
+    *   Data leaking between tenants is a critical architectural failure.
+
 ## Implementation Rules
 
 *   **Strict CQRS Enforcement**: The system strictly adheres to the rules defined in `@shared/skills/patterns/cqrs-and-events`.
@@ -55,4 +66,5 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
 *   Each `specs/[module]/queries` behavior corresponds to exactly one **Query Handler** in the `application/queries/` layer.
 *   Each `specs/[module]/presentation/subscribers/` behavior MUST be projected into a **Driving Adapter** in `presentation/subscribers/` that delegates to an Application Command.
 *   Each `specs/[module]/presentation/rest/` behavior corresponds to a **Driving Adapter** in `presentation/rest/`.
-*   Each `specs/[module]/models` file corresponds to a pure entity/aggregate in the Domain Layer, and requires a corresponding Persistence Entity in the Infrastructure Layer.
+*   Each `specs/[module]/models` file corresponds to a pure entity/aggregate in the Domain Layer (Write Model).
+*   Each `specs/[module]/projections` file corresponds to a Read Model in the Domain Layer (UI Model).
