@@ -9,6 +9,7 @@
 - **Composition**: Use interfaces and embedding over inheritance.
 - **Concurrency**: Use goroutines and channels for concurrent tasks. "Don't communicate by sharing memory; share memory by communicating."
 - **Context**: Pass `context.Context` for cancellation and timeouts across API boundaries.
+- **Type Mapping Law**: Any property marked as optional (e.g., `email?`) or nullable in the specifications MUST be projected as a pointer type `*T` in the Go implementation to support explicit nil-checking.
 
 ## Domain Errors & Handling
 - **No Exceptions**: Go does not have exceptions. The Builder must NEVER translate DDD "Exceptions" into `panic()` calls.

@@ -9,6 +9,7 @@ This document defines the acceptance criteria for managing people via the API.
 - **When** I request to create a person with name "Alice Smith" and email "alice@example.com".
 - **Then** a new person record should be created in the Store.
 - **And** the response should contain the generated ID.
+- **And** a `PersonCreated` event should be emitted to the [[specs/people/presentation/subscribers/ProcessPersonBackfill|Event Bus]].
 
 ### Scenario: Failing registration due to empty name
 - **When** I request to create a person with an empty name.

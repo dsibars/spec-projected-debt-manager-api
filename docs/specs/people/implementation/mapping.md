@@ -5,7 +5,7 @@ This document maps the business specifications of the People module to the techn
 ## Module-Specific Skill Assignments
 
 - **Persistence**: Use `@shared/skills/persistence/postgresql` for storing [[models/Person]] data.
-- **API Routing**: The routes defined in `presentation/api.md` should be implemented using the platform defined in the implementation `config` (e.g., Spring, Ktor, Axum, Gin).
+- **API Routing**: The routes defined in `presentation/rest/api.md` should be implemented using the platform defined in the implementation `config` (e.g., Spring, Ktor, Axum, Gin).
 
 ## Data Mapping
 

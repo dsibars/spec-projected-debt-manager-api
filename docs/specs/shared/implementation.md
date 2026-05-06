@@ -18,7 +18,7 @@ Every module in the `docs/specs/` directory automatically inherits the following
 
 ## Technical Composition Rules
 
-- **Zero Technical Leakage**: Spec files in `logic/` and `models/` must remain purely declarative.
+- **Zero Technical Leakage**: Spec files in `commands/`, `queries/`, and `models/` must remain purely declarative.
 - **Idiomatic Source Root Mirroring**: The "Mirror Rule" dictates that `docs/specs/[module]/[layer]/[filename]` maps to the language's Idiomatic Source Root defined in its language skill file. 
   - For example, in Java, it maps to `src/main/java/{base_package}/[module]/[layer]/[filename].[ext]`.
 - **Makefile Integrity**: Each implementation must provide a Makefile that supports `infra-up`, `build`, `test`, and `run` as defined in the DevOps and Testing skills.

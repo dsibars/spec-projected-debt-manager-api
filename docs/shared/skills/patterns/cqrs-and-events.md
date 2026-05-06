@@ -21,10 +21,14 @@ The Application Layer must strictly segregate intent into Commands and Queries.
 To maintain high availability and decoupling, the system uses Eventual Consistency via Domain Events.
 
 *   **Event Emission**: Any Command that successfully alters domain state MUST emit a Domain Event (e.g., `PersonCreated`, `DebtSettled`) to an `EventBus`.
-*   **Idempotency Law (Inbox Pattern)**: Because distributed messaging systems guarantee *at-least-once* delivery, every Event Subscriber/Handler MUST be strictly idempotent. The implementation MUST use an **Inbox Pattern** (tracking processed `eventId`s in a `processed_events` table as defined in `@shared/skills/patterns/outbox-inbox-schema` within the same transaction) to prevent applying the same state change twice.
 *   **Event Subscription (Read Models)**:
     *   If Module B requires data owned by Module A, Module B must subscribe to Module A's Domain Events.
-    *   Module B must use these events to construct its own isolated "Read Model" (Materialized View) of the data.
+    *   **Payload Law**: Every Event Subscriber MUST receive the **`EventEnvelope`** (as defined in `specs/shared/models/EventEnvelope.md`) as its input. The Subscriber MUST NOT expect the raw domain payload alone.
+    *   Module B must use the `data` portion of the envelope to construct its own isolated "Read Model" of the data.
+    *   **Idempotency Law (Inbox Pattern)**: Because distributed messaging systems guarantee *at-least-once* delivery, every Event Subscriber MUST be strictly idempotent. 
+        *   Before processing the event logic, the implementation MUST check if the `eventId` from the `EventEnvelope` already exists in the `processed_events` table (Inbox Pattern).
+        *   If it exists, the event MUST be discarded (ACK'd but not processed).
+        *   If it does not exist, the `eventId` must be stored in the same transaction as the Read Model update.
     *   **Read Model Law (Immutability)**: Read Models MUST be treated as strictly read-only by the Logic layer. They are projections of external state and MUST ONLY be updated by Event Handlers in response to Domain Events. Manual modification of a Read Model by a Command Handler is strictly forbidden.
 *   **The Hydration Protocol (Cold Starts)**: 
     *   If a module boots with an empty Read Model, it cannot process new commands.

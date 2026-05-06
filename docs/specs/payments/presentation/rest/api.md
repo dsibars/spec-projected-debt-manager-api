@@ -8,6 +8,7 @@ Standard REST interface for managing payments.
 ## Base Path: `/api/v1/payments`
 
 ### Register Payment
+- **Adapts**: [[../../commands/RegisterPayment]]
 - **Method**: `POST`
 - **Path**: `/`
 - **Request Body**:
@@ -24,15 +25,17 @@ Standard REST interface for managing payments.
   - `400 Bad Request`: `InvalidAmount`, `PaymentExceedsBalance`.
   - `404 Not Found`: `DebtNotFound`.
 
+### Get Payment Details
+- **Adapts**: [[../../queries/GetPayment]]
+- **Method**: `GET`
+- **Path**: `/{id}`
+- **Success Response**: `200 OK` with [[../../models/Payment]] in `data`.
+
 ### List Payments
+- **Adapts**: [[../../queries/ListPayments]]
 - **Method**: `GET`
 - **Path**: `/`
 - **Query Parameters**:
   - `debtId`: `uuid?`
   - `page`, `size` (pagination)
-- **Success Response**: `200 OK` with paginated array of [[models/Payment]].
-
-### Get Payment Details
-- **Method**: `GET`
-- **Path**: `/{id}`
-- **Success Response**: `200 OK` with [[models/Payment]] in `data`.
+- **Success Response**: `200 OK` with paginated array of [[../../models/Payment]].

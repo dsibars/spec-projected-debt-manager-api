@@ -22,14 +22,18 @@ This layer is purely declarative and agnostic to the final implementation langua
     - `presentation.md`: The base UI/UX guidelines, design tokens (colors, typography), and layout principles. Module-specific presentation specs inherit and can override these.
     - `implementation.md`: The base technical composition rules. Module-specific implementation specs inherit these shared skill assignments.
 - **`/specs/[module]/`**: Atomic Business Units. Follows DDD (Domain Driven Design).
-    - `definitions/`: The Ubiquitous Language. Glossary, core domain concepts, and explicitly defined **Domain Errors** (e.g., `InsufficientFunds`, `UserSuspended`).
-    - `models/`: (Strictly 1 File per Model) Data contracts, properties, and business constraints (e.g., `User`, `Session`).
-    - `logic/`: (Strictly 1 File per Use Case) Step-by-step business flows/services triggered by the presentation layer (e.g., `CreateUser`, `Authenticate`).
-    - `events/`: (Strictly 1 File per Handler) Event Subscribers and Sync handlers triggered by the Event Bus (e.g., `SyncUser`, `ProcessBackfill`).
-    - `behaviors/`: Acceptance criteria using Natural Language (e.g., Given/When/Then) to auto-synthesize test suites.
-    - `migrations/`: Declarative schema evolutions to safely alter state and models over time.
-    - `presentation/`: Interaction contracts (UI descriptions or API Route definitions).
-    - `implementation/`: Composition files. Maps this specific module to Shared Skills (e.g., "Use `shared/skills/persistence/postgres` for models in this module").
+    - `definitions/`: The Ubiquitous Language. Glossary and Domain Errors.
+    - `models/`: Data contracts and properties.
+    - `commands/`: State-changing business logic.
+    - `queries/`: Side-effect-free data retrieval.
+    - `presentation/`: Driving Adapters.
+        - `rest/`: REST API definitions (adapts HTTP to commands/queries).
+        - `subscribers/`: Event subscribers (adapts Broker messages to commands).
+    - `behaviors/`: Acceptance criteria (Given/When/Then).
+    - `migrations/`: Declarative schema evolutions.
+    - `implementation/`: Composition files mapping Module to Shared Skills.
+
+
 
 ### 1.2. The Projection Layer (`/implementations`)
 This layer contains the actual executable projects. A single repo can have multiple implementations (e.g., `rust-backend`, `go-backend`, `web-frontend`). Each implementation is an isolated, idempotent projection of the specifications. All implementation-specific files and directories must reside within `implementations/[target-name]/`.
