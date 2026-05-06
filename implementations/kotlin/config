@@ -1,0 +1,10 @@
+Target Stack: Kotlin / Ktor / Postgres
+Persistence: PostgreSQL
+Platform: Ktor
+Output: build/libs/ (JAR)
+Skills:
+- @shared/skills/languages/kotlin
+- @shared/skills/platforms/ktor
+- @shared/skills/persistence/postgresql
+- @shared/skills/devops/dockerization
+- @shared/skills/testing/strategy

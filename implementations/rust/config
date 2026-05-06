@@ -1,0 +1,10 @@
+Target Stack: Rust / Axum / Postgres
+Persistence: PostgreSQL
+Platform: Axum
+Output: target/release/ (Binary)
+Skills:
+- @shared/skills/languages/rust
+- @shared/skills/platforms/axum
+- @shared/skills/persistence/postgresql
+- @shared/skills/devops/dockerization
+- @shared/skills/testing/strategy

@@ -1,0 +1,10 @@
+Target Stack: Java / Spring Boot / Postgres
+Persistence: PostgreSQL
+Platform: Spring Boot
+Output: target/ (JAR)
+Skills:
+- @shared/skills/languages/java
+- @shared/skills/platforms/spring
+- @shared/skills/persistence/postgresql
+- @shared/skills/devops/dockerization
+- @shared/skills/testing/strategy

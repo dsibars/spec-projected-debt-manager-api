@@ -1,0 +1,10 @@
+Target Stack: Go / Gin / Postgres
+Persistence: PostgreSQL
+Platform: Gin
+Output: bin/ (Binary)
+Skills:
+- @shared/skills/languages/go
+- @shared/skills/platforms/gin
+- @shared/skills/persistence/postgresql
+- @shared/skills/devops/dockerization
+- @shared/skills/testing/strategy
