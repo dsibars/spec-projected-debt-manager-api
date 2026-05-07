@@ -13,6 +13,7 @@ To maintain strict isolation between modules (Bounded Contexts) and avoid synchr
 A **Read Model** is a local, denormalized projection of data owned by an external module.
 
 - **Storage**: Read Models are stored in the database schema of the consuming module.
+- **Tenant Isolation**: Every Read Model MUST include a `tenant_id` column. Data replication is tenant-scoped; a module MUST only replicate data belonging to the same tenant as the original event.
 - **Naming Convention**:
     - Table name: `[external_entity]_read_model` (e.g., `person_read_model` inside the `debts` schema).
     - Foreign Keys: Local tables should reference the Read Model's ID (e.g., `debt.person_id` -> `person_read_model.id`).
