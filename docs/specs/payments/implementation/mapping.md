@@ -2,24 +2,29 @@
 
 Technical mapping for payment data. Inherits [[specs/shared/implementation]].
 
-## Module-Specific Skill Assignments
-
-- **Persistence**: `@shared/skills/persistence/postgresql`.
-
-## Data Mapping
+## 1. Write Database (`WRITE_DB`)
+Target: **Aggregates Only**
 
 ### Table: `payments` (Schema: `payments`)
 - `id`: `UUID` (PK)
 - `tenant_id`: `UUID` (Not Null)
-- `debt_id`: `UUID` (FK -> `payments.debt_read_model.id`)
-- `amount`: `BIGINT` (Cents)
+- `debt_id`: `UUID` (Not Null - No Physical FK)
+- `amount`: `BIGINT`
 - `notes`: `TEXT`
 - `paid_at`: `TIMESTAMP WITH TIME ZONE`
-- `created_at`: `TIMESTAMP WITH TIME ZONE`
-- `updated_at`: `TIMESTAMP WITH TIME ZONE`
-- `version`: `INTEGER` (Not Null, Default 0)
+- `version`: `INTEGER`
 
+---
+
+## 2. Read Database (`READ_DB`)
+Target: **All Projections**
+
+### Table: `debt_read_models` (Schema: `payments`)
+- `id`: `UUID` (PK)
+- `tenant_id`: `UUID` (Not Null)
+- `current_balance`: `BIGINT`
+- `is_settled`: `BOOLEAN`
 
 ## Indexes
-- `idx_payments_debt_id` on `payments(debt_id)`
-- `idx_payments_paid_at` on `payments(paid_at)`
+- `WRITE_DB`: `idx_payments_tenant` on `payments(tenant_id)`
+- `READ_DB`: `idx_debt_read_tenant` on `debt_read_models(tenant_id)`

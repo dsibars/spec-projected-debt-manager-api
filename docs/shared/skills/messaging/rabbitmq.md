@@ -18,5 +18,11 @@ This skill defines the technical implementation for a distributed, highly availa
 *   **Serialization**: All payloads must be serialized in UTF-8 JSON.
 *   **Resilience**: Dead Letter Queues (DLQ) are mandatory for all event subscriptions.
 
-## Use Case
-This implementation must be projected when the architecture targets a distributed microservices environment.
+## Configuration Contract
+This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+- **Broker URL**: `messaging.url`, `messaging.user`, `messaging.password`
+
+## Connection Credentials (Local Dev)
+- **Host**: `localhost` (or `broker` within docker-compose).
+- **Port**: `5672` (AMQP) / `15672` (Management UI).
+- **User/Password**: `guest` / `guest`.

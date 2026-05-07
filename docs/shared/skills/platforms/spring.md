@@ -17,6 +17,14 @@
 - Repositories must be interfaces extending `JpaRepository`.
 - Logic layers must use the Repository interfaces, not implementations.
 
-## Configuration
-- Use `application.yml` for configuration.
-- Environment variables must override configuration for secrets and infrastructure addresses.
+## Configuration Contract
+This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+- **Server Port**: `server.port` (Default: `8080`)
+- **App Name**: `spring.application.name` (Injected by Builder)
+- **Profile**: `spring.profiles.active` (Injected by Builder: `local`, `prod`)
+
+## Default Tuning (Production-Ready)
+- **Log Format**: `logging.pattern.console` should be structured JSON in `prod`.
+- **Performance**: `server.tomcat.max-threads` (Default: `200`).
+- **JPA Tuning**: `spring.jpa.properties.hibernate.jdbc.batch_size` (Default: `50`).
+- **Shutdown**: `server.shutdown: graceful` (Mandatory).

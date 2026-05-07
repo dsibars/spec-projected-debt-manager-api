@@ -1,6 +1,7 @@
 # Implementation: Identity Module Mapping
 
 Technical mapping for Identity and Access Management (IAM) data. Inherits [[specs/shared/implementation]].
+Target Database: **WRITE_DB**
 
 ## Module-Specific Skill Assignments
 

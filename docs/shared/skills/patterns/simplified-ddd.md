@@ -67,6 +67,17 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
     - The `sid` claim in the JWT identifies which physical shard/database contains the user's data.
     - Cross-shard transactions are forbidden. A single user's data MUST reside on a single shard.
 
+14. **Observability Law (Total Traceability)**:
+    - Every Command, Query, and Subscriber MUST be instrumented with an OpenTelemetry Span.
+    - Spans MUST include the `tenantId` and `shardId` as attributes for high-resolution debugging.
+    - Distributed Tracing MUST be maintained across messaging boundaries (Outbox $\rightarrow$ Broker $\rightarrow$ Subscriber).
+
+15. **Persistence Segregation Law (Physical CQRS)**:
+    - **WRITE_DB**: Contains ONLY Domain Aggregates (Source of Truth).
+    - **READ_DB**: Contains ALL Projections and Read Models (Display and Validation data).
+    - **Zero Physical Coupling**: No Foreign Keys or JOINs are allowed between the `WRITE_DB` and `READ_DB`.
+    - **Asynchronous Integrity**: The Command Layer (Write) may query the `READ_DB` for non-critical validation, accepting that the Read Side is eventually consistent.
+
 ## Implementation Rules
 
 *   **Strict CQRS Enforcement**: The system strictly adheres to the rules defined in `@shared/skills/patterns/cqrs-and-events`.

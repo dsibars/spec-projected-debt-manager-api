@@ -9,16 +9,19 @@ This skill defines the technical law for generating and validating JSON Web Toke
     - The `sid` (Shard ID) claim MUST represent the `shardId` (The Physical Partition).
 3.  **Mandatory Validation**: Every protected endpoint MUST validate the token before processing.
 
+## Configuration Contract
+This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+- **Secret Key**: `security.jwt.secret` (MANDATORY in Prod)
+- **Issuer**: `security.jwt.issuer` (Default: `spd-debt-manager`)
+- **Expiration**: `security.jwt.access-expiry-minutes` (Default: `15`)
+
 ## Technical Requirements
-- **Algorithm**: RS256 (Public/Private Key) or HS256 (Shared Secret), as defined in the implementation `config`.
+- **Algorithm**: HS256 (Shared Secret) for this MVP, upgradable to RS256.
 - **Validation Rules**:
     - Expiration (`exp`) must be in the future.
     - Signature must be valid.
-    - Issuer (`iss`) and Audience (`aud`) must match the `config`.
-    - `tid` and `sub` MUST be present.
-- **Issuance Rules**:
-    - `iat` (Issued At) must be the current time.
-    - `exp` should be configurable (e.g., 15 minutes for Access Token, 7 days for Refresh Token).
+    - Issuer (`iss`) must match the config.
+    - `sid` and `sub` MUST be present.
 
 ## Implementation Interface
 The Builder must synthesize a `TokenPort`:
@@ -27,4 +30,4 @@ The Builder must synthesize a `TokenPort`:
 - `validateToken(token: String): TokenClaims`
 
 ## Error Handling
-If validation fails, the Presentation layer must return `401 Unauthorized` with a standardized JSON error.
+If validation fails, the Presentation layer must return `401 Unauthorized`.

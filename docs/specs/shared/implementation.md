@@ -8,23 +8,32 @@ Every module in the `docs/specs/` directory automatically inherits the following
 
 1.  **Architecture**: `@shared/skills/patterns/simplified-ddd`
 2.  **Code Quality**: `@shared/skills/patterns/clean-code`
-3.  **DevOps**: `@shared/skills/devops/dockerization`
+3.  **DevOps**: 
+    - `@shared/skills/devops/dockerization`
+    - `@shared/skills/devops/configuration-management`
+    - `@shared/skills/devops/health-probes`
 4.  **Testing**: `@shared/skills/testing/strategy`
 5.  **Persistence**: 
     - @shared/skills/persistence/postgresql
     - @shared/skills/standards/data-formats
     - @shared/skills/persistence/migrations
+    - @shared/skills/persistence/read-write-split
+    - @shared/skills/persistence/repository-pattern
 6.  **Messaging**: `@shared/skills/messaging/rabbitmq`
 7.  **Security**:
     - `@shared/skills/security/jwt`
     - `@shared/skills/security/hashing`
     - `@shared/skills/security/oauth-integration`
     - `@shared/skills/security/pii-management`
+    - `@shared/skills/security/traffic-governance`
 8.  **Scaling**:
     - `@shared/skills/patterns/tenant-load-balancing`
 9.  **Resilience**:
     - `@shared/skills/patterns/resilience`
     - `@shared/skills/patterns/outbox-inbox-schema`
+10. **Observability**:
+    - `@shared/skills/observability/opentelemetry`
+    - `@shared/skills/observability/signoz`
 
 ## Technical Composition Rules
 

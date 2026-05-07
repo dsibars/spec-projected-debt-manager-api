@@ -13,7 +13,7 @@ Initialize a new debt record in the user's ledger.
 - `dueDate`: `datetime?`
 
 ## Flow
-1. Validate that `personId` exists in the local [[projections/PersonReadModel]] **for this `tenantId`**.
+1. Validate that `personId` exists in the [[projections/PersonReadModel]] (Note: This queries the **READ_DB**, which is eventually consistent).
 2. Validate that the person is not archived.
 3. Generate a unique `id`.
 4. Create the [[models/Debt]] record with the provided `tenantId`.

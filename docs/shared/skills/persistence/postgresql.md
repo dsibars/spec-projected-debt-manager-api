@@ -27,8 +27,13 @@ This skill defines the technical "laws" for persisting data using a PostgreSQL d
     *   `min_idle`: 2.
 *   **Transactions**: Logic layers requiring atomicity must be wrapped in technical transactions at the infrastructure layer.
 
+## Configuration Contract
+This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+- **Write Aggregates**: `db.write.url`, `db.write.user`, `db.write.password`
+- **Read Projections**: `db.read.url`, `db.read.user`, `db.read.password`
+
 ## Connection Credentials (Local Dev)
-- **Host**: `localhost` (or `db` within docker-compose network).
-- **Port**: `5432`.
+- **Host**: `localhost` (or `db-write`/`db-read` within docker-compose).
+- **Port**: `5432` / `5433`.
 - **User**: `spd_user`.
 - **Password**: `spd_pass`.

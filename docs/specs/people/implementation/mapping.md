@@ -1,6 +1,7 @@
 # Implementation: People Module Mapping
 
 This document maps the business specifications of the People module to the technical Shared Skills. It inherits global baselines from [[specs/shared/implementation]].
+Target Database: **WRITE_DB**
 
 ## Module-Specific Skill Assignments
 
