@@ -24,7 +24,8 @@ To maintain high availability and decoupling, the system uses Eventual Consisten
 *   **Event Subscription (Read Models)**:
     *   If Module B requires data owned by Module A, Module B must subscribe to Module A's Domain Events.
     *   **Payload Law**: Every Event Subscriber MUST receive the **`EventEnvelope`** (as defined in `specs/shared/models/EventEnvelope.md`) as its input. The Subscriber MUST NOT expect the raw domain payload alone.
-    *   Module B must use the `data` portion of the envelope to construct its own isolated "Read Model" of the data.
+    *   **Tenant Filtering Law**: Before processing an event, the Subscriber MUST verify that the `tenantId` in the `EventEnvelope.metadata` matches a valid tenant it is responsible for. This ensures that even with shared infrastructure, cross-tenant data leakage is prevented at the application level.
+    *   Module B must use the `payload` portion of the envelope to construct its own isolated "Read Model" of the data.
     *   **Idempotency Law (Inbox Pattern)**: Because distributed messaging systems guarantee *at-least-once* delivery, every Event Subscriber MUST be strictly idempotent. 
         *   Before processing the event logic, the implementation MUST check if the `eventId` from the `EventEnvelope` already exists in the `processed_events` table (Inbox Pattern).
         *   If it exists, the event MUST be discarded (ACK'd but not processed).
