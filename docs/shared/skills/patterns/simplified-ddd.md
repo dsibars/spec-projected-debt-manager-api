@@ -54,11 +54,18 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
     - Projections MUST NOT be used to enforce domain invariants or business rules within a Command.
     - Commands MUST ONLY rely on the Source of Truth (Aggregates) or specific Outbound Ports.
 
-12. **Multi-Tenancy Isolation Law (Horizontal Scaling)**:
+12. **Multi-Tenancy Isolation Law (Logical Ownership)**:
     - Every Domain Aggregate and Projection (outside the `Identity` global scope) MUST include a `tenantId`.
-    - The `tenantId` acts as the primary partition key for the system, allowing for horizontal sharding of data.
-    - All queries and commands MUST strictly filter by the `tenantId` provided by the authenticated context.
-    - Data leaking between tenants is a critical architectural failure.
+    - Every Command and Query MUST accept a `tenantId` as a mandatory input parameter.
+    - All persistence operations MUST strictly filter by this `tenantId`.
+    - In this Personal Ledger ecosystem, the `tenantId` is functionally equivalent to the `userId`.
+    - All queries and commands MUST strictly filter by the `tenantId` (The Owner) provided by the `sub` claim in the authenticated context.
+    - Data leaking between users is a critical architectural failure.
+
+13. **Sharding Law (Physical Partitioning)**:
+    - To support millions of users, the system uses **Shard-Based Routing**.
+    - The `sid` claim in the JWT identifies which physical shard/database contains the user's data.
+    - Cross-shard transactions are forbidden. A single user's data MUST reside on a single shard.
 
 ## Implementation Rules
 

@@ -1,25 +1,25 @@
 # Command: Rebalance User
 
 ## Goal
-Move a user from one tenant (partition) to another for load balancing or maintenance.
+Move a user from one shard (physical partition) to another for load balancing or maintenance.
 
 ## Input
 - `userId`: `uuid`
-- `targetTenantId`: `uuid`
+- `targetShardId`: `uuid`
 
 ## Flow
 1. Find the [[models/User]] by `userId`.
-2. Find the current [[models/Tenant]] (Source) and the `targetTenantId` [[models/Tenant]] (Destination).
-3. Verify that Destination Tenant is `ACTIVE` and has capacity.
+2. Find the current [[models/Shard]] (Source) and the `targetShardId` [[models/Shard]] (Destination).
+3. Verify that Destination Shard is `ACTIVE` and has capacity.
 4. Emit `UserRebalanceStarted` event.
-5. Update [[models/User]] `tenantId` to `targetTenantId`.
-6. Decrement `currentLoad` of Source Tenant.
-7. Increment `currentLoad` of Destination Tenant.
+5. Update [[models/User]] `shardId` to `targetShardId`.
+6. Decrement `currentLoad` of Source Shard.
+7. Increment `currentLoad` of Destination Shard.
 8. Emit `UserRebalanced` event.
 
 ## Emits
-- `UserRebalanceStarted` (payload: `userId`, `sourceTenantId`, `destinationTenantId`)
-- `UserRebalanced` (payload: `userId`, `sourceTenantId`, `destinationTenantId`)
+- `UserRebalanceStarted` (payload: `userId`, `sourceShardId`, `destinationShardId`)
+- `UserRebalanced` (payload: `userId`, `sourceShardId`, `destinationShardId`)
 
 ## Note
-This is a high-level declarative command. In a real-world distributed system, this would trigger a data migration process across all modules that use this `userId`.
+This is a high-level administrative command. The `UserRebalanced` event triggers data migration subscribers in all other modules to move the isolated user data between physical databases if necessary.

@@ -5,8 +5,8 @@ This skill defines the technical law for generating and validating JSON Web Toke
 ## Principles
 1.  **Stateless Identity**: All authentication must be stateless using JSON Web Tokens.
 2.  **Explicit Claims**:
-    - The `sub` (Subject) claim MUST represent the `userId`.
-    - The `tid` (Tenant ID) claim MUST represent the `tenantId`.
+    - The `sub` (Subject) claim MUST represent the `userId` (The Logical Tenant).
+    - The `sid` (Shard ID) claim MUST represent the `shardId` (The Physical Partition).
 3.  **Mandatory Validation**: Every protected endpoint MUST validate the token before processing.
 
 ## Technical Requirements

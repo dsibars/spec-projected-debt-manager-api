@@ -2,10 +2,10 @@
 
 ## Base Path: `/api/v1/backoffice/identity`
 
-### Create Tenant
-- **Adapts**: [[../../commands/CreateTenant]]
+### Create Shard
+- **Adapts**: [[../../commands/CreateShard]]
 - **Method**: `POST`
-- **Path**: `/tenants`
+- **Path**: `/shards`
 - **Request Body**:
   ```json
   {
@@ -14,7 +14,7 @@
     "region": "us-east-1"
   }
   ```
-- **Success Response**: `201 Created` with `tenantId`.
+- **Success Response**: `201 Created` with `shardId`.
 
 ### Rebalance User
 - **Adapts**: [[../../commands/RebalanceUser]]
@@ -23,12 +23,18 @@
 - **Request Body**:
   ```json
   {
-    "targetTenantId": "uuid"
+    "targetShardId": "uuid"
   }
   ```
 - **Success Response**: `200 OK`.
 
-### List Tenants (Query)
+### Delete User
+- **Adapts**: [[../../commands/DeleteUser]]
+- **Method**: `DELETE`
+- **Path**: `/users/{userId}`
+- **Success Response**: `204 No Content`.
+
+### List Shards (Query)
 - **Method**: `GET`
-- **Path**: `/tenants`
-- **Success Response**: `200 OK` with list of Tenants (Paginated).
+- **Path**: `/shards`
+- **Success Response**: `200 OK` with list of Shards (Paginated).
