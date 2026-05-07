@@ -1,7 +1,7 @@
 # Command: Authenticate User
 
 ## Goal
-Validate credentials and issue tokens.
+Validate credentials and issue tokens containing the tenant context.
 
 ## Input
 - `email`: `string`
@@ -19,6 +19,7 @@ Validate credentials and issue tokens.
    - Verify `externalId` matches the secret.
 6. Update `lastLoginAt` on [[models/User]].
 7. Generate Access and Refresh Tokens (using `@shared/skills/security/jwt`).
+   - The token MUST include `tenantId` from the [[models/User]] record as a claim.
 8. Return tokens.
 
 ## Result

@@ -5,6 +5,7 @@ To represent a unique identity within the system.
 
 ## Properties
 - `id`: `uuid` (Primary Key, global `userId`)
+- `tenantId`: `uuid` (Foreign Key to [[Tenant]], mandatory for data isolation)
 - `email`: `string` (Unique)
 - `isActive`: `boolean` (Default: `true`)
 - `lastLoginAt`: `datetime?`
