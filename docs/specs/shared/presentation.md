@@ -45,6 +45,10 @@ Paginated responses should include a `meta` field:
 }
 ```
 
+## API Documentation
+
+Every implementation MUST provide automated API documentation using the `@shared/skills/presentation/openapi` skill. This documentation must be accessible at `/api/docs/ui` and serve as the contract for frontend and third-party integrations.
+
 ## HTTP Methods
 
 - `GET`: Retrieve data (Idempotent).

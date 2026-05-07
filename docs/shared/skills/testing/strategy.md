@@ -15,13 +15,13 @@ All projects must follow the testing pyramid to ensure a balance between speed, 
 ### 2. Integration Tests (The Middle)
 - **Scope**: Infrastructure components (repository implementations, external API clients).
 - **Environment**: Requires the Dockerized environment defined in `@shared/skills/devops/dockerization` (e.g., Testcontainers).
-- **Migration Execution**: Since ORM DDL auto-generation is banned, the test harness MUST orchestrate the execution of all schema migrations against the ephemeral database before executing the test suite.
-- **Goal**: Verify that the technical implementation correctly interacts with the database (PostgreSQL) or external systems.
+- **Migration & Seeding**: The test harness MUST orchestrate the execution of all schema migrations AND seed a valid `Tenant` context (see `@shared/skills/persistence/seeding`) before executing the test suite.
+- **Goal**: Verify that the technical implementation correctly interacts with the database (PostgreSQL) or external systems within a valid tenant scope.
 
 ### 3. Application Tests (The Top)
 - **Scope**: Full end-to-end functionality of a module.
 - **Environment**: Requires a complete Dockerized environment.
-- **Migration Execution**: Must ensure migrations are executed on startup, testing the identical boot sequence as production.
+- **Bootstrapping**: Must ensure migrations and initial seeding are executed on startup, testing the identical boot sequence as production.
 - **Testing Interface**: HTTP requests against the endpoints defined in `docs/specs/[module]/presentation/api.md`.
 - **Goal**: Validate that all layers (presentation -> application -> domain -> infrastructure) work together to fulfill the specifications.
 

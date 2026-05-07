@@ -10,6 +10,7 @@ Technical mapping for financial data. Inherits [[specs/shared/implementation]].
 
 ### Table: `debts` (Schema: `debts`)
 - `id`: `UUID` (PK)
+- `tenant_id`: `UUID` (Not Null)
 - `person_id`: `UUID` (FK -> `debts.person_read_model.id`)
 - `name`: `VARCHAR(255)`
 - `total_amount`: `BIGINT` (Cents)

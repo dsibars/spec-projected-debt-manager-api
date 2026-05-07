@@ -12,8 +12,9 @@ This skill defines the technical implementation for a distributed, highly availa
     *   **Outbox Implementation**: The Builder must implement a Polling Worker (e.g., a background scheduler) that reads unpublished events from a local `outbox_events` table and dispatches them to RabbitMQ, marking them as processed only upon broker acknowledgment.
 *   **Routing & Topology**:
     *   **Exchange**: Use a `Topic` exchange for Domain Events (e.g., `spd.domain.events`).
-    *   **Routing Keys**: Format as `[module].[entity].[action]` (e.g., `people.person.created`).
-    *   **Queues**: Named persistently per subscriber logic (e.g., `debts_module_person_created_queue`).
+    *   **Tenant Isolation**: While a single RabbitMQ cluster serves all tenants, isolation is achieved via routing.
+    *   **Routing Keys**: MUST include the `tenantId` to allow for granular filtering. Format: `[tenantId].[module].[entity].[action]` (e.g., `550e8400.people.person.created`).
+    *   **Queues**: Named per subscriber logic AND tenant if necessary. For global subscribers, use wildcards (e.g., `*.people.person.created`).
 *   **Serialization**: All payloads must be serialized in UTF-8 JSON.
 *   **Resilience**: Dead Letter Queues (DLQ) are mandatory for all event subscriptions.
 

@@ -6,6 +6,7 @@ This skill defines the technical "laws" for persisting data using a PostgreSQL d
 
 *   **Database Engine**: PostgreSQL 16+.
 *   **Database Name**: `spd_debt_manager`.
+*   **Bootstrapping & Seeding**: The implementation MUST follow the laws defined in `@shared/skills/persistence/seeding`. At least one active tenant must be seeded for the system to be functional.
 *   **Schema Strategy**: Per-module isolation. Each module in `docs/specs/[module]` maps to a dedicated schema in the database (e.g., `people`, `debts`).
 *   **Migrations & DDL**:
     *   **Strictly Banned**: Using ORM features like `ddl-auto=update` or `hibernate.hbm2ddl.auto` is strictly forbidden.
