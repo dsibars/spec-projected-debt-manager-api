@@ -16,8 +16,12 @@ Every module in the `docs/specs/` directory automatically inherits the following
     - @shared/skills/persistence/migrations
 6.  **Messaging**: `@shared/skills/messaging/rabbitmq`
 7.  **Security**:
-    - `@shared/skills/security/jwt-auth`
+    - `@shared/skills/security/jwt`
+    - `@shared/skills/security/hashing`
+    - `@shared/skills/security/oauth-integration`
     - `@shared/skills/security/pii-management`
+8.  **Scaling**:
+    - `@shared/skills/patterns/tenant-load-balancing`
 
 ## Technical Composition Rules
 
@@ -37,4 +41,3 @@ To ensure interoperability between different language implementations, the follo
 | `Boolean` | `boolean` | `bool` | `bool` |
 | `DateTime` | `OffsetDateTime` | `time.Time` | `DateTime<Utc>` |
 | `UUID` | `java.util.UUID` | `uuid.UUID` | `uuid::Uuid` |
-
