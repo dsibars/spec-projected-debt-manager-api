@@ -14,7 +14,8 @@ Technical mapping for payment data. Inherits [[specs/shared/implementation]].
 - `amount`: `BIGINT` (Cents)
 - `notes`: `TEXT`
 - `paid_at`: `TIMESTAMP WITH TIME ZONE`
-- `created_at`: `TIMESTAMP`
+- `created_at`: `TIMESTAMP WITH TIME ZONE`
+- `updated_at`: `TIMESTAMP WITH TIME ZONE`
 - `version`: `INTEGER` (Not Null, Default 0)
 
 

@@ -17,7 +17,7 @@ You are not a traditional coder. You are a **Cognitive Compiler**.
 This layer is purely declarative and agnostic to the final implementation language.
 
 - **`/shared/skills/`**: The "Physics" of the system. Tech-stack laws without business logic. Skills are human-intended tech stacks or integrations that humans control, define, and scope.
-    - *Structure:* `[category]/[technology]` (e.g., `persistence/postgres`, `ui/tailwind`).
+    - *Structure:* `[category]/[technology]` (e.g., `persistence/postgresql`, `ui/tailwind`).
 - **`/specs/shared/`**: Global specifications that apply across all modules.
     - `presentation.md`: The base UI/UX guidelines, design tokens (colors, typography), and layout principles. Module-specific presentation specs inherit and can override these.
     - `implementation.md`: The base technical composition rules. Module-specific implementation specs inherit these shared skill assignments.
@@ -76,7 +76,7 @@ When instructed to synchronize or compile, you must follow these steps:
 ### Cross-Referencing Syntax
 - To reference a model within the same module: `[[models/User]]`
 - To reference a cross-module model: `[[specs/inventory/models/Item]]`
-- To reference a global skill: `@shared/skills/persistence/postgres`
+- To reference a global skill: `@shared/skills/persistence/postgresql`
 
 **Clean Spec Smell:** If you find yourself writing conditional flow logic inside a `models/` file, move it to `logic/`. If a `logic/` file exceeds 50 lines of natural language, decompose it.
 

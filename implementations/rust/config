@@ -7,4 +7,5 @@ Skills:
 - @shared/skills/platforms/axum
 - @shared/skills/persistence/postgresql
 - @shared/skills/devops/dockerization
+- @shared/skills/devops/cargo
 - @shared/skills/testing/strategy

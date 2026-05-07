@@ -18,7 +18,7 @@ The Application Layer must strictly segregate intent into Commands and Queries.
 *   **Bounded Context Isolation**: Modules MUST NOT import or reference Domain Models from other modules. A `Person` in the `People` module is completely disjoint from a `PersonReadModel` in the `Debts` module. They are two distinct files, representations, and concepts. Sharing domain classes across modules is strictly banned.
 
 ## 3. Domain Events and Data Replication
-To maintain high availability and decoupling, the system uses Eventual Consistency via Domain Events.
+To maintain high availability and decoupling, the system uses Eventual Consistency via Domain Events. For detailed rules on data replication, see `@shared/skills/patterns/data-replication`.
 
 *   **Event Emission**: Any Command that successfully alters domain state MUST emit a Domain Event (e.g., `PersonCreated`, `DebtSettled`) to an `EventBus`.
 *   **Event Subscription (Read Models)**:
