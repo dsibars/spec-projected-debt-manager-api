@@ -14,9 +14,12 @@ This skill defines the standards for containerizing the application and its envi
 The system must provide a `docker-compose.yml` in each implementation directory to spin up the required infrastructure.
 
 ### Standard Services:
-- `db`: PostgreSQL 16 image.
+- `db-write`: PostgreSQL 16 (Master for Aggregates).
+- `db-read`: PostgreSQL 16 (Replica/Store for Projections).
 - `broker`: RabbitMQ 3-management image (with management UI enabled).
-- `api`: The implementation being worked on (optional, if running via `make run` outside docker).
+- `signoz-collector`: The OpenTelemetry ingestion hub.
+- `signoz-ui`: The observability dashboard accessible at port 3301.
+- `api`: The implementation being worked on (optional).
 
 ## Makefile Integration
 

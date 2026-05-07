@@ -1,6 +1,7 @@
 # Implementation: People Module Mapping
 
 This document maps the business specifications of the People module to the technical Shared Skills. It inherits global baselines from [[specs/shared/implementation]].
+Target Database: **WRITE_DB**
 
 ## Module-Specific Skill Assignments
 
@@ -12,6 +13,7 @@ This document maps the business specifications of the People module to the techn
 - **Table**: `people` (Schema: `people`)
 - **Columns**:
     - `id`: `UUID` (Primary Key)
+    - `tenant_id`: `UUID` (Not Null)
     - `name`: `VARCHAR(255)` (Not Null)
     - `email`: `VARCHAR(255)` (Unique, Nullable)
     - `phone`: `VARCHAR(50)` (Nullable)

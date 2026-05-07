@@ -6,6 +6,7 @@ This skill defines the technical "laws" for persisting data using a PostgreSQL d
 
 *   **Database Engine**: PostgreSQL 16+.
 *   **Database Name**: `spd_debt_manager`.
+*   **Bootstrapping & Seeding**: The implementation MUST follow the laws defined in `@shared/skills/persistence/seeding`. At least one active tenant must be seeded for the system to be functional.
 *   **Schema Strategy**: Per-module isolation. Each module in `docs/specs/[module]` maps to a dedicated schema in the database (e.g., `people`, `debts`).
 *   **Migrations & DDL**:
     *   **Strictly Banned**: Using ORM features like `ddl-auto=update` or `hibernate.hbm2ddl.auto` is strictly forbidden.
@@ -26,8 +27,13 @@ This skill defines the technical "laws" for persisting data using a PostgreSQL d
     *   `min_idle`: 2.
 *   **Transactions**: Logic layers requiring atomicity must be wrapped in technical transactions at the infrastructure layer.
 
+## Configuration Contract
+This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+- **Write Aggregates**: `db.write.url`, `db.write.user`, `db.write.password`
+- **Read Projections**: `db.read.url`, `db.read.user`, `db.read.password`
+
 ## Connection Credentials (Local Dev)
-- **Host**: `localhost` (or `db` within docker-compose network).
-- **Port**: `5432`.
+- **Host**: `localhost` (or `db-write`/`db-read` within docker-compose).
+- **Port**: `5432` / `5433`.
 - **User**: `spd_user`.
 - **Password**: `spd_pass`.

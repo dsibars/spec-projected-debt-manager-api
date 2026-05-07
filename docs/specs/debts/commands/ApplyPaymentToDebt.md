@@ -14,6 +14,10 @@ To reduce the balance of a debt aggregate when a payment is confirmed.
 4. If `currentBalance` <= 0, set `isSettled` to `true`.
 5. Set `updatedAt` to now.
 6. Persist [[models/Debt]].
+7. Update [[projections/DebtSummaryProjection]] via [[UpdateDebtSummary]] with:
+   - `debtId`: The `debtId`.
+   - `remainingAmount`: The new `currentBalance`.
+   - `isSettled`: The new `isSettled`.
 
 ## Emits
 - `DebtSettled` (if newly settled)

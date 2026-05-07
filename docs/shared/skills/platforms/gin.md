@@ -13,5 +13,12 @@
 - Use `c.ShouldBindJSON` for request parsing.
 - Use a helper function for consistent JSON error responses.
 
-## Dependency Injection
-- Use "Poor Man's DI" (Constructor functions) to wire up services and repositories.
+## Configuration Contract
+This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+- **Server Port**: `GIN_PORT` (Default: `8080`)
+- **Mode**: `GIN_MODE` (e.g., `debug`, `release`)
+
+## Default Tuning
+- **Read Timeout**: `10s`.
+- **Write Timeout**: `10s`.
+- **Max Body Size**: `1MB`.
