@@ -4,19 +4,16 @@ This skill defines the deterministic algorithm for assigning new users to tenant
 
 ## Principles
 1.  **Capacity Awareness**: Never assign a user to a tenant that has reached its capacity.
-2.  **Even Distribution**: Distribute users across available tenants to prevent hotspots.
-3.  **Stability**: Once a user is assigned, their `tenantId` is immutable except via an explicit `RebalanceUser` command.
+2.  **Even Distribution**: Distribute users across available tenants.
 
-## Assignment Algorithm (Deterministic)
-When the `RegisterUser` command requests a `tenantId`:
+## Atomic Load Increment Law
+To prevent over-provisioning in a distributed system without needing global locks:
+- The Shard Assignment MUST use an atomic database update on the Global Identity DB.
+- **Query**: `UPDATE shards SET current_load = current_load + 1 WHERE id = :id AND current_load < capacity AND status = 'ACTIVE'`.
+- If the rows affected is 0, the operation must retry with the next available shard or return `SystemOverloaded`.
 
-1.  **Filter**: Identify all Tenants with `status == 'ACTIVE'`.
-2.  **Capacity Check**: Exclude any Tenant where `currentLoad >= capacity`.
-3.  **Sort**: Sort the remaining Tenants by the following priority:
-    - Primary: `currentLoad` (Ascending) - *Pick the least loaded shard first.*
-    - Secondary: `id` (Ascending) - *Tie-breaker for perfectly equal loads.*
-4.  **Selection**: Pick the first Tenant from the sorted list.
-5.  **Failure**: If the list is empty, the system MUST return a `SystemOverloaded` Domain Error.
-
-## Implementation Rules
-- The Builder must ensure this logic is thread-safe or handled within a database transaction to prevent over-subscription of a tenant during concurrent registrations.
+## Selection Algorithm
+1. Filter `ACTIVE` shards.
+2. Sort by `currentLoad` (Ascending).
+3. Attempt Atomic Increment on the top shard.
+4. If successful, that shard is assigned.

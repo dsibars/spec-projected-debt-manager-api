@@ -12,17 +12,3 @@ To represent a unique identity within the system.
 - `createdAt`: `datetime`
 - `updatedAt`: `datetime`
 
----
-
-# Model: Credential
-
-## Goal
-To store the secrets required for authentication.
-
-## Properties
-- `id`: `uuid`
-- `userId`: `uuid` (Foreign Key to User)
-- `provider`: `LOCAL | GOOGLE | APPLE`
-- `secret`: `string` (Hashed password or external subject ID)
-- `providerData`: `json?` (Extra data like Google profile info)
-- `createdAt`: `datetime`

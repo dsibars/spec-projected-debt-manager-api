@@ -14,4 +14,5 @@ A denormalized, ready-to-render view of a debt and its related data (Person, Pay
 - `paymentCount`: `integer` (Computed)
 - `lastPaymentDate`: `datetime?` (Computed)
 - `isSettled`: `boolean`
+- `isArchived`: `boolean` (Default: `false`)
 - `updatedAt`: `datetime`

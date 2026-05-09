@@ -1,24 +1,27 @@
-# Skill: OpenTelemetry Instrumentation
+# Skill: OpenTelemetry & Observability
 
 This skill defines the law for instrumenting the system with traces, metrics, and logs.
 
 ## Principles
-1.  **Vendor Agnostic**: All instrumentation MUST use the OpenTelemetry SDK/API.
-2.  **Context Propagation**: The `traceId` and `spanId` MUST be propagated across process boundaries (e.g., via HTTP headers or Message Metadata).
-3.  **Automatic Instrumentation**: Use library-specific auto-instrumentation (e.g., Spring Boot Starter, Go Middleware) wherever possible.
-4.  **Semantic Conventions**: Follow the [OTel Semantic Conventions](https://opentelemetry.io/docs/concepts/semantic-conventions/) for span and attribute naming.
+1.  **Vendor Agnostic**: Use the OpenTelemetry SDK/API exclusively.
+2.  **Context Propagation**: Propagate `traceId` and `spanId` across PROCESS and MESSAGE boundaries.
+3.  **Semantic Conventions**: Follow OTel naming standards.
+
+## Logging Law (Structured Logging)
+All applications MUST produce logs in **Structured JSON** format to facilitate automated ingestion.
+- **Mandatory Fields**: `timestamp`, `level`, `traceId`, `spanId`, `tenantId`, `message`.
+- **Log Levels**:
+    - `INFO`: Business milestones (e.g., "User Registered", "Debt Created").
+    - `WARN`: Recoverable errors (e.g., "Shard in Maintenance - retrying").
+    - `ERROR`: System failures or unhandled exceptions.
+- **PII Protection**: Never log sensitive data (passwords, PII) in plain text.
 
 ## Instrumentation Points
-- **REST Adapters**: Every incoming request must start a new root span or continue an existing one.
-- **Application Layer**: Every Command/Query handler must be wrapped in a child span named after the use case.
-- **Outbound Ports**: Every Repository and External API call must be instrumented.
-- **Messaging**: Every event published to the Broker must carry the current trace context.
+- **REST Adapters**: Start/Continue root spans.
+- **Application Layer**: Wrap Command/Query handlers in child spans.
+- **Outbound Ports**: Instrument all Repository and External API calls.
+- **Messaging**: Carry trace context in `EventEnvelope` metadata.
 
 ## Configuration Contract
-This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
-- **Exporter URL**: `otel.exporter.url` (Default: `http://localhost:4317`)
-- **Service Name**: `otel.service.name` (Injected by Builder)
-
-## Technical Requirements
-- **Protocol**: OTLP/gRPC.
-- **Resource Attributes**: Every span must include `service.name`, `service.version`, and `deployment.environment`.
+- **Exporter URL**: `otel.exporter.url`
+- **Service Name**: `otel.service.name`

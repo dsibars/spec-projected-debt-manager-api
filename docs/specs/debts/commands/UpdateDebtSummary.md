@@ -9,6 +9,7 @@ To keep the denormalized projection in sync with the source aggregates.
 - `remainingAmount`: `integer?`
 - `paymentDate`: `datetime?`
 - `isSettled`: `boolean?`
+- `isArchived`: `boolean?`
 
 ## Flow
 1. Find the [[projections/DebtSummaryProjection]] by `debtId`.
@@ -19,5 +20,6 @@ To keep the denormalized projection in sync with the source aggregates.
    - Increment `paymentCount`.
    - Update `lastPaymentDate` with `paymentDate`.
 5. If `isSettled` is provided, update it.
-6. Set `updatedAt` to now.
-7. Persist to store.
+6. If `isArchived` is provided, update it.
+7. Set `updatedAt` to now.
+8. Persist to store.
