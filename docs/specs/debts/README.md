@@ -6,7 +6,7 @@ Manages financial obligations between users and other people.
 ## Bounded Context
 This module owns:
 - Debt lifecycle (create, update, settle, archive)
-- Payment tracking (via events from Payments module)
+- Payment tracking
 - Debt summary projections
 
 ## Dependencies
@@ -17,17 +17,17 @@ This module owns:
 - @shared/skills/security/jwt
 
 ## Entry Points
-- REST: [[presentation/rest/api]]
-- Subscribers: [[presentation/subscribers/]]
-- Commands: [[commands/]]
-- Queries: [[queries/]]
+- REST: [[presentation/rest/api]], [[presentation/rest/payments]]
+- Subscribers: (See presentation/subscribers/)
+- Commands: (See commands/)
+- Queries: (See queries/)
 
 ## Events Produced
 - [[events/DebtRegistered]]
 - [[events/DebtSettled]]
 
 ## Events Consumed
-- [[specs/payments/events/PaymentApplied]]
+- (None from payments, payments are internal)
 - [[specs/people/events/PersonCreated]]
 - [[specs/people/events/PersonUpdated]]
 - [[specs/identity/events/IdentityPurgeRequested]]

@@ -22,8 +22,8 @@ To record a payment event for a specific debt and synchronously update the debt'
 10. Return the registered `Payment` `id`.
 
 ## Emits
-- `PaymentRegistered`
-- `DebtSettled` (if `debt.currentBalance` reached 0)
+- `PaymentRegistered` (see [[events/PaymentRegistered]])
+- `DebtSettled` (if `debt.currentBalance` reached 0, see [[events/DebtSettled]])
 
 ## Errors
 - `DebtNotFound`: Referenced debt does not exist.

@@ -29,6 +29,6 @@ Initialize a new debt record in the user's ledger.
 
 ## Errors
 - `InvalidAmount`: If `totalAmount <= 0`.
-- `PersonNotFound`: If `personId` does not exist in the local PersonReadModel.
+- `PersonNotFound`: If `personId` does not exist in the local Person integration store (aggregate cache).
 - `PersonArchived`: If the referenced person is archived.
 - `CurrencyNotSupported`: If the provided currency code is not recognized by `@shared/skills/standards/data-formats`.

@@ -1,0 +1,4373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+  <File>
+    <Path>.
+    </Path>
+    <Name>.gitignore
+    </Name>
+    <Content><![CDATA[# Compiled class file
+    *.class
+    
+    # Log file
+    *.log
+    
+    # BlueJ files
+    *.ctxt
+    
+    # Mobile Tools for Java (J2ME)
+    .mtj.tmp/
+    
+    # Package Files #
+    *.jar
+    *.war
+    *.nar
+    *.ear
+    *.zip
+    *.tar.gz
+    *.rar
+    
+    # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+    hs_err_pid*
+    replay_pid*
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>.
+    </Path>
+    <Name>LICENSE
+    </Name>
+    <Content><![CDATA[MIT License
+    
+    Copyright (c) 2026 dsibars
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>.
+    </Path>
+    <Name>README.md
+    </Name>
+    <Content><![CDATA[# Spec Projected Debt Manager - API
+    
+    This repository contains the declarative specifications and multiple technical implementations for the **Projected Debt Manager API**, built using the **Spec Projected Development (SPD)** methodology.
+    
+    ## 🚀 The SPD Approach
+    
+    Following the principles defined in [AGENTS.md](./AGENTS.md), this project separates the **Truth Layer** (Documentation/Specs) from the **Projection Layer** (Implementation Code).
+    
+    - **Specs as Source**: All business logic, models, and behaviors are defined in natural language within the `/docs` folder.
+    - **Idempotent Projections**: The source code in `/implementations/*/src` is a volatile, generated projection of the specs.
+    - **Multi-Implementation**: This repository demonstrates the power of SPD by maintaining identical business logic across four different tech stacks.
+    
+    ## 🛠 Target Implementations
+    
+    This project maintains four distinct implementations:
+    
+    1.  **Kotlin**: Modern JVM implementation.
+    2.  **Java**: Standard JVM implementation.
+    3.  **Rust**: High-performance, memory-safe implementation.
+    4.  **Go**: Simple, concurrent implementation.
+    
+    ## 📂 Project Structure
+    
+    - `/docs`: The Truth Layer.
+        - `/shared/skills`: Technical "laws" and integration patterns (e.g., PostgreSQL, DDD).
+        - `/specs`: Business domain specifications.
+    - `/implementations`: The Projection Layer.
+        - `/[target]/config`: Tech stack definitions.
+        - `/[target]/src`: Generated source code (DO NOT EDIT MANUALLY).
+        - `/[target]/Makefile`: Standard commands for build, test, and run.
+    
+    ## 🛠 Getting Started
+    
+    To explore or run a specific implementation, navigate to its directory in `/implementations` and use the provided `Makefile`.
+    
+    ```bash
+    cd implementations/rust
+    make run
+    ```
+    
+    ---
+    
+    *This project is a sample of Spec Projected Development (SPD).*
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>.
+    </Path>
+    <Name>AGENTS.md
+    </Name>
+    <Content><![CDATA[# The Declarative Architecture Manifest (v3.0 - Definitive)
+    
+    ## Mission Statement
+    You are not a traditional coder. You are a **Cognitive Compiler**.
+    - Your **source code** is written in Natural Language located in `/docs/specs/`.
+    - Your **target output** is the Source Code located in `/implementations/[target]/src/`.
+    - The `src` directory is a volatile, idempotent projection of the `docs` directory.
+    
+    > [!IMPORTANT]
+    > **CORE RULE:** Manual edits to any `src` folder are strictly prohibited and will be overwritten. To change the software, you **MUST** iterate the specs or the skills.
+    
+    ---
+    
+    ## 1. Repository Topology
+    
+    ### 1.1. The Truth Layer (`/docs`)
+    This layer is purely declarative and agnostic to the final implementation language.
+    
+    - **`/shared/skills/`**: The "Physics" of the system. Tech-stack laws without business logic. Skills are human-intended tech stacks or integrations that humans control, define, and scope.
+        - *Structure:* `[category]/[technology]` (e.g., `persistence/postgresql`, `ui/tailwind`).
+    - **`/specs/shared/`**: Global specifications that apply across all modules.
+        - `presentation.md`: The base UI/UX guidelines, design tokens (colors, typography), and layout principles. Module-specific presentation specs inherit and can override these.
+        - `implementation.md`: The base technical composition rules. Module-specific implementation specs inherit these shared skill assignments.
+    - **`/specs/[module]/`**: Atomic Business Units. Follows DDD (Domain Driven Design).
+        - `definitions/`: The Ubiquitous Language. Glossary and Domain Errors.
+        - `models/`: Domain Aggregates (The Write Model).
+        - `projections/`: Read Models and denormalized views (The UI Model).
+        - `commands/`: State-changing business logic.
+        - `queries/`: Side-effect-free data retrieval.
+        - `presentation/`: Driving Adapters.
+            - `rest/`: REST API definitions (adapts HTTP to commands/queries).
+            - `subscribers/`: Event subscribers (adapts Broker messages to commands).
+        - `behaviors/`: Acceptance criteria (Given/When/Then).
+        - `migrations/`: Declarative schema evolutions.
+        - `implementation/`: Composition files mapping Module to Shared Skills.
+    
+    
+    
+    
+    ### 1.2. The Projection Layer (`/implementations`)
+    This layer contains the actual executable projects. A single repo can have multiple implementations (e.g., `rust-backend`, `go-backend`, `web-frontend`). Each implementation is an isolated, idempotent projection of the specifications. All implementation-specific files and directories must reside within `implementations/[target-name]/`.
+    
+    - **`/[target-name]/config`**: Tech stack definition (e.g., "Language: Go 1.22", "Framework: Gin").
+    - **`/[target-name]/sync`**: State tracking. Maps Spec Git Hashes to current implementation status.
+    - **`/[target-name]/tech_assumptions`**: Ledger of technical assumptions (See Section 6).
+    - **`/[target-name]/Makefile`**: Standard execution interface (See Section 7).
+    - **`/[target-name]/src/`**: The generated output. **MUST** mirror the `/docs/specs/[module]/` hierarchy 1:1.
+    
+    ---
+    
+    ## 2. The Compilation Algorithm
+    When instructed to synchronize or compile, you must follow these steps:
+    
+    ### Phase I: Dependency Graph Analysis
+    1. Scan the requested module in `docs/specs/[module]`.
+    2. Map all referenced models in `models/` to create the **Type Graph**.
+    3. Load all **Shared Skills** referenced in the module's `implementation/` files.
+    4. If a cross-module dependency exists (e.g., Auth needing a User), verify the contract in the external module.
+    
+    ### Phase II: Contract Enforcement & Validation
+    - **Zero Technical Leakage:** Files in `logic/` and `models/` **MUST NOT** mention tech-specific terms (e.g., JSON, SQL, React, JWT). Use pure domain terms (*Store*, *Encrypt*, *Display*, *Token*).
+    - **SRP (Single Responsibility):** Every spec file in `specs/` results in exactly one corresponding code file/class in `src/`.
+    
+    ### Phase III: Synthesis (Mirroring)
+    - **File Mapping:** Generate code following the mirror rule: `docs/specs/[module]/[layer]/[filename]` -> `implementations/[target]/src/modules/[module]/[layer]/[filename].[ext]`.
+    - **Skill Synthesis:** Inject technical boilerplate (SQL queries, HTTP decorators, etc.) by interpreting the business logic through the lens of the chosen Shared Skill.
+    
+    ### Phase IV: Behavior Validation (Testing)
+    - **Test Generation:** Compile the rules defined in `behaviors/` into the target's native testing framework (e.g., Jest, Go test).
+    - **Execution:** Execute the tests against the synthesized code. A failure halts the sync process until the agent corrects the implementation or assumptions.
+    
+    ---
+    
+    ## 3. Specification Standards (Syntax & Logic)
+    
+    ### Cross-Referencing Syntax
+    - To reference a model within the same module: `[[models/User]]`
+    - To reference a cross-module model: `[[specs/inventory/models/Item]]`
+    - To reference a global skill: `@shared/skills/persistence/postgresql`
+    
+    **Clean Spec Smell:** If you find yourself writing conditional flow logic inside a `models/` file, move it to `logic/`. If a `logic/` file exceeds 50 lines of natural language, decompose it.
+    
+    ---
+    
+    ## 4. The Sync Protocol (`sync` file)
+    Each implementation tracks its own "Freshness". The agent must update this file after any generation following this structure:
+    
+    ```text
+    Sync State
+    Target Stack: [e.g., Rust / Axum]
+    Last Global Sync: [Timestamp]
+    
+    Module Status:
+    [Auth]: SYNCED (Spec Hash: x72a)
+    [Combat]: OUTDATED (Spec Hash: y91b -> Current: z32c)
+    
+    Pending Diffs:
+    [Combat/logic/Attack]: Delta -> "Added critical hit logic". Not yet projected to src.
+    ```
+    
+    ### 4.1. The Planning Section
+    For initial development or major refactoring, the `sync` file must include a step-by-step task list to guide the Builder.
+    Each task must follow this exact format:
+    
+    Task [N]
+    - Description: [Granular explanation of what needs to be implemented]
+    - Status: [PENDING TO CODE | PENDING TO ARCHITECTURE REVIEW | DONE]
+    
+    **Status Lifecycle:**
+    - `PENDING TO CODE`: The task has not been started. The Builder must write the code and verify it compiles/tests pass. Once completed, the Builder MUST update the status in the `sync` file to `PENDING TO ARCHITECTURE REVIEW`.
+    - `PENDING TO ARCHITECTURE REVIEW`: The Builder must pause writing new features and explicitly review the implemented code for this specific task against the declarative specs and shared skills to ensure "Zero Technical Leakage" and 100% compliance. If deviations are found, the Builder must fix the implementation. Once perfectly aligned, the Builder MUST update the status to `DONE`.
+    - `DONE`: The task is fully completed and verified.
+    
+    ---
+    
+    ## 5. Agent Behavioral Laws
+    1. **The "Halt and Catch Fire" Rule:** If a spec is ambiguous, contradicts another spec, or a referenced Skill is missing, **STOP**. Do not hallucinate a solution. **Ask the Human.**
+    2. **Idempotency:** Re-running the synthesis on unchanged specs **MUST** result in exactly zero changes to the `src` folder.
+    3. **Security First:** Apply the most restrictive security patterns defined in `@shared/skills/security/` unless explicitly overridden.
+    
+    ---
+    
+    ## 6. Technical Coherence & Assumptions
+    When generating code, if a technical choice (e.g., library choice, directory naming convention, exact framework version) is required but no specific Skill dictates it:
+    
+    - **Architectural Consistency:** Do not mix multiple technologies that serve the same purpose. Maintain a unified stack within the implementation.
+    - **Technical Completeness:** The Builder MUST ensure that every implementation is technically complete. This includes generating all necessary configuration files (e.g., `tsconfig.json`, `package.json`, `Makefile`, `.gitignore`) required by the chosen tech stack and Shared Skills.
+    - **The Assumptions Ledger:** You **MUST** record any "vibe-based" technical choices in `/implementations/[target]/tech_assumptions`.
+        - *Format:* `[Date] - [Assumption Made] - [Reasoning] - [Affected Modules]`
+    - **Promotion Workflow:** This ledger allows humans to review assumptions. Once validated, the human or agent will promote the assumption into a formal `@shared/skills/` file, and remove it from the ledger.
+    
+    ---
+    
+    ## 7. Local Execution & Tooling (Makefile)
+    Every implementation **MUST** be "ready-to-run" for a human developer. You are responsible for generating and maintaining a standard `Makefile` in the root of `/implementations/[target]/`.
+    
+    ### Mandatory Makefile Targets
+    - `make build`: Compiles, transpiles, or packages the project. Must handle dependency installation (e.g., `npm install`, `cargo build`, `go mod tidy`).
+    - `make test`: Executes all unit and integration tests derived from the specs.
+    - `make run`: Starts the application locally (e.g., launches the Spring Boot server, starts the Vite dev server).
+    
+    > [!NOTE]
+    > The specific underlying commands are determined by the config and the Shared Skills. If a build tool is chosen but not strictly defined, log it in `tech_assumptions`.
+    
+    ---
+    
+    ## 8. Repository Hygiene (.gitignore Management)
+    The repository must remain pristine. It should strictly contain the declarative original content (`docs/`) and the declarative code implementations. No build artifacts, execution-derived temporary files, or OS/IDE metadata should ever be committed.
+    
+    - **Agent Responsibility:** Each implementation must independently manage its own `.gitignore` logic (either in a global `.gitignore` or an implementation-level `.gitignore`). The agent **MUST** ensure that framework-specific artifacts are properly ignored.
+    - **The Append-Only Rule:** When updating the `.gitignore`, the agent must **APPEND** missing rules (e.g., `node_modules/`, `target/`, `.idea/`, `.DS_Store`, `*.log`, `dist/`). Never remove or truncate existing rules. It is always better to have an overly cautious `.gitignore` than a lacking one.
+    - **Contextual Awareness:** If the config specifies Java, the agent must ensure `*.class` and `target/` are ignored. If Node, `.env` and `node_modules/`, etc.
+    
+    ---
+    
+    ## 9. Agent Workflows & Core Commands
+    The system separates the workload into two distinct agent personas to prevent contextual contamination:
+    
+    ### 9.1. The Architect (Spec Agent)
+    - **Domain:** Exclusively operates within the `/docs` folder.
+    - **Workflow:** You interact with The Architect to brainstorm, design, and update specs. 
+    - **Action:** If you say "Add a reset password feature", The Architect updates the `models`, `logic`, and `behaviors` in the `auth` module. It never touches implementation code.
+    
+    ### 9.2. The Builder (Implementation Agent)
+    - **Domain:** Exclusively operates within `/implementations/[target]`.
+    - **Workflow:** Triggered when the specs change. It reads the `sync` file to identify Spec Hash mismatches, projects the updated specs into the `src/` folder, and runs `make test`. If tests fail, it adjusts its projection/assumptions—it **never** modifies the specs.
+    - **Rule of Skill Priority:** The Builder MUST prioritize using existing Shared Skills over inventing new technical solutions or assumptions.
+    
+    ### 9.3. The Architect (Arch/Plan Stage)
+    Before the Builder executes, an architectural planning stage may occur to define new Skills or update existing ones if the current "Physics" of the system do not support the requirements.
+    
+    ### 9.4. Directives
+    
+    When communicating with the agents, humans or CI/CD pipelines will use these directives:
+    
+    - **`INITIALIZE [Context]`**: Generate the `docs` folder structure, base text files, initial shared skills, and base `.gitignore`.
+    - **`SYNCHRONIZE [Target]`**: Trigger The Builder. Update the implementation `src`, `sync` state, `Makefile`, and `.gitignore` to match the latest specs.
+    - **`ADVANCE [Target]`**: Instructs the Builder agent to open the target's `sync` file, pick the first task (by numerical order) that is NOT in `DONE` status, and execute the necessary action based on its current lifecycle state (Code or Architecture Review).
+    - **`AUDIT`**: Compare `docs/` against all `implementations/` and report **OUTDATED** modules or broken assumptions.
+    - **`BENCHMARK [Target A] vs [Target B]`**: Generate both implementations and output a comparison report (performance, complexity).
+    - **`REFACTOR SKILL [Skill Path]`**: Update a technical law and systematically propagate the architectural change to all dependent target implementations.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>clean-code.md
+    </Name>
+    <Content><![CDATA[# Skill: Clean Code & Maintainability
+    
+    This skill defines the mandatory coding standards for all code synthesized by the Builder agent, ensuring the output reads like hand-written, maintainable code authored by a senior engineer.
+    
+    ## 1. No Hardcoding
+    - **Configuration over Constants**: Any external integration details, environment-specific variables, or magic numbers/strings must be injected via the language's idiomatic configuration system (e.g., `.env`, `application.yml`).
+    - **Domain Constants**: If a constant belongs to the domain (e.g., maximum retry attempts), it must be defined as a statically typed constant at the top of the relevant class/file, never inline.
+    
+    ## 2. Dependency Injection
+    - Never use global state or static singletons for business logic.
+    - All services, repositories, and configurations must be injected into the components that use them, adhering to the Dependency Inversion Principle.
+    
+    ## 3. Human Maintainability & File Structure
+    - **Naming Conventions**: Variables and methods must have clear, intent-revealing names. Avoid single-letter variables unless used as iterator counters in short loops.
+    - **One-Class-Per-File Rule**: Multiple non-nested public classes/types within a single file are strictly forbidden. For example, a Mapper class must never be defined within the same file as an Entity class. Every structural type must reside in its own dedicated file.
+    - **Modularity**: Functions and methods must be kept short and focused on a single task (Single Responsibility Principle).
+    
+    ## 4. Separation of Concerns
+    - Never mix Presentation logic (e.g., HTTP parsing, JSON generation) with Business Logic.
+    - Never mix Infrastructure logic (e.g., SQL queries, Database annotations) with Domain logic.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>outbox-inbox-schema.md
+    </Name>
+    <Content><![CDATA[# Skill: Pattern - Outbox & Inbox Schema
+    
+    This skill defines the standard SQL schema for implementing the Outbox and Inbox patterns consistently across all modules.
+    
+    ## 1. Outbox Table Schema
+    - **Location**: MUST reside in the `WRITE_DB` of the module emitting events.
+    - **Goal**: Ensure atomic persistence with the Domain Aggregate change.
+    
+    ```sql
+    CREATE TABLE outbox_events (
+        id UUID PRIMARY KEY,
+        event_type VARCHAR(255) NOT NULL,
+        payload JSONB NOT NULL,
+        occurred_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        processed_at TIMESTAMP WITH TIME ZONE, -- NULL if not yet sent to broker
+        retry_count INTEGER DEFAULT 0
+    );
+    ```
+    
+    ## 2. Inbox Table Schema (Processed Events)
+    - **Location**: MUST reside in the same database as the target of the update.
+        - If updating a Projection $\rightarrow$ `READ_DB`.
+        - If updating an Aggregate $\rightarrow$ `WRITE_DB`.
+    - **Goal**: Ensure idempotency by tracking processed `event_id` in the same transaction as the state change.
+    
+    ```sql
+    CREATE TABLE processed_events (
+        event_id UUID PRIMARY KEY,
+        handler_name VARCHAR(255) NOT NULL,
+        processed_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+    );
+    ```
+    
+    ## Implementation Rules
+    - **Atomic Persistence**: Saving a domain entity and inserting into `outbox_events` MUST happen within the same database transaction.
+    - **Idempotency Check**: The insertion into `processed_events` and the model update MUST happen within the same transaction.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>cqrs-and-events.md
+    </Name>
+    <Content><![CDATA[# Skill: CQRS and Event-Driven Architecture
+    
+    This skill defines the technical laws for implementing Command Query Responsibility Segregation (CQRS) and inter-module communication via Eventual Consistency.
+    
+    ## 1. Strict CQRS Laws
+    The Application Layer must strictly segregate intent into Commands and Queries.
+    
+    *   **Commands**:
+        *   **Intent**: Alter the state of the system (e.g., Create, Update, Delete).
+        *   **Return Type**: Strict CQRS is enforced. Commands MUST return `void` (or at most, an identifier of the created resource). They must never return full Domain Entities or DTOs.
+        *   **Routing**: Must be dispatched via a `CommandBus` to exactly one `CommandHandler`.
+    *   **Queries**:
+        *   **Intent**: Read the state of the system. MUST NOT produce any side effects.
+        *   **Routing**: Must be dispatched via a `QueryBus` to exactly one `QueryHandler`.
+    
+    ## 2. The Decoupling Law (Banning Synchronous Calls & Model Sharing)
+    *   **Cross-Module Execution Independence**: A module (e.g., `Debts`) is **strictly forbidden** from invoking the Use Cases, Command Handlers, or Query Handlers of another module (e.g., `People`) synchronously. No direct code injection across module boundaries.
+    *   **Bounded Context Isolation**: Modules MUST NOT import or reference Domain Models from other modules. A `Person` in the `People` module is completely disjoint from a `PersonReadModel` in the `Debts` module. They are two distinct files, representations, and concepts. Sharing domain classes across modules is strictly banned.
+    
+    ## 3. Domain Events and Data Replication
+    To maintain high availability and decoupling, the system uses Eventual Consistency via Domain Events. For detailed rules on data replication, see `@shared/skills/patterns/data-replication`.
+    
+    *   **Event Emission**: Any Command that successfully alters domain state MUST emit a Domain Event (e.g., `PersonCreated`, `DebtSettled`) to an `EventBus`.
+    *   **Event Subscription (Read Models)**:
+        *   If Module B requires data owned by Module A, Module B must subscribe to Module A's Domain Events.
+        *   **Payload Law**: Every Event Subscriber MUST receive the **`EventEnvelope`** (as defined in `specs/shared/models/EventEnvelope.md`) as its input. The Subscriber MUST NOT expect the raw domain payload alone.
+        *   **Tenant Filtering Law**: Before processing an event, the Subscriber MUST verify that the `tenantId` in the `EventEnvelope.metadata` matches a valid tenant it is responsible for. This ensures that even with shared infrastructure, cross-tenant data leakage is prevented at the application level.
+        *   Module B must use the `payload` portion of the envelope to construct its own isolated "Read Model" of the data.
+        *   **Idempotency Law (Inbox Pattern)**: Because distributed messaging systems guarantee *at-least-once* delivery, every Event Subscriber MUST be strictly idempotent. 
+            *   Before processing the event logic, the implementation MUST check if the `eventId` from the `EventEnvelope` already exists in the `processed_events` table (Inbox Pattern).
+            *   If it exists, the event MUST be discarded (ACK'd but not processed).
+            *   If it does not exist, the `eventId` must be stored in the same transaction as the Read Model update.
+        *   **Read Model Law (Immutability)**: Read Models MUST be treated as strictly read-only by the Logic layer. They are projections of external state and MUST ONLY be updated by Event Handlers in response to Domain Events. Manual modification of a Read Model by a Command Handler is strictly forbidden.
+    *   **The Hydration Protocol (Cold Starts)**: 
+        *   If a module boots with an empty Read Model, it cannot process new commands.
+        *   To solve this, the module MUST emit a "Backfill Request" Command to the Event Bus (e.g., `RequestPersonBackfill`).
+        *   The owning module (e.g., `People`) subscribes to this request, queries its entire database, and re-publishes the creation events (e.g., `PersonCreated`) for all active records.
+        *   The requesting module uses its existing Event Handlers to ingest this historical data idempotently.
+    
+    ## 4. Specification Syntax
+    When writing declarative logic specs in `docs/specs/[module]/logic/`, use the following sections:
+    - `## Emits`: List the events triggered by the command.
+    - `## Subscribes To`: List the external events this handler listens to.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>data-replication.md
+    </Name>
+    <Content><![CDATA[# Skill: Data Replication & Read Models
+    
+    This skill defines the strategy for cross-module data consistency using Event-Driven Data Replication and Read Models.
+    
+    ## 1. Architectural Philosophy
+    To maintain strict isolation between modules (Bounded Contexts) and avoid synchronous cross-service dependencies, we use **Event-Driven Data Replication**.
+    
+    - **Autonomy**: Each module must have all the data it needs to perform its business logic locally.
+    - **Latency**: Data is served from local "Read Models" (projections) to ensure high performance.
+    - **Consistency**: The system achieves eventual consistency by propagating changes via Domain Events.
+    
+    ## 2. Read Models (Projections)
+    A **Read Model** is a local, denormalized projection of data owned by an external module.
+    
+    - **Storage**: Read Models are stored in the database schema of the consuming module.
+    - **Tenant Isolation**: Every Read Model MUST include a `tenant_id` column. Data replication is tenant-scoped; a module MUST only replicate data belonging to the same tenant as the original event.
+    - **Naming Convention**:
+        - Table name: `[external_entity]_read_model` (e.g., `person_read_model` inside the `debts` schema).
+        - Foreign Keys: Local tables should reference the Read Model's ID (e.g., `debt.person_id` -> `person_read_model.id`).
+    - **Isolation**: The consuming module **MUST NEVER** perform direct writes to a Read Model from its Command Handlers. Read Models are exclusively updated by Event Subscribers.
+    
+    ## 3. The Replication Flow
+    1.  **Change in Owner Module**: A Command in the "Owner" module (e.g., `People`) updates its Domain Model and emits a Domain Event (e.g., `PersonCreated`).
+    2.  **Event Propagation**: The event is published to the Messaging Infrastructure (e.g., RabbitMQ).
+    3.  **Consumption in Dependent Module**: The "Consumer" module (e.g., `Debts`) subscribes to the event.
+    4.  **Local Update**: An Event Subscriber in the Consumer module receives the event and updates its local Read Model.
+    
+    ## 4. Backfill & Hydration (Cold Starts)
+    When a new module is introduced or a database is wiped, Read Models must be populated from existing data.
+    
+    - **Request**: The Consumer module emits a `BackfillRequested` event.
+    - **Response**: The Owner module listens for this request and re-publishes the creation events for all its active domain entities.
+    - **Idempotency**: All Event Subscribers MUST implement the **Inbox Pattern** (as defined in `@shared/skills/patterns/cqrs-and-events`) to handle duplicate events safely during backfills.
+    
+    ## 5. Schema Separation
+    In PostgreSQL, this is enforced using schemas. For example, the `debts` module might have:
+    - `debts.debts` (Local Domain Table)
+    - `debts.person_read_model` (Replicated Data from People module)
+    
+    This ensures that the `debts` module's code only ever interacts with the `debts` schema, maintaining the illusion of a single, unified database while being physically and logically decoupled.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>resilience.md
+    </Name>
+    <Content><![CDATA[# Skill: Resilience & Consistency Patterns
+    
+    This skill defines the laws for maintaining data integrity and recovering from failures in a distributed, sharded ecosystem.
+    
+    ## 1. Transactional Outbox Law
+    To prevent data loss between the Database and the Message Broker:
+    - Every command that modifies state and emits an event MUST use a **Transactional Outbox**.
+    - The state change and the event insertion into an `outbox` table MUST happen in the same database transaction.
+    - A background process (Relay) is responsible for publishing events from the `outbox` table to the Broker.
+    - Refer to `@shared/skills/patterns/outbox-inbox-schema` for the table definition.
+    
+    ## 2. Eventual Consistency & Repair Law
+    Projections are eventually consistent. If events are lost or a new projection is added:
+    - Every module MUST provide a "Replay" command (e.g., `ReplayActivePeople`) that emits current-state events for a specific `tenantId`.
+    - Subscribers MUST implement the **Idempotent Consumer** pattern using an `inbox` table to prevent duplicate processing.
+    
+    ## 3. Shard-Aware Routing Law
+    - Repositories MUST be aware of the `shardId` provided in the context.
+    - In a multi-database environment, the `ShardPort` is responsible for selecting the correct database connection/pool based on the `shardId`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>simplified-ddd.md
+    </Name>
+    <Content><![CDATA[# Skill: Simplified DDD Approach
+    
+    This skill defines the architectural patterns for a "Simplified Domain Driven Design" (DDD).
+    
+    ## Core Principles
+    
+    1.  **Ubiquitous Language**: Matching terms from `docs/specs/[module]/definitions`.
+    2.  **Hexagonal Structure**: `domain/`, `application/`, `presentation/`, `infrastructure/`.
+    
+    3.  **Law of Optimistic Locking**:
+        - **Aggregates**: MUST include a `version` (Integer).
+        - **Projections (Inline)**: Any projection updated via the "Inline Update" pattern MUST also include a `version` field to prevent race conditions during atomic dual-writes.
+        - Repositories MUST enforce `WHERE version = :oldVersion` and throw `ConcurrencyConflict` on failure.
+    
+    4.  **Binary Structural Law**:
+        - To support separate REST and Worker binaries, the project structure MUST decouple the "Runners" from the "Logic".
+        - **ApiRunner**: Bootstraps the application with `presentation/rest/` adapters enabled.
+        - **WorkerRunner**: Bootstraps the application with `presentation/subscribers/` adapters enabled.
+        - Both runners share the same `application/` and `domain/` layers.
+    
+    5.  **Multi-Tenancy Isolation Law**: 
+        - Functionally: `tenantId` == `userId`.
+        - Sharding: `sid` identifying the physical partition.
+    
+    6.  **Persistence Segregation Law**:
+        - `WRITE_DB` (Aggregates) vs `READ_DB` (Projections).
+        - No physical coupling (FKs) between Write and Read sides.
+    
+    ## 7. Event-First Design Law
+    - Every state change in an Aggregate MUST produce at least one Domain Event.
+    - Events are the source of truth for cross-module communication.
+    - Aggregates MUST NOT directly call other aggregates. They emit events instead.
+    - The `events/` folder in each module is a first-class spec layer.
+    - Event consumers MUST be idempotent.
+    - Event producers MUST use the Outbox pattern for atomic consistency.
+    
+    ## 8. Aggregate Isolation Law
+    - Aggregates MUST NOT hold direct references to other aggregate roots.
+    - Cross-aggregate relationships MUST use foreign identity (UUID) only.
+    - Cross-aggregate consistency MUST be eventual, driven by events.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>tenant-load-balancing.md
+    </Name>
+    <Content><![CDATA[# Skill: Tenant Load Balancing Strategy
+    
+    This skill defines the deterministic algorithm for assigning new users to tenants (shards).
+    
+    ## Principles
+    1.  **Capacity Awareness**: Never assign a user to a tenant that has reached its capacity.
+    2.  **Even Distribution**: Distribute users across available tenants.
+    
+    ## Atomic Load Increment Law
+    To prevent over-provisioning in a distributed system without needing global locks:
+    - The Shard Assignment MUST use an atomic database update on the Global Identity DB.
+    - **Query**: `UPDATE shards SET current_load = current_load + 1 WHERE id = :id AND current_load < capacity AND status = 'ACTIVE'`.
+    - If the rows affected is 0, the operation must retry with the next available shard or return `SystemOverloaded`.
+    
+    ## Selection Algorithm
+    1. Filter `ACTIVE` shards.
+    2. Sort by `currentLoad` (Ascending).
+    3. Attempt Atomic Increment on the top shard.
+    4. If successful, that shard is assigned.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/patterns
+    </Path>
+    <Name>module-boundaries.md
+    </Name>
+    <Content><![CDATA[# Skill: Module Boundaries
+    
+    ## Purpose
+    Defines the rules for cross-module communication and dependency management.
+    
+    ## Allowed Dependencies
+    - A module MAY depend on another module's `models/` (read-only).
+    - A module MAY depend on another module's `events/` (as a consumer).
+    - A module MAY NOT depend on another module's `commands/`, `queries/`, or `projections/`.
+    
+    ## Dependency Direction
+    The dependency graph MUST be acyclic. If Module A depends on Module B, Module B MUST NOT depend on Module A.
+    
+    ## Current Dependency Graph
+    ```
+    identity -> (none)
+    people -> identity
+    debts -> people, identity (events only)
+    ```
+    
+    ## Violation Detection
+    If a spec file references a disallowed layer (e.g., debts/commands importing people/commands), the Builder MUST halt and report a boundary violation.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/persistence
+    </Path>
+    <Name>migrations.md
+    </Name>
+    <Content><![CDATA[# Skill: Migrations
+    
+    This skill defines the abstract, technology-agnostic philosophy and requirements for managing structural or data state changes over time across any persistence layer.
+    
+    ## Core Concepts
+    
+    1. **Definition of a Migration**: A migration is a strictly ordered script that alters the state of a persistence layer (e.g., creating a schema, adding an index, or backfilling data).
+    2. **Immutability Law**: Once a migration script has been committed and executed against any persistent environment, it is **strictly immutable**. You must NEVER modify an existing migration. Any corrections or structural rollbacks must be authored as a brand *new* migration script to be executed sequentially.
+    3. **Strict Ordering**: Migrations must follow a clear, ascending versioning scheme to guarantee deterministic execution across all environments.
+    4. **Execution Barrier**: The execution of pending migrations acts as a strict technical barrier. All pending migrations MUST be successfully executed against the target environment (including ephemeral test databases) *before* the application code is allowed to fully boot or accept traffic.
+    5. **Idempotency Guidance**: Where the underlying technology allows, migrations should be designed idempotently to ensure they can recover safely if a previous execution partially failed or was interrupted.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/persistence
+    </Path>
+    <Name>postgresql.md
+    </Name>
+    <Content><![CDATA[# Skill: Persistence - PostgreSQL
+    
+    This skill defines the technical "laws" for persisting data using a PostgreSQL database.
+    
+    ## Technical Requirements
+    
+    *   **Database Engine**: PostgreSQL 16+.
+    *   **Database Name**: `spd_debt_manager`.
+    *   **Bootstrapping & Seeding**: The implementation MUST follow the laws defined in `@shared/skills/persistence/seeding`. At least one active tenant must be seeded for the system to be functional.
+    *   **Schema Strategy**: Per-module isolation. Each module in `docs/specs/[module]` maps to a dedicated schema in the database (e.g., `people`, `debts`).
+    *   **Migrations & DDL**:
+        *   **Strictly Banned**: Using ORM features like `ddl-auto=update` or `hibernate.hbm2ddl.auto` is strictly forbidden.
+        *   **Mandatory Tooling**: Schema changes must be declarative, explicitly versioned SQL migrations managed by an enterprise migration tool (e.g., Flyway/Liquibase for Java, `golang-migrate` for Go).
+        *   **Format**: All migrations targeting PostgreSQL must be written in **Pure SQL**. Abstract formats (e.g., Liquibase XML/YAML) are forbidden to ensure raw visibility and universal readability.
+        *   **Naming Convention**: All SQL migration scripts must adhere to the standard `V[Version]__[Description].sql` naming format (e.g., `V1__create_people_table.sql`).
+        *   **Execution Strategy**: Migrations must be executed automatically on application startup by the native framework integration (e.g., Spring Boot + Flyway auto-configure), or orchestrated via a pre-deployment CI/CD pipeline step (e.g., a `make migrate` task). This guarantees the schema is ready before the application accepts traffic.
+        *   **Explicit Indexing**: The Builder MUST generate explicit `CREATE INDEX` scripts for any fields that are used in Domain Repository lookup queries (e.g., `email`, `person_id`).
+    *   **Naming Convention**: `snake_case` for tables and columns.
+    *   **Primary Keys**: UUID (v4) or ULID are required.
+    *   **Concurrency Law (Optimistic Locking)**: To prevent race conditions during "Read-Validate-Write" flows (e.g., balance updates), the Builder MUST implement **Optimistic Locking** for all domain entities. Every table MUST include a `version` column (integer), and updates MUST increment this version and fail if the version in the database has changed since the entity was loaded.
+    
+    ## Integration Patterns
+    
+    *   **Repository Implementation**: Use the native database driver or a lightweight query builder for the target language.
+    *   **Connection Pooling**: Must be implemented in all production-ready projections. Standard configuration:
+        *   `max_pool_size`: 10 (default).
+        *   `min_idle`: 2.
+    *   **Transactions**: Logic layers requiring atomicity must be wrapped in technical transactions at the infrastructure layer.
+    
+    ## Configuration Contract
+    This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+    - **Write Aggregates**: `db.write.url`, `db.write.user`, `db.write.password`
+    - **Read Projections**: `db.read.url`, `db.read.user`, `db.read.password`
+    
+    ## Connection Credentials (Local Dev)
+    - **Host**: `localhost` (or `db-write`/`db-read` within docker-compose).
+    - **Port**: `5432` / `5433`.
+    - **User**: `spd_user`.
+    - **Password**: `spd_pass`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/persistence
+    </Path>
+    <Name>read-write-split.md
+    </Name>
+    <Content><![CDATA[# Skill: Read/Write Persistence Split (Strict CQRS)
+    
+    This skill defines the law for separating the physical storage of Write Models (Aggregates) and Read Models (Projections).
+    
+    ## Principles
+    1.  **Physical Separation**: The system MUST connect to two distinct database instances: `WRITE_DB` and `READ_DB`.
+    2.  **Connection Segregation**:
+        - **Command Layer**: MUST use the `WRITE_DB` connection for aggregate persistence.
+        - **Query Layer**: MUST only use the `READ_DB`.
+        - **Dual-Write (Inline)**: If a projection is marked for inline updates, the Command Layer is granted permission to use a `READ_DB` connection within its execution context.
+    3.  **Schema Segregation**:
+        - The `WRITE_DB` schema contains the Normalized Relational Model (Aggregates).
+        - The `READ_DB` schema contains the Denormalized View Model (Projections).
+    
+    ## Synchronization Mechanics
+    1.  **Application-Level Sync (Event-Driven)**: Cross-module projections are updated by Domain Events via subscribers writing to the `READ_DB`.
+    2.  **Inline Sync (Atomic)**: High-priority projections are updated by the Command Layer directly to the `READ_DB` to ensure read-your-own-write consistency.
+    
+    ## Technical Requirements
+    - **Postgres Instances**: Two separate containers (`db-write` and `db-read`).
+    - **Connection Pools**: The application MUST maintain distinct connection pools for `WRITE_DB` and `READ_DB`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/persistence
+    </Path>
+    <Name>repository-pattern.md
+    </Name>
+    <Content><![CDATA[# Skill: Persistence - Repository & DataSource Strategy
+    
+    This skill defines how the Builder should generate the data access layer for a sharded, split-DB architecture.
+    
+    ## 1. DataSource Strategy
+    The application MUST maintain two distinct connection pools:
+    - **`WriteDataSource`**: Points to the `db-write` instance. Used for all state-changing operations on Aggregates.
+    - **`ReadDataSource`**: Points to the `db-read` instance. Used for all Projections, Read Models, and UI Queries.
+    
+    ## 2. Structural Patterns
+    
+    ### Command Side (Write)
+    - **Pattern**: **Aggregate Repository**.
+    - **Scope**: One repository per Aggregate Root defined in `models/`.
+    - **Injection**: MUST be injected with the `WriteDataSource`.
+    - **Naming**: `[EntityName]Repository` (e.g., `DebtRepository`, `PersonRepository`).
+    
+    ### Query Side (Read)
+    - **Pattern**: **Data Access Object (DAO) / Reader**.
+    - **Scope**: One reader per Projection or Read Model defined in `projections/`.
+    - **Injection**: MUST be injected with the `ReadDataSource`.
+    - **Naming**: `[ProjectionName]Reader` (e.g., `DebtSummaryReader`, `PersonReadModelReader`).
+    
+    ### Subscriber Side (Sync)
+    - **Pattern**: **Projection Writer**.
+    - **Scope**: Used by event subscribers to update the `READ_DB`.
+    - **Injection**: MUST be injected with the `ReadDataSource` (with Write permissions).
+    - **Naming**: `[ProjectionName]Writer`.
+    
+    ## 3. Implementation Rules
+    - **No Cross-Pollution**: A Repository MUST NOT accept or use the `ReadDataSource`.
+    - **Transaction Management**: 
+        - Transactions on the Command side MUST be managed against the `WriteDataSource`.
+        - Transactions on the Subscriber side (for atomic projection updates) MUST be managed against the `ReadDataSource`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/persistence
+    </Path>
+    <Name>seeding.md
+    </Name>
+    <Content><![CDATA[# Skill: Data Seeding and Bootstrapping
+    
+    This skill defines how the system initializes its state for development, testing, and production environments.
+    
+    ## 1. Principles
+    - **Deterministic Initial State**: Every environment must be capable of reaching a "Ready" state automatically.
+    - **Separation of Concerns**: Migrations handle structural changes (DDL); Seeding handles initial data (DML).
+    - **Environment Awareness**: Seeding logic must be configurable per environment (e.g., more verbose data in `dev`, minimal in `prod`).
+    
+    ## 2. Bootstrapping the System (The First Tenant)
+    For the system to allow registration, at least one ACTIVE tenant must exist (as per the Tenant Load Balancing strategy).
+    
+    - **The Seed Migration**: Each implementation MUST provide a `V0__seed_initial_tenant.sql` migration or a code-based seeder that inserts a "Default Tenant" into the `identity.tenants` table if it is empty.
+    - **Local Dev**: `make infra-up` must result in a database with at least one tenant ready.
+    
+    ## 3. Environment-Specific Seeding
+    - **Development**: Seeding should include a range of dummy users, people, and debts to allow immediate manual testing.
+    - **Testing**:
+        - Integration and Application tests MUST NOT rely on persistent database state.
+        - The test harness MUST seed a "Test Tenant" and a "Test User" before each test execution if the test requires an authenticated context.
+    - **Production**: Seeding should be strictly limited to the absolute minimum required for the system to function (e.g., initial system roles or the first bootstrap tenant).
+    
+    ## 4. Implementation Requirements
+    - **Idempotency**: Seeding scripts MUST use `INSERT ... ON CONFLICT DO NOTHING` or similar logic to prevent duplicate data errors on restarts.
+    - **Makefile Interface**:
+        - `make seed`: Executes the seeder for the current environment.
+        - `make infra-up` should automatically trigger seeding in the `dev` profile.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/languages
+    </Path>
+    <Name>kotlin.md
+    </Name>
+    <Content><![CDATA[# Language Skill: Kotlin
+    
+    ## Standards
+    - **Version**: Kotlin 1.9.22+.
+    - **Runtime**: JVM 21.
+    - **Style Guide**: Follow [Official Kotlin Style Guide](https://kotlinlang.org/docs/coding-conventions.html).
+    
+    ## Best Practices
+    - **Immutability**: Use `val` by default. Use `data class` for domain models and DTOs.
+    - **Null Safety**: Leverage Kotlin's type system to eliminate `NullPointerException`.
+    - **Coroutines**: Use structured concurrency for all asynchronous operations.
+    - **Type Mapping Law**: Any property marked as optional (e.g., `email?`) or nullable in the specifications MUST be projected as a nullable type `T?` in Kotlin to leverage the language's native null-safety features.
+    - **Functional Idioms**: Prefer `map`, `filter`, `fold` over imperative loops.
+    - **Extension Functions**: Use to add utility logic to classes without inheritance.
+    
+    ## Error Handling
+    - Use `Result<T>` or custom sealed classes for domain-level error representation.
+    - Reserved exceptions are only for systemic/unrecoverable failures.
+    
+    ## Idiomatic Project Structure
+    - **Source Root**: `src/main/kotlin/{base_package}/`
+    - **Test Root**: `src/test/kotlin/{base_package}/`
+    - **Resources Root**: `src/main/resources/`
+    - **Base Package**: The `{base_package}` string (e.g., `com.company.app`) MUST be defined in the implementation's `config` file via a `Base Package: ...` directive. The Builder must construct the directory tree to project modules inside this base package.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/languages
+    </Path>
+    <Name>java.md
+    </Name>
+    <Content><![CDATA[# Language Skill: Java
+    
+    ## Best Practices
+    - **Records**: For DTOs and Value Objects.
+    - **Mutable Aggregates**: Standard classes with private fields and domain-rich methods.
+    - **Optimistic Locking**: Use `@Version` (if using JPA) or manual `version` increments in repositories.
+    
+    ## Multi-Binary Build Law (Maven)
+    To support the "Binary Structural Law", the Builder MUST configure the `pom.xml` with specialized profiles or execution blocks:
+    
+    1. **Profile `api`**: Sets the main class to `ApiRunner`.
+    2. **Profile `worker`**: Sets the main class to `WorkerRunner`.
+    
+    Generating these separate artifacts allows the DevOps layer to deploy them with different resource limits and scaling policies.
+    
+    ## Type Mapping
+    Optional props $\rightarrow$ `Optional<T>`.
+    Long $\rightarrow$ `Long` (64-bit).
+    Decimal $\rightarrow$ `BigDecimal`.
+    DateTime $\rightarrow$ `OffsetDateTime`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/languages
+    </Path>
+    <Name>rust.md
+    </Name>
+    <Content><![CDATA[# Language Skill: Rust
+    
+    ## Standards
+    - **Version**: Rust 1.76+ (Stable).
+    - **Edition**: 2021.
+    - **Style Guide**: Follow `rustfmt` defaults.
+    
+    ## Best Practices
+    - **Ownership**: Strict adherence to borrowing rules. Avoid `Clone` unless necessary.
+    - **Type Safety**: Use Newtype pattern for domain identifiers (e.g., `struct PersonId(Uuid)`).
+    - **Enums**: Use algebraic data types (Enums) for state management and errors.
+    - **Async**: Use `tokio` as the standard runtime.
+    - **Serde**: Use `serde` for all serialization/deserialization needs.
+    - **Type Mapping Law**: Any property marked as optional (e.g., `email?`) or nullable in the specifications MUST be projected as an `Option<T>` in the Rust implementation to leverage the language's safety and functional pattern matching.
+    
+    ## Domain Errors & Handling
+    - **No Exceptions**: Rust does not have exceptions. The Builder must NEVER translate DDD "Exceptions" into `panic!` calls.
+    - **Algebraic Data Types**: Explicit Domain Errors defined in the specs must be synthesized as a module-specific `Enum` (e.g., `pub enum PersonDomainError { NotFound(Uuid), InvalidEmail }`).
+    - **thiserror**: Use the `thiserror` crate to implement the `std::error::Error` trait for these Domain Error enums automatically.
+    - **Return Signatures**: Use Cases must return `Result<T, DomainError>`.
+    - **Inspection**: The Presentation layer must use `match` statements on the `DomainError` enum to map it to the appropriate HTTP status code.
+    
+    ## Idiomatic Project Structure
+    - **Source Root**: `src/`
+    - **Module Hierarchy**: The Builder must map each projected module to a Rust module declared explicitly via `pub mod [module];` inside `src/lib.rs` or `src/main.rs`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/languages
+    </Path>
+    <Name>go.md
+    </Name>
+    <Content><![CDATA[# Language Skill: Go
+    
+    ## Standards
+    - **Version**: Go 1.22+.
+    - **Style Guide**: Follow `gofmt` and [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments).
+    
+    ## Best Practices
+    - **Simplicity**: Favor explicit code over "magical" abstractions.
+    - **Composition**: Use interfaces and embedding over inheritance.
+    - **Concurrency**: Use goroutines and channels for concurrent tasks. "Don't communicate by sharing memory; share memory by communicating."
+    - **Context**: Pass `context.Context` for cancellation and timeouts across API boundaries.
+    - **Type Mapping Law**: Any property marked as optional (e.g., `email?`) or nullable in the specifications MUST be projected as a pointer type `*T` in the Go implementation to support explicit nil-checking.
+    
+    ## Domain Errors & Handling
+    - **No Exceptions**: Go does not have exceptions. The Builder must NEVER translate DDD "Exceptions" into `panic()` calls.
+    - **Custom Error Types**: Explicit Domain Errors defined in the specs must be synthesized as custom `struct` types implementing the standard `error` interface (e.g., `type InvalidEmailError struct{}`).
+    - **Return Signatures**: Use Cases must return a tuple of `(Type, error)`.
+    - **Inspection**: The Presentation layer must use `errors.As()` to inspect the exact Domain Error struct and map it to the appropriate HTTP status code.
+    
+    ## Idiomatic Project Structure
+    - **Source Root**: `internal/` (For domain business logic and modules).
+    - **Entrypoint Root**: `cmd/server/` (Main application executable).
+    - **Configuration**: Modules must be projected strictly as subpackages of `internal/`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/platforms
+    </Path>
+    <Name>ktor.md
+    </Name>
+    <Content><![CDATA[# Platform Skill: Ktor
+    
+    ## Standards
+    - **Version**: Ktor 2.3.x.
+    - **Engine**: Netty (default).
+    
+    ## Core Modules (Plugins)
+    - **Routing**: Explicit route definitions in separate files/modules.
+    - **ContentNegotiation**: Use `kotlinx.serialization` for JSON.
+    - **StatusPages**: Centralized error handling to map Domain Errors to HTTP responses.
+    - **CallLogging**: For audit and debugging.
+    
+    ## Architecture
+    - Use Koin or Kodein for Dependency Injection.
+    - Handlers should be lightweight, delegating business logic to Application Services (Logic Layer).
+    
+    ## Deployment
+    - Project should be packaged as a fat JAR or native image using GraalVM.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/platforms
+    </Path>
+    <Name>axum.md
+    </Name>
+    <Content><![CDATA[# Platform Skill: Axum
+    
+    ## Standards
+    - **Version**: Axum 0.7.x.
+    - **Runtime**: Tokio.
+    
+    ## Architecture
+    - Use `Router` for defining API endpoints.
+    - Handlers should be async functions receiving `State` and `Json<T>`.
+    - Use `tower-http` for middleware (CORS, Trace, Compression).
+    
+    ## State Management
+    - Use `axum::extract::State` to share database pools and shared services.
+    - Shared state must be thread-safe (`Arc<T>`).
+    
+    ## Configuration Contract
+    This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+    - **Server Address**: `AXUM_ADDR` (Default: `0.0.0.0:8080`)
+    - **Worker Threads**: `TOKIO_WORKER_THREADS` (Default: CPU count)
+    
+    ## Default Tuning
+    - **Timeout**: Use `tower_http::timeout::TimeoutLayer` (Default: `30s`).
+    - **Body Limit**: Use `axum::extract::DefaultBodyLimit` (Default: `1MB`).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/platforms
+    </Path>
+    <Name>gin.md
+    </Name>
+    <Content><![CDATA[# Platform Skill: Gin
+    
+    ## Standards
+    - **Version**: Gin v1.9.x.
+    
+    ## Architecture
+    - Use `gin.Engine` for routing.
+    - Group routes by version and module (e.g., `/api/v1/people`).
+    - Middleware for logging, recovery, and authentication.
+    
+    ## Handlers
+    - Handlers receive `*gin.Context`.
+    - Use `c.ShouldBindJSON` for request parsing.
+    - Use a helper function for consistent JSON error responses.
+    
+    ## Configuration Contract
+    This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+    - **Server Port**: `GIN_PORT` (Default: `8080`)
+    - **Mode**: `GIN_MODE` (e.g., `debug`, `release`)
+    
+    ## Default Tuning
+    - **Read Timeout**: `10s`.
+    - **Write Timeout**: `10s`.
+    - **Max Body Size**: `1MB`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/platforms
+    </Path>
+    <Name>spring.md
+    </Name>
+    <Content><![CDATA[# Platform Skill: Spring Boot
+    
+    ## Standards
+    - **Version**: Spring Boot 3.2.x.
+    - **Dependency Injection**: Constructor-based injection is required. Avoid `@Autowired` on fields.
+    
+    ## Web Layer
+    - Use `@RestController` for API endpoints.
+    - Define Request/Response DTOs as `records`.
+    - Use `@Valid` for request body validation.
+    - Implement a `@ControllerAdvice` for global error handling, mapping Domain Errors to HTTP status codes.
+    
+    ## Persistence Layer
+    - Use Spring Data JPA.
+    - **Strictly Forbidden**: Do NOT use `spring.jpa.hibernate.ddl-auto=update`. Schema generation must be disabled.
+    - **Mandatory Migrations**: The implementation MUST integrate Flyway or Liquibase to execute the Pure SQL migrations mandated by the `@shared/skills/persistence/postgresql` skill.
+    - Repositories must be interfaces extending `JpaRepository`.
+    - Logic layers must use the Repository interfaces, not implementations.
+    
+    ## Configuration Contract
+    This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+    - **Server Port**: `server.port` (Default: `8080`)
+    - **App Name**: `spring.application.name` (Injected by Builder)
+    - **Profile**: `spring.profiles.active` (Injected by Builder: `local`, `prod`)
+    
+    ## Default Tuning (Production-Ready)
+    - **Log Format**: `logging.pattern.console` should be structured JSON in `prod`.
+    - **Performance**: `server.tomcat.max-threads` (Default: `200`).
+    - **JPA Tuning**: `spring.jpa.properties.hibernate.jdbc.batch_size` (Default: `50`).
+    - **Shutdown**: `server.shutdown: graceful` (Mandatory).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/devops
+    </Path>
+    <Name>maven.md
+    </Name>
+    <Content><![CDATA[# DevOps Skill: Maven
+    
+    ## Standards
+    - **Wrapper**: Always use the Maven Wrapper (`mvnw`) to ensure consistent build environments.
+    - **pom.xml**: Maintain a clean `pom.xml`. Group dependencies logically (e.g., Spring Boot starters, persistence, testing).
+    - **Plugins**: Ensure the Spring Boot Maven Plugin is configured for executable JAR generation.
+    
+    ## Lifecycle Goals
+    - `clean`: Removes the `target/` directory.
+    - `compile`: Compiles the source code.
+    - `test`: Executes tests.
+    - `package`: Packages the compiled code into a distributable format (e.g., JAR).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/devops
+    </Path>
+    <Name>go-modules.md
+    </Name>
+    <Content><![CDATA[# Skill: DevOps - Go Modules
+    
+    This skill defines the standards for dependency management and build orchestration in Go-based implementations.
+    
+    ## Standards
+    - **Dependency Management**: Use `go modules` (`go.mod`, `go.sum`).
+    - **Tooling**: Use the standard `go` toolchain.
+    - **Project Structure**: Follow the [Standard Go Project Layout](https://github.com/golang-standards/project-layout) if applicable, or project modules into a flat `internal/` structure to ensure encapsulation.
+    
+    ## Makefile Integration
+    - `make build`: Must execute `go build ./...`.
+    - `make test`: Must execute `go test ./...`.
+    - `make run`: Must execute `go run cmd/main.go` (or similar entry point).
+    
+    ## Best Practices
+    - Use `go mod tidy` to prune dependencies.
+    - Vendor dependencies (`go mod vendor`) only if explicitly required by the implementation config.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/devops
+    </Path>
+    <Name>cargo.md
+    </Name>
+    <Content><![CDATA[# Skill: DevOps - Cargo (Rust)
+    
+    This skill defines the standards for dependency management and build orchestration in Rust-based implementations.
+    
+    ## Standards
+    - **Dependency Management**: Use `cargo` (`Cargo.toml`, `Cargo.lock`).
+    - **Tooling**: Use `rustc` via `cargo`.
+    - **Edition**: Target the latest stable edition (e.g., `2021`).
+    
+    ## Makefile Integration
+    - `make build`: Must execute `cargo build`.
+    - `make test`: Must execute `cargo test`.
+    - `make run`: Must execute `cargo run`.
+    
+    ## Best Practices
+    - Use `clippy` for linting.
+    - Use `rustfmt` for formatting.
+    - Project modules into `src/modules/` to maintain the mirror rule.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/devops
+    </Path>
+    <Name>configuration-management.md
+    </Name>
+    <Content><![CDATA[# Skill: DevOps - Configuration Management
+    
+    This skill defines the environment-based configuration management and the "Configuration Contract" for all shared skills.
+    
+    ## 1. The Configuration Contract
+    Every Shared Skill that requires external settings MUST define a **Configuration Contract**. This identifies the keys it consumes.
+    
+    ## 2. Global Key Registry (The Source of Truth)
+    
+    | Category | Spec Key | Environment Variable | Default (Local) |
+    | :--- | :--- | :--- | :--- |
+    | **Server** | `server.port` | `SPD_SERVER_PORT` | `8080` |
+    | **Write DB** | `db.write.url` | `SPD_DB_WRITE_URL` | `jdbc:postgresql://localhost:5432/spd_write` |
+    | **Read DB** | `db.read.url` | `SPD_DB_READ_URL` | `jdbc:postgresql://localhost:5433/spd_read` |
+    | **Broker** | `messaging.url` | `SPD_BROKER_URL` | `amqp://guest:guest@localhost:5672` |
+    
+    ## 3. Secret Injection & Security Law
+    - **No Secrets in Specs**: Specifications MUST NOT contain actual passwords or keys.
+    - **Environment Overrides**: All configurations MUST support overrides via Environment Variables using the `SPD_` prefix.
+    - **Production Secrets**: In `prod`, the application MUST NOT start if mandatory secrets (e.g., `SPD_JWT_SECRET`) are missing. 
+    - **Secret Stores**: For production deployments, the use of a secure vault (e.g., HashiCorp Vault, AWS Secrets Manager) is MANDATORY. The application SHOULD be configured to fetch secrets at startup or via sidecar injection.
+    
+    ## 4. Profile Generation Law
+    The Builder MUST generate:
+    - `application.yml`: Skeleton and defaults.
+    - `application-local.yml`: Dev-ready connection strings.
+    - `application-test.yml`: Mock/InMemory overrides for CI.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/devops
+    </Path>
+    <Name>dockerization.md
+    </Name>
+    <Content><![CDATA[# Skill: DevOps - Dockerization
+    
+    This skill defines the standards for containerizing the application and its environment.
+    
+    ## Container Standards
+    
+    - **Base Images**: Use official, minimal base images (e.g., `alpine`, `slim`, or `distroless`).
+    - **Multi-stage Builds**: Mandatory for all implementations to separate build artifacts from the runtime environment.
+    - **User**: Do not run applications as `root` inside the container. Create a dedicated `spd_user`.
+    - **Environment Variables**: Use `.env` files for local development and standard environment variables for production.
+    
+    ## Docker Compose (Local Development)
+    
+    The system must provide a `docker-compose.yml` in each implementation directory to spin up the required infrastructure.
+    
+    ### Standard Services:
+    - `db-write`: PostgreSQL 16 (Master for Aggregates).
+    - `db-read`: PostgreSQL 16 (Replica/Store for Projections).
+    - `broker`: RabbitMQ 3-management image (with management UI enabled).
+    - `signoz-collector`: The OpenTelemetry ingestion hub.
+    - `signoz-ui`: The observability dashboard accessible at port 3301.
+    - `api`: The implementation being worked on (optional).
+    
+    ## Makefile Integration
+    
+    The `Makefile` should orchestrate the Docker lifecycle:
+    - `make infra-up`: Starts infrastructure (e.g., database).
+    - `make infra-down`: Stops infrastructure.
+    - `make docker-build`: Builds the implementation's docker image.
+    - `make docker-run`: Runs the implementation inside a container.
+    
+    ## Networking
+    - Containers must communicate via a shared network (e.g., `spd_network`).
+    - Use service names as hostnames (e.g., `postgresql://db:5432`).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/devops
+    </Path>
+    <Name>health-probes.md
+    </Name>
+    <Content><![CDATA[# Skill: DevOps - Health & Probes
+    
+    This skill defines the mandatory health monitoring endpoints for production readiness.
+    
+    ## 1. Mandatory Endpoints
+    The application MUST expose the following endpoints:
+    - `/health/live`: Indicates the application process is running (Liveness).
+    - `/health/ready`: Indicates the application is ready to accept traffic (Readiness).
+    
+    ## 2. Readiness Logic (Shard-Aware)
+    To be considered "Ready," the application MUST verify:
+    - **Write Connectivity**: A successful `SELECT 1` against the `WRITE_DB`.
+    - **Read Connectivity**: A successful `SELECT 1` against the `READ_DB`.
+    - **Broker Connectivity**: A successful heartbeat with RabbitMQ.
+    
+    ## 3. Telemetry Integration
+    - Health check failures MUST be logged as `CRITICAL` events.
+    - SigNoz must track the uptime and latency of these health probes.
+    
+    ## 4. Configuration Contract
+    - **Probe Frequency**: `health.probe.interval-seconds` (Default: `10`).
+    - **Failure Threshold**: `health.probe.failure-threshold` (Default: `3`).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/testing
+    </Path>
+    <Name>strategy.md
+    </Name>
+    <Content><![CDATA[# Skill: Testing Strategy
+    
+    This skill defines the architectural requirements and standards for testing all API implementations.
+    
+    ## Core Principles: The Testing Pyramid
+    1. **Unit Tests**: Fast, isolated (mocked), covering domain logic.
+    2. **Integration Tests**: Infrastructure-focused (DB, Broker), requires Docker.
+    3. **Application Tests**: End-to-end HTTP flows against the projected API.
+    
+    ## Testing Event-Driven Architectures (CQRS)
+    To prevent non-deterministic failures in test suites, the Builder MUST adhere to:
+    
+    ### 1. Asynchronous Assertion Strategy
+    Application tests that trigger cross-module workflows MUST NOT use synchronous assertions.
+    - **Polling**: Use an asynchronous polling mechanism (e.g., `Awaitility`).
+    - **Timeout Law**:
+        - **Default Timeout**: 5 seconds.
+        - **Poll Interval**: 100 milliseconds.
+    - **Fail Fast**: If the condition is not met within the timeout, the test MUST fail with a clear "Eventual Consistency Failure" message.
+    
+    ### 2. Idempotency Verification
+    Every integration test for an Event Subscriber MUST execute the same event TWICE to verify that the **Inbox Pattern** (Idempotency) is correctly implemented and doesn't create duplicate side effects.
+    
+    ## Naming Convention
+    `given[State]_when[Action]_then[ExpectedResult]`
+    
+    ## Technical Requirements
+    - **Frameworks**: Native language test runners.
+    - **Docker Integration**: Orchestrated via `Makefile` and Testcontainers.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/testing
+    </Path>
+    <Name>behavior-projection.md
+    </Name>
+    <Content><![CDATA[# Skill: Behavior-to-Test Projection
+    
+    ## Purpose
+    Defines how natural language behaviors in `docs/specs/[module]/behaviors/` are projected into executable tests.
+    
+    ## Input Format
+    Behaviors are written in Given/When/Then format in markdown files.
+    
+    ## Projection Rules
+    
+    ### 1. Test File Naming
+    - Source: `behaviors/debt_management.md`
+    - Target: `tests/DebtManagementTest.[ext]` (language-specific)
+    
+    ### 2. Scenario Mapping
+    Each `### Scenario: ...` block becomes one test method/function.
+    
+    ### 3. Step Mapping
+    | Behavior Step | Test Code Responsibility |
+    |---------------|-------------------------|
+    | `Given [state]` | Arrange: setup mocks, seed database, create fixtures |
+    | `When [action]` | Act: invoke the command/query under test |
+    | `Then [result]` | Assert: verify state, check return values |
+    | `And [result]` | Additional assertions |
+    
+    ### 4. Cross-Module Scenario Rule
+    If a scenario references models from another module (e.g., "Given a person exists"), the test MUST use the module's public factory/test helper, not internal structures.
+    
+    ### 5. Async Assertion Rule
+    For scenarios involving event-driven updates, tests MUST use polling with:
+    - Default timeout: 5 seconds
+    - Poll interval: 100ms
+    - Failure message: "Eventual consistency failure: [expected state] not reached"
+    
+    ### 6. Idempotency Test Rule
+    Every integration test for an Event Subscriber MUST execute the same event TWICE to verify that the Inbox Pattern is correctly implemented.
+    
+    ### 7. Naming Convention
+    Tests MUST follow: `given[State]_when[Action]_then[ExpectedResult]`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/messaging
+    </Path>
+    <Name>rabbitmq.md
+    </Name>
+    <Content><![CDATA[# Skill: Messaging - RabbitMQ
+    
+    This skill defines the technical implementation for a distributed, highly available, asynchronous messaging broker using RabbitMQ.
+    
+    ## Technical Requirements
+    
+    *   **Transport Mechanism**: External RabbitMQ broker.
+    *   **Transactionality (Eventual Consistency)**: 
+        *   Events are published asynchronously. 
+        *   Subscribers execute in separate transactions (often in entirely separate microservice instances).
+        *   To prevent message loss if the database commits but the broker is down, the implementation MUST use the **Outbox Pattern**.
+        *   **Outbox Implementation**: The Builder must implement a Polling Worker (e.g., a background scheduler) that reads unpublished events from a local `outbox_events` table and dispatches them to RabbitMQ, marking them as processed only upon broker acknowledgment.
+    *   **Routing & Topology**:
+        *   **Exchange**: Use a `Topic` exchange for Domain Events (e.g., `spd.domain.events`).
+        *   **Tenant Isolation**: While a single RabbitMQ cluster serves all tenants, isolation is achieved via routing.
+        *   **Routing Keys**: MUST include the `tenantId` to allow for granular filtering. Format: `[tenantId].[module].[entity].[action]` (e.g., `550e8400.people.person.created`).
+        *   **Queues**: Named per subscriber logic AND tenant if necessary. For global subscribers, use wildcards (e.g., `*.people.person.created`).
+    *   **Serialization**: All payloads must be serialized in UTF-8 JSON.
+    *   **Resilience**: Dead Letter Queues (DLQ) are mandatory for all event subscriptions.
+    
+    ## Configuration Contract
+    This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
+    - **Broker URL**: `messaging.url`, `messaging.user`, `messaging.password`
+    
+    ## Connection Credentials (Local Dev)
+    - **Host**: `localhost` (or `broker` within docker-compose).
+    - **Port**: `5672` (AMQP) / `15672` (Management UI).
+    - **User/Password**: `guest` / `guest`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/messaging
+    </Path>
+    <Name>contracts.md
+    </Name>
+    <Content><![CDATA[# Skill: Messaging - Event Contracts
+    
+    This skill defines the structural laws and naming conventions for all asynchronous messages dispatched via the Event Bus.
+    
+    ## 1. The Global Envelope Law
+    All events published to the broker MUST strictly follow the schema defined in `docs/specs/shared/models/EventEnvelope.md`. 
+    
+    The implementation MUST provide a generic `EventEnvelope<T>` type that wraps the domain-specific `payload`.
+    
+    ## 2. Naming Conventions
+    To ensure discoverability and predictable routing, events MUST use the following naming pattern:
+    
+    `[module].[Entity][Action]`
+    
+    - **Examples**: `identity.UserRegistered`, `people.PersonCreated`, `debts.DebtRegistered`.
+    - **Action Tense**: Always use the **Past Tense** to signify that the event has already occurred.
+    
+    ## 3. Versioning Strategy
+    - **Compatibility**: Payloads MUST be evolved in a backward-compatible manner (adding optional fields) whenever possible.
+    - **Breaking Changes**: If a breaking change is required, the `eventType` MUST be incremented with a version suffix.
+        - **Example**: `identity.UserRegistered.v2`
+    - **Subscribers**: MUST be tolerant of unknown fields (Ignore unknown properties) during deserialization.
+    
+    ## 4. Routing Key Law
+    The messaging provider (e.g., RabbitMQ) MUST use routing keys derived from the envelope to enable tenant isolation:
+    
+    `[tenantId].[module].[entity].[action]`
+    
+    ## 5. Serialization Standards
+    - **Format**: JSON (UTF-8).
+    - **Date/Time**: All timestamps MUST be ISO-8601 strings in UTC format.
+    - **Precision**: Monetary values MUST be serialized as integers (smallest currency unit) as defined in the models.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/presentation
+    </Path>
+    <Name>rest-api.md
+    </Name>
+    <Content><![CDATA[# Skill: Presentation - REST API
+    
+    This skill defines the technical laws for projecting a RESTful HTTP server.
+    
+    ## Technical Requirements
+    
+    *   **Transport Mechanism**: HTTP/1.1 or HTTP/2.
+    *   **Content Type**: All requests and responses must consume and produce `application/json; charset=utf-8`.
+    *   **Response Enveloping**: 
+        *   All successful responses MUST be wrapped in a `data` field.
+        *   List responses MUST include a `meta` field for pagination (if applicable).
+        *   Standard format: `{"data": ..., "meta": {...}}`.
+    *   **Error Handling (Global Interceptor)**: 
+        *   The implementation MUST use a Global Exception Handler mechanism (e.g., Spring `@ControllerAdvice`, Gin Middleware) to catch all `DomainException` occurrences.
+        *   The handler MUST translate these domain errors into the standard JSON Error Envelope: `{"error": {"code": "...", "message": "..."}}`.
+    *   **HTTP Status Codes**:
+        *   `200 OK`: Successful Queries or Updates.
+        *   `201 Created`: Successful Commands that create a resource.
+        *   `204 No Content`: Successful Deletions/Archivals.
+        *   `400 Bad Request`: Domain validation failures (e.g., `InvalidAmount`).
+        *   `401 Unauthorized`: Authentication failures (Missing/Invalid JWT).
+        *   `403 Forbidden`: Authorization failures (Tenant mismatch).
+        *   `404 Not Found`: Entity not found failures (e.g., `DebtNotFound`).
+        *   `409 Conflict`: Business rule conflicts (e.g., `DebtSettled`).
+        *   `422 Unprocessable Entity`: Synthetic validation failures (Schema/Type errors).
+        *   `500 Internal Server Error`: Unhandled technical exceptions.
+    *   **Pagination Implementation**:
+        *   The API MUST support `page` (default 1) and `size` (default 20) query parameters for all list operations.
+        *   The `meta` object MUST contain: `totalItems`, `totalPages`, `currentPage`, and `pageSize`.
+    *   **Routing Definition**: Route paths must strictly map to the definitions provided in `docs/specs/[module]/presentation/rest/`.
+    
+    ## API Documentation
+    - Every implementation MUST provide automated OpenAPI v3 documentation.
+    - The UI MUST be served at `/api/docs/ui`.
+    
+    ## Route Mapping Rule
+    Each file in `presentation/rest/` defines one route group.
+    
+    ### File: `api.md`
+    MUST declare:
+    - Base path (e.g., `/api/v1/debts`)
+    - HTTP methods per endpoint
+    - Request/response DTO references
+    - Auth requirements
+    - Rate limiting rules (if any)
+    
+    ### File: `projections.md`
+    MUST declare:
+    - Read endpoint paths
+    - Query parameter mapping to query specs
+    - Response envelope format (must follow [[specs/shared/presentation]])
+    
+    ## Controller Naming
+    - Source: `presentation/rest/api.md`
+    - Target: `[Module]Controller.[ext]` or `[Module]Routes.[ext]`
+    
+    ## Security Injection
+    The adapter MUST extract `sub` (userId) and `sid` (shardId) from JWT and inject them into the Context object before calling any command or query.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/presentation
+    </Path>
+    <Name>openapi.md
+    </Name>
+    <Content><![CDATA[# Skill: API Documentation - OpenAPI (Swagger)
+    
+    This skill defines the requirements for automated API documentation and discovery.
+    
+    ## 1. Core Principles
+    - **Self-Documenting Code**: The API documentation must be automatically generated from the source code and specifications.
+    - **Interactive Exploration**: Every implementation MUST provide a web-based UI (e.g., Swagger UI) to allow developers to explore and test the API endpoints.
+    - **Contract-First Alignment**: The generated documentation MUST strictly match the paths, methods, and schemas defined in the `docs/specs/[module]/presentation/rest/` specifications.
+    
+    ## 2. Technical Requirements
+    - **Specification Version**: OpenAPI 3.0 or 3.1.
+    - **Authentication**: The UI must support JWT Bearer authentication. It must allow users to input a token that will be included in the `Authorization` header for all requests.
+    - **Endpoint Discovery**: All Command and Query endpoints defined in the module's REST presentation MUST be included.
+    - **Schema Definitions**: All request and response objects (including success and error envelopes defined in `@shared/specs/presentation`) MUST be documented with clear types and constraints.
+    
+    ## 3. Standard Paths
+    To ensure consistency across implementations, the following paths are mandated:
+    - **OpenAPI Spec (JSON/YAML)**: `/api/docs/openapi.json` or `/api/docs/openapi.yaml`
+    - **Swagger UI**: `/api/docs/ui`
+    
+    ## 4. Implementation Guidance
+    - **Java/Kotlin**: Use `springdoc-openapi` or `ktor-swagger`.
+    - **Go**: Use `swaggo/swag` with Gin middleware.
+    - **Rust**: Use `utoipa` with Axum integration.
+    
+    ## 5. Metadata
+    The documentation MUST include:
+    - **Title**: SPD Debt Manager - [Module Name] API
+    - **Version**: Current implementation version.
+    - **Description**: Projected from the module's summary.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/standards
+    </Path>
+    <Name>data-formats.md
+    </Name>
+    <Content><![CDATA[# Skill: Global Data Standards
+    
+    This skill defines the mandatory data formats and serialization standards to ensure technical interoperability across all projected modules and implementations.
+    
+    ## 1. Temporal Standards (Date & Time)
+    - **Timezone**: All timestamps MUST be stored, processed, and transmitted in **UTC**.
+    - **Format**: All date-time strings in the API and Event Bus MUST adhere to **ISO-8601** (e.g., `2024-05-06T20:00:00Z`).
+    - **Precision**: Minimum precision of milliseconds is required.
+    
+    ## 2. Monetary Standards (Money & Currency)
+    - **Precision**: To avoid floating-point rounding errors, all monetary amounts MUST be represented as **Integers** in the smallest unit of the currency (e.g., Cents for USD/EUR).
+    - **Type**: Use `BigInt` (or `Long` in JVM) for all amount properties.
+    
+    ## 3. Identity Standards
+    - **Format**: All `id` fields MUST be strings in the **UUID v4** (canonical 36-character) format or **ULID** format, as specified in the persistence skill.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/observability
+    </Path>
+    <Name>opentelemetry.md
+    </Name>
+    <Content><![CDATA[# Skill: OpenTelemetry & Observability
+    
+    This skill defines the law for instrumenting the system with traces, metrics, and logs.
+    
+    ## Principles
+    1.  **Vendor Agnostic**: Use the OpenTelemetry SDK/API exclusively.
+    2.  **Context Propagation**: Propagate `traceId` and `spanId` across PROCESS and MESSAGE boundaries.
+    3.  **Semantic Conventions**: Follow OTel naming standards.
+    
+    ## Logging Law (Structured Logging)
+    All applications MUST produce logs in **Structured JSON** format to facilitate automated ingestion.
+    - **Mandatory Fields**: `timestamp`, `level`, `traceId`, `spanId`, `tenantId`, `message`.
+    - **Log Levels**:
+        - `INFO`: Business milestones (e.g., "User Registered", "Debt Created").
+        - `WARN`: Recoverable errors (e.g., "Shard in Maintenance - retrying").
+        - `ERROR`: System failures or unhandled exceptions.
+    - **PII Protection**: Never log sensitive data (passwords, PII) in plain text.
+    
+    ## Instrumentation Points
+    - **REST Adapters**: Start/Continue root spans.
+    - **Application Layer**: Wrap Command/Query handlers in child spans.
+    - **Outbound Ports**: Instrument all Repository and External API calls.
+    - **Messaging**: Carry trace context in `EventEnvelope` metadata.
+    
+    ## Configuration Contract
+    - **Exporter URL**: `otel.exporter.url`
+    - **Service Name**: `otel.service.name`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/observability
+    </Path>
+    <Name>signoz.md
+    </Name>
+    <Content><![CDATA[# Skill: SigNoz Observability Stack
+    
+    This skill defines the deployment and integration with the SigNoz observability platform.
+    
+    ## Architecture
+    - **Collector**: Every module sends telemetry to the **OpenTelemetry Collector** via OTLP.
+    - **Backend**: SigNoz uses **ClickHouse** as the storage engine for high-performance telemetry analysis.
+    - **Frontend**: A modern UI accessible at `http://localhost:3301` (default).
+    
+    ## Local Development (Docker)
+    The local `infra-up` command MUST provision:
+    1.  `signoz-otel-collector`: The ingestion hub.
+    2.  `signoz-query-service`: The API for the UI.
+    3.  `signoz-frontend`: The dashboard.
+    4.  `clickhouse`: The data store.
+    
+    ## Dashboards & Alerts
+    - Standard APM dashboards should be automatically populated by SigNoz.
+    - Custom business metrics (e.g., `total_debts_created`, `payment_processing_latency`) should be visualized via SigNoz Dashboards.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/security
+    </Path>
+    <Name>hashing.md
+    </Name>
+    <Content><![CDATA[# Skill: Secure Password Hashing
+    
+    This skill defines the technical law for protecting user credentials at rest.
+    
+    ## Principles
+    1.  **Slow and Salted**: Use a slow, memory-hard hashing algorithm to resist brute-force and rainbow table attacks.
+    2.  **Unique Salts**: Every password MUST have a unique, randomly generated salt.
+    3.  **No Plaintext**: Plaintext passwords MUST NEVER be logged, cached, or stored.
+    
+    ## Technical Requirements
+    - **Algorithm**: `Argon2id` is the preferred algorithm. If not available in the target stack, `BCrypt` (with a cost factor of at least 12) MUST be used.
+    - **Parameters (Argon2id)**:
+      - Iterations: 3
+      - Memory: 64MB
+      - Parallelism: 1
+    - **Storage**: The stored secret MUST include the algorithm identifier, salt, and the hash itself (e.g., Modular Crypt Format).
+    
+    ## Implementation Interface
+    The Builder must synthesize a `HashingPort` with two methods:
+    - `hash(plaintext: String): String`
+    - `verify(plaintext: String, hashed: String): Boolean`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/security
+    </Path>
+    <Name>jwt.md
+    </Name>
+    <Content><![CDATA[# Skill: JWT Management (Issuance & Validation)
+    
+    This skill defines the technical law for generating and validating JSON Web Tokens (JWT) for authentication and tenant isolation.
+    
+    ## Principles
+    1.  **Stateless Identity**: All authentication must be stateless using JSON Web Tokens.
+    2.  **Explicit Claims**:
+        - `sub`: `userId`.
+        - `sid`: `shardId` (Routing Hint).
+        - `ver`: `tokenVersion`.
+    
+    ## Validation Law
+    Every protected endpoint MUST validate:
+    1.  **Signature & Expiration**: Standard JWT validation.
+    2.  **Context Integrity**: The API MUST verify the `sid` and `ver` against the `@shared/skills/security/token-cache`. 
+        - If the cache says the user has been rebalanced to a new shard, the request MUST be rejected.
+        - If the `ver` in the token is less than the `ver` in the cache, the request MUST be rejected.
+    
+    ## Configuration Contract
+    - **Secret Key**: `security.jwt.secret`
+    - **Issuer**: `security.jwt.issuer`
+    - **Expiration**: `security.jwt.access-expiry-minutes`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/security
+    </Path>
+    <Name>oauth-integration.md
+    </Name>
+    <Content><![CDATA[# Skill: External OAuth Integration (Google & Apple)
+    
+    This skill defines how the system interacts with external Identity Providers (IdP).
+    
+    ## Principles
+    1.  **Trust but Verify**: The system must never trust an `externalId` provided directly by a client without verifying it against the IdP.
+    2.  **Token Exchange**: Clients provide an `idToken` (OIDC) from the IdP. The system validates this token and extracts the `subject` (externalId) and `email`.
+    3.  **Cross-Check**: If a user logs in via OAuth, the `email` from the IdP MUST match the `email` in our system for that User.
+    
+    ## Technical Requirements
+    - **Verification**: Use the IdP's public keys (retrieved via JWKS) to verify the `idToken` signature.
+    - **Claims Validation**:
+      - `aud` (Audience) MUST match our Client ID.
+      - `iss` (Issuer) MUST match the IdP's expected URL (`https://accounts.google.com` or `https://appleid.apple.com`).
+      - `exp` (Expiration) MUST be in the future.
+    - **Mapping**:
+      - Google `sub` -> `externalId`
+      - Apple `sub` -> `externalId`
+    
+    ## Implementation Interface
+    The Builder must synthesize an `OAuthPort` for each provider:
+    - `verifyToken(idToken: String): ExternalIdentity`
+    - `ExternalIdentity` contains `externalId`, `email`, and `providerData`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/security
+    </Path>
+    <Name>pii-management.md
+    </Name>
+    <Content><![CDATA[# Skill: PII Management & GDPR Compliance
+    
+    This skill defines the law for handling Personally Identifiable Information (PII) across the distributed ecosystem.
+    
+    ## Principles
+    1.  **Source of Truth**: The `Identity` module is the ONLY module authorized to store the "Primary Email" for account identification.
+    2.  **PII Shadowing**: Other modules (e.g., `People`) may store "Contact Info" only if strictly necessary for their domain logic.
+    3.  **Right to be Forgotten (Purge Law)**:
+        - When a User is deleted from the `Identity` module, an `identity.IdentityPurgeRequested` event MUST be emitted.
+        - Every module containing PII related to that `tenantId` MUST subscribe to this event and perform a hard-delete or anonymization of the PII data.
+    4.  **Encryption at Rest**: Any field labeled as `PII` in the models SHOULD be encrypted at rest using a per-tenant key or a global application key.
+    
+    ## Implementation Rules
+    - Modules must track which fields contain PII in their `models/` specifications.
+    - Purge handlers must be prioritized in the `subscribers/` layer.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/security
+    </Path>
+    <Name>traffic-governance.md
+    </Name>
+    <Content><![CDATA[# Skill: Security - Traffic Governance (Rate Limiting)
+    
+    This skill defines how the system protects itself from resource exhaustion and "Noisy Neighbor" effects.
+    
+    ## 1. Tenant-Level Rate Limiting
+    The system MUST implement a **Leaky Bucket** or **Token Bucket** algorithm for rate limiting.
+    - **Scope**: Limits are applied per `tenantId` (extracted from the JWT).
+    - **Default Limit**: `100` requests per minute per tenant.
+    
+    ## 2. Resource Protection
+    If a tenant exceeds their limit:
+    - The system MUST return `429 Too Many Requests`.
+    - The response MUST include a `Retry-After` header.
+    
+    ## 3. Configuration Contract
+    - **Default Limit**: `security.rate-limit.default-rpm` (Default: `100`).
+    - **Burst Capacity**: `security.rate-limit.burst` (Default: `20`).
+    
+    ## 4. Telemetry
+    - Every `429` event MUST be emitted as a metric to SigNoz to identify "Aggressive Tenants."
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/security
+    </Path>
+    <Name>token-cache.md
+    </Name>
+    <Content><![CDATA[# Skill: Security - Token Cache (High Performance)
+    
+    This skill defines the law for caching security metadata to avoid expensive database lookups during stateless authentication.
+    
+    ## 1. The Requirement
+    To validate JWT `tokenVersion` and `shardId` without querying the Shard DB on every request, the system MUST utilize a high-performance, in-memory cache.
+    
+    ## 2. Technical Standards
+    - **Provider**: Redis (or similar distributed KV store).
+    - **Key Pattern**: `security:user:[userId]:context`
+    - **Stored Values**:
+        - `shardId`: UUID
+        - `tokenVersion`: Integer
+        - `status`: User status (e.g., ACTIVE, BLOCKED)
+    - **TTL (Time-to-Live)**: 
+        - The TTL SHOULD match the `security.jwt.access-expiry-minutes` or slightly exceed it.
+        - If a cache miss occurs, the system MUST fallback to the Shard DB and populate the cache.
+    
+    ## 3. Invalidation Policy (The Cache Law)
+    - **State Changes**: Any change to a User's `shardId`, `tokenVersion`, or `isActive` status MUST immediately invalidate or update the corresponding Redis key.
+    - **Consistency**: Use a "Write-Through" or "Cache-Aside" pattern that favors consistency for security-critical attributes.
+    
+    ## 4. Configuration Contract
+    - **Redis URL**: `cache.security.url`
+    - **Cache Name**: `security-context`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/shared/skills/meta
+    </Path>
+    <Name>type-mapping.md
+    </Name>
+    <Content><![CDATA[# Skill: Universal Type Mapping
+    
+    ## Purpose
+    Defines how abstract spec types map to concrete types in each target language.
+    
+    ## Spec Type Definitions
+    
+    | Spec Type | Meaning | Constraints |
+    |-----------|---------|-------------|
+    | `String` | Unicode text | Max length defined by consuming skill |
+    | `Integer` | Whole number | Context-dependent bit-width |
+    | `Decimal` | Arbitrary precision decimal | For financial calculations |
+    | `Boolean` | true/false | |
+    | `DateTime` | ISO 8601 timestamp | With timezone |
+    | `UUID` | Universally unique identifier | Version 4 |
+    | `Enum<T>` | Closed set of values | Values listed in model spec |
+    
+    ## Language Mappings
+    
+    | Spec Type | Java/Kotlin | Go | Rust | TypeScript |
+    |-----------|-------------|-----|------|------------|
+    | `String` | `String` | `string` | `String` | `string` |
+    | `Integer` | `Long` | `int64` | `i64` | `number` |
+    | `Integer (count/index)` | `Integer` | `int` | `i32` | `number` |
+    | `Decimal` | `BigDecimal` | `decimal.Decimal` | `rust_decimal::Decimal` | `number` (cents pattern preferred) |
+    | `Boolean` | `boolean` | `bool` | `bool` | `boolean` |
+    | `DateTime` | `OffsetDateTime` | `time.Time` | `chrono::DateTime<Utc>` | `Date` |
+    | `UUID` | `java.util.UUID` | `uuid.UUID` | `uuid::Uuid` | `string` |
+    | `Enum<T>` | `enum class` | `const` + `iota` | `enum` | union types |
+    
+    ## Nullable Mapping Rule
+    Any spec property marked with `?` (optional) MUST be projected as a nullable type in the target language:
+    - Kotlin: `T?`
+    - Java: `Optional<T>`
+    - Go: `*T`
+    - Rust: `Option<T>`
+    - TypeScript: `T | undefined`
+    
+    ## Financial Integer Rule
+    Any property representing currency (amount, balance, payment) MUST use the 64-bit mapping regardless of magnitude, to prevent overflow.
+    
+    ## Type Override Rule
+    If a model spec explicitly declares a type (e.g., `String/UUID`), the explicit declaration takes precedence over the default mapping.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people
+    </Path>
+    <Name>README.md
+    </Name>
+    <Content><![CDATA[# Module: People
+    
+    ## Purpose
+    Manages the directory of individuals a user interacts with financially.
+    
+    ## Bounded Context
+    This module owns:
+    - Person profiles
+    - Contact information
+    - Soft deletion / archival
+    
+    ## Dependencies
+    - [[specs/identity/models/User]] (tenant isolation)
+    - @shared/skills/persistence/postgresql
+    - @shared/skills/security/pii-management
+    
+    ## Entry Points
+    - REST: [[presentation/rest/api]]
+    - Commands: (See commands/)
+    - Queries: (See queries/)
+    
+    ## Events Produced
+    - [[events/PersonCreated]]
+    - [[events/PersonUpdated]]
+    - [[events/PeoplePurged]]
+    - [[specs/shared/events/ModuleDataPurged]]
+    
+    ## Events Consumed
+    - [[specs/identity/events/IdentityPurgeRequested]]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/definitions
+    </Path>
+    <Name>person.md
+    </Name>
+    <Content><![CDATA[# Definitions: Person Domain
+    
+    This document defines the Ubiquitous Language for the People management domain.
+    
+    ## Core Terms
+    
+    - **Person**: An individual who can be involved in a debt relationship. This is the root entity of this module.
+    - **Identity**: The unique technical identifier (ID) that distinguishes one person from another.
+    - **Contact Info**: The set of data used to reach a person, including their email and phone number.
+    - **Full Name**: The complete name used to identify a person in the ledger.
+    - **Archived State**: A status indicating that a person is no longer active in the system but their historical data is preserved.
+    - **Soft Delete**: The process of moving a person to an **Archived State** instead of removing their data from the Store.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/models
+    </Path>
+    <Name>Person.md
+    </Name>
+    <Content><![CDATA[# Model: Person
+    
+    This model represents an individual in the system.
+    
+    ## Properties
+    
+    - `id`: Unique identifier (String/UUID).
+    - `tenantId`: The ID of the [[specs/identity/models/User]] who owns this record.
+    - `name`: Full name of the person (String, Required).
+    - `email`: Contact email ([[specs/shared/models/Email]], Optional).
+    - `phone`: Contact phone (String, Optional).
+    - `isArchived`: Soft deletion flag (Boolean, Defaults to false).
+    - `createdAt`: Timestamp of creation (DateTime).
+    - `updatedAt`: Timestamp of last modification (DateTime).
+    
+    ## Constraints
+    
+    - `name` cannot be empty or solely whitespace.
+    - `id` must be unique globally.
+    - `email` must be unique per `tenantId` if provided.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/behaviors
+    </Path>
+    <Name>crud.md
+    </Name>
+    <Content><![CDATA[# Behaviors: People Management
+    
+    This document defines the acceptance criteria for managing people via the API.
+    
+    ## Feature: Person Registration
+    
+    ### Scenario: Successful registration with full details
+    - **Given** no person exists with email "alice@example.com".
+    - **When** I request to create a person with name "Alice Smith" and email "alice@example.com".
+    - **Then** a new person record should be created in the Store.
+    - **And** the response should contain the generated ID.
+    - **And** a `PersonCreated` event should be emitted to the [[specs/people/presentation/subscribers/ProcessPersonBackfill|Event Bus]].
+    
+    ### Scenario: Failing registration due to empty name
+    - **When** I request to create a person with an empty name.
+    - **Then** the system should return an `InvalidName` error.
+    - **And** no record should be stored.
+    
+    ## Feature: Person Retrieval & Discovery
+    
+    ### Scenario: Retrieving a person by ID
+    - **Given** a person exists with ID "uuid-1" and name "Bob".
+    - **When** I request to get the person with ID "uuid-1".
+    - **Then** the system should return the details for "Bob".
+    
+    ### Scenario: Listing people with pagination
+    - **Given** 25 active persons exist in the Store.
+    - **When** I request the first page of people with a size of 20.
+    - **Then** the system should return a list of 20 people.
+    - **And** the metadata should indicate 25 total items and 2 total pages.
+    
+    ## Feature: Person Lifecycle
+    
+    ### Scenario: Soft deleting a person (Archive)
+    - **Given** a person exists with ID "uuid-2".
+    - **When** I request to delete the person with ID "uuid-2".
+    - **Then** the person's `isArchived` flag should be set to `true`.
+    - **And** the person should not be returned in default list requests.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/presentation/rest
+    </Path>
+    <Name>api.md
+    </Name>
+    <Content><![CDATA[# Presentation: People API
+    
+    This document defines the RESTful interface for managing people.
+    
+    > [!IMPORTANT]
+    > All endpoints follow the global JSON envelopes and pagination standards defined in [[specs/shared/presentation]].
+    
+    ## Base Path: `/api/v1/people`
+    
+    ### Create Person
+    - **Adapts**: [[commands/CreatePerson]]
+    - **Method**: `POST`
+    - **Path**: `/`
+    - **Request Body**:
+      ```json
+      {
+        "name": "string",
+        "email": "string?",
+        "phone": "string?"
+      }
+      ```
+    - **Success Response**: `201 Created` with the generated `id` wrapped in the standard `data` envelope.
+    - **Error Responses**:
+      - `400 Bad Request`: `InvalidName`, `InvalidEmailFormat`.
+      - `409 Conflict`: `DuplicateEmail`.
+    
+    ### Get Person
+    - **Adapts**: [[queries/GetPerson]]
+    - **Method**: `GET`
+    - **Path**: `/{id}`
+    - **Success Response**: `200 OK` with [[models/Person]] wrapped in the standard `data` envelope.
+    - **Error Responses**:
+      - `404 Not Found`: `PersonNotFound`.
+    
+    ### List People
+    - **Adapts**: [[queries/ListPeople]]
+    - **Method**: `GET`
+    - **Path**: `/`
+    - **Query Parameters**:
+      - `includeArchived`: `boolean` (default: `false`)
+      - `page`: `number` (pagination)
+      - `size`: `number` (pagination)
+    - **Success Response**: `200 OK` with a JSON Array of [[models/Person]] in the `data` envelope and pagination info in the `meta` envelope.
+    
+    ### Update Person
+    - **Adapts**: [[commands/UpdatePerson]]
+    - **Method**: `PUT`
+    - **Path**: `/{id}`
+    - **Request Body**:
+      ```json
+      {
+        "name": "string?",
+        "email": "string?",
+        "phone": "string?"
+      }
+      ```
+    - **Success Response**: `200 OK` with the `id` in the `data` envelope.
+    
+    ### Delete Person (Archive)
+    - **Adapts**: [[commands/DeletePerson]]
+    - **Method**: `DELETE`
+    - **Path**: `/{id}`
+    - **Success Response**: `204 No Content`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/presentation/subscribers
+    </Path>
+    <Name>ProcessPersonBackfill.md
+    </Name>
+    <Content><![CDATA[# Subscriber: Process Person Backfill
+    
+    ## Goal
+    To adapt incoming backfill requests to the replay command.
+    
+    ## Subscribes To
+    - `debts.RequestPersonBackfill`
+    
+    ## Adapts
+    - [[../../commands/ReplayActivePeople]]
+    
+    ## Flow
+    1. Receive **`EventEnvelope`**.
+    2. Call [[../../commands/ReplayActivePeople]].
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/presentation/subscribers
+    </Path>
+    <Name>OnIdentityPurgeRequested.md
+    </Name>
+    <Content><![CDATA[# Subscriber: On Identity Purge Requested
+    
+    ## Goal
+    To fulfill the GDPR "Right to be Forgotten" by deleting all personal data associated with a user.
+    
+    ## Subscribes To
+    - `identity.IdentityPurgeRequested`
+    
+    ## Flow
+    1. Receive **`EventEnvelope`**. Extract `targetUserId` from the payload.
+    2. Verify that the event `metadata.tenantId` matches an authorized administrative ID (or the system ID).
+    3. Call the Internal Command [[commands/DeleteAllPeopleForUser]] (userId: targetUserId).
+    4. Perform a hard-delete of all Person aggregates where `tenantId = targetUserId`.
+    5. Emit **`ModuleDataPurged`** event (payload: `moduleId: "people", userId: targetUserId`).
+    6. Emit `PeoplePurged` event to confirm completion.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/presentation/subscribers
+    </Path>
+    <Name>SyncPerson.md
+    </Name>
+    <Content><![CDATA[# Subscriber: Sync Person
+    
+    ## Goal
+    To automatically create a "Self" Person record whenever a new User is registered in the Identity module. This allows the user to be a participant in their own debts immediately.
+    
+    ## Listens To
+    - `UserRegistered` (from Identity module)
+    
+    ## Flow
+    1. Receive `UserRegistered` event.
+    2. Extract `userId` and `email`.
+    3. Check if a [[models/Person]] with `externalRef == userId` already exists for this tenant.
+    4. If not, create a new [[models/Person]]:
+       - `id`: new `uuid`
+       - `tenantId`: `userId` (from event)
+       - `name`: `email` (initial name)
+       - `externalRef`: `userId`
+       - `isArchived`: `false`
+    5. Emit `PersonCreated` (internal to People module).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/implementation
+    </Path>
+    <Name>mapping.md
+    </Name>
+    <Content><![CDATA[# Implementation: People Module Mapping
+    
+    This document maps the business specifications of the People module to the technical Shared Skills. It inherits global baselines from [[specs/shared/implementation]].
+    Target Database: **WRITE_DB**
+    
+    ## Module-Specific Skill Assignments
+    
+    - **Persistence**: Use `@shared/skills/persistence/postgresql` for storing [[models/Person]] data.
+    - **API Routing**: The routes defined in `presentation/rest/api.md` should be implemented using the platform defined in the implementation `config` (e.g., Spring, Ktor, Axum, Gin).
+    
+    ## Data Mapping
+    
+    - **Table**: `people` (Schema: `people`)
+    - **Columns**:
+        - `id`: `UUID` (Primary Key)
+        - `tenant_id`: `UUID` (Not Null)
+        - `name`: `VARCHAR(255)` (Not Null)
+        - `email`: `VARCHAR(255)` (Unique, Nullable)
+        - `phone`: `VARCHAR(50)` (Nullable)
+        - `is_archived`: `BOOLEAN` (Not Null, Default False)
+        - `created_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
+        - `updated_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
+        - `version`: `INTEGER` (Not Null, Default 0)
+    
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/commands
+    </Path>
+    <Name>DeletePerson.md
+    </Name>
+    <Content><![CDATA[# Use Case: Delete Person (Archive)
+    
+    ## Goal
+    Mark a person as archived so they no longer appear in active lists, while preserving their historical data.
+    
+    ## Flow
+    1. Receive `id`.
+    2. Find the existing [[models/Person]] in the Store.
+    3. If not found, return an error.
+    4. Set `isArchived` to `true`.
+    5. Set `updatedAt` to the current system time.
+    6. Persist the changes to the Store.
+    7. Return the `id`.
+    
+    ## Emits
+    - `PersonArchived` (payload: `id`)
+    
+    ## Errors
+    - `PersonNotFound`: If the `id` does not match any existing person.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/commands
+    </Path>
+    <Name>UpdatePerson.md
+    </Name>
+    <Content><![CDATA[# Use Case: Update Person
+    
+    ## Goal
+    Modify the details of an existing person.
+    
+    ## Flow
+    1. Receive `id`, and optional `name`, `email`, `phone`.
+    2. Find the existing [[models/Person]] in the Store.
+    3. If not found, return an error.
+    4. If `name` is provided, validate it is not empty and update the field.
+    5. If `email` is provided, validate its format and check for duplicates (excluding the current person).
+    6. If `phone` is provided, update the field.
+    7. Set `updatedAt` to the current system time.
+    8. Persist the changes to the Store.
+    9. Return the updated [[models/Person]].
+    
+    ## Emits
+    - `PersonUpdated`
+    
+    ## Errors
+    - `PersonNotFound`: If `id` does not exist.
+    - `InvalidName`: If the provided name is empty.
+    - `DuplicateEmail`: If the new email is already used by another non-archived person **for this user**.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/commands
+    </Path>
+    <Name>ReplayActivePeople.md
+    </Name>
+    <Content><![CDATA[# Command: Replay Active People
+    
+    ## Goal
+    To broadcast creation events for all current non-archived people.
+    
+    ## Flow
+    1. Query Store for all [[models/Person]] where `isArchived` is `false`.
+    2. For each record:
+       - Emit `PersonCreated` with `id` and `name`.
+    
+    ## Emits
+    - `PersonCreated` (multiple)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/commands
+    </Path>
+    <Name>CreatePerson.md
+    </Name>
+    <Content><![CDATA[# Use Case: Create Person
+    
+    ## Goal
+    To register a new person in the user's private directory.
+    
+    ## Input
+    - `tenantId`: `uuid` (The owning User, injected from Auth context)
+    - `name`: `string`
+    - `email`: `string?`
+    - `phone`: `string?`
+    
+    ## Flow
+    1. Validate that `name` is provided.
+    2. If `email` is provided:
+       - Check if a non-archived person already exists with the same email **strictly within this `tenantId`**.
+    3. Generate a unique `id`.
+    4. Create the [[models/Person]] record with the provided `tenantId`.
+    5. Persist the record.
+    6. Emit `PersonCreated` event (carrying `tenantId` in envelope metadata).
+    7. Return `id`.
+    
+    ## Emits
+    - `PersonCreated`
+    
+    ## Errors
+    - `DuplicateEmail`: If another person already exists with the same email **for this user**.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/commands
+    </Path>
+    <Name>DeleteAllPeopleForUser.md
+    </Name>
+    <Content><![CDATA[# Command: Delete All People For User
+    
+    ## Goal
+    Bulk deletion of a user's directory during a GDPR purge.
+    
+    ## Input
+    - `tenantId`: `uuid` (The User whose data must be purged)
+    
+    ## Flow
+    1. Identify all [[models/Person]] records where `tenantId` matches.
+    2. Hard-delete these records from the Store.
+    3. Emit `PeoplePurged` event.
+    
+    ## Emits
+    - `PeoplePurged` (payload: `tenantId`)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/queries
+    </Path>
+    <Name>GetPerson.md
+    </Name>
+    <Content><![CDATA[# Use Case: Get Person
+    
+    ## Goal
+    Retrieve the details of a specific person using their unique identifier.
+    
+    ## Flow
+    1. Receive `id`.
+    2. Attempt to find the [[models/Person]] with the matching `id` in the Store.
+    3. If not found, return an error.
+    4. Return the found [[models/Person]].
+    
+    ## Errors
+    - `PersonNotFound`: If no person exists with the provided `id`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/queries
+    </Path>
+    <Name>ListPeople.md
+    </Name>
+    <Content><![CDATA[# Use Case: List People
+    
+    ## Goal
+    Retrieve a paginated list of people in the user's directory.
+    
+    ## Input
+    - `tenantId`: UUID (from Auth context)
+    - `page`: Integer (default: 1)
+    - `size`: Integer (default: 20, max: 100)
+    - `includeArchived`: Boolean (default: false)
+    
+    ## Flow
+    1. Validate `page` >= 1 and `size` between 1 and 100.
+    2. Query the Person aggregate store for records matching `tenantId`.
+    3. If `includeArchived` is false, filter out archived records.
+    4. Order by `name` ascending.
+    5. Calculate total matches and pages.
+    6. Apply pagination (skip/take).
+    7. Return list of [[models/Person]] and pagination metadata.
+    
+    ## Result
+    - Standard paginated response (as per [[specs/shared/presentation]]).
+    
+    ## Errors
+    - `InvalidPagination`: If `page` or `size` are out of bounds.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/events
+    </Path>
+    <Name>PersonCreated.md
+    </Name>
+    <Content><![CDATA[# Event: Person Created
+    
+    ## Description
+    Emitted when a new person is registered.
+    
+    ## Payload
+    - `eventId`: UUID
+    - `personId`: UUID
+    - `tenantId`: UUID
+    - `name`: String
+    - `email`: String?
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[commands/CreatePerson]]
+    
+    ## Consumers
+    - [[specs/debts/presentation/subscribers/SyncPerson]]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/events
+    </Path>
+    <Name>PersonUpdated.md
+    </Name>
+    <Content><![CDATA[# Event: Person Updated
+    
+    ## Description
+    Emitted when a person's details are modified.
+    
+    ## Payload
+    - `eventId`: UUID
+    - `personId`: UUID
+    - `tenantId`: UUID
+    - `name`: String
+    - `email`: String?
+    - `phone`: String?
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[commands/UpdatePerson]]
+    
+    ## Consumers
+    - [[specs/debts/presentation/subscribers/SyncPerson]]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/people/events
+    </Path>
+    <Name>PeoplePurged.md
+    </Name>
+    <Content><![CDATA[# Event: People Purged
+    
+    ## Description
+    Emitted by the People module after all person records for a specific user have been hard-deleted as part of an identity purge.
+    
+    ## Payload
+    - `eventId`: UUID
+    - `tenantId`: UUID (The ID of the user whose data was purged)
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[presentation/subscribers/OnIdentityPurgeRequested]]
+    
+    ## Consumers
+    - (None yet; used for system-level audit)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared
+    </Path>
+    <Name>implementation.md
+    </Name>
+    <Content><![CDATA[# Shared Implementation: Global Baselines
+    
+    This document defines the base technical composition rules that apply to all modules in the system.
+    
+    ## Global Skill Assignments
+    
+    Every module in the `docs/specs/` directory automatically inherits the following shared skills unless explicitly overridden in its own `implementation/` mapping:
+    
+    1.  **Architecture**: `@shared/skills/patterns/simplified-ddd`
+    2.  **Code Quality**: `@shared/skills/patterns/clean-code`
+    3.  **DevOps**: 
+        - `@shared/skills/devops/dockerization`
+        - `@shared/skills/devops/configuration-management`
+        - `@shared/skills/devops/health-probes`
+    4.  **Testing**: `@shared/skills/testing/strategy`
+    5.  **Persistence**: 
+        - @shared/skills/persistence/postgresql
+        - @shared/skills/standards/data-formats
+        - @shared/skills/persistence/migrations
+        - @shared/skills/persistence/read-write-split
+        - @shared/skills/persistence/repository-pattern
+    6.  **Messaging**: 
+        - `@shared/skills/messaging/rabbitmq`
+        - `@shared/skills/messaging/contracts`
+    7.  **Security**:
+        - `@shared/skills/security/jwt`
+        - `@shared/skills/security/hashing`
+        - `@shared/skills/security/oauth-integration`
+        - `@shared/skills/security/pii-management`
+        - `@shared/skills/security/traffic-governance`
+    8.  **Scaling**:
+        - `@shared/skills/patterns/tenant-load-balancing`
+    9.  **Resilience**:
+        - `@shared/skills/patterns/resilience`
+        - `@shared/skills/patterns/outbox-inbox-schema`
+    10. **Observability**:
+        - `@shared/skills/observability/opentelemetry`
+        - `@shared/skills/observability/signoz`
+    11. **Meta**:
+        - `@shared/skills/meta/type-mapping`
+        - `@shared/skills/patterns/module-boundaries`
+    12. **Testing**:
+        - `@shared/skills/testing/behavior-projection`
+    13. **Presentation**:
+        - `@shared/skills/presentation/rest-api`
+    
+    ## Technical Composition Rules
+    
+    - **Zero Technical Leakage**: Spec files in `commands/`, `queries/`, and `models/` must remain purely declarative.
+    - **Security Context Injection**: To ensure multi-tenant isolation, the Presentation layer MUST extract the `sub` (userId) and `sid` (shardId) claims from the JWT and inject them into every Command and Query as a mandatory `Context` argument. Use Cases MUST NOT perform manual token parsing; they should receive pre-validated context. In this multi-tenant architecture, the `tenantId` is functionally equivalent to the `userId` (the JWT `sub` claim).
+    - **Projection Consistency Policy**: To balance UX performance and system complexity, a hybrid strategy is used:
+      - **Inline Updates (Atomic)**: Primary read models within the same module (e.g., `DebtSummary`) MUST be updated within the same transaction as the command.
+      - **Event-Driven Updates (Eventual)**: Cross-module read models or non-critical views MUST be updated via event subscribers.
+    - **Shard Maintenance Enforcement**: Before executing any write operation (Commands), the system MUST verify the `status` of the shard identified by `shardId` in the `Context`. If the status is `MAINTENANCE`, the operation MUST be aborted with a `ShardUnderMaintenance` error.
+    - **Idiomatic Source Root Mirroring**: The "Mirror Rule" dictates that `docs/specs/[module]/[layer]/[filename]` maps to the language's Idiomatic Source Root defined in its language skill file. 
+      - For example, in Java, it maps to `src/main/java/{base_package}/[module]/[layer]/[filename].[ext]`.
+    - **Makefile Integrity**: Each implementation must provide a Makefile that supports `infra-up`, `build`, `test`, and `run` as defined in the DevOps and Testing skills.
+    
+    ## Event-Driven Architecture Rule
+    - All modules participating in cross-module workflows MUST declare their events in `events/`.
+    - All events must comply with the global rules defined in [[events]].
+    - Commands that produce side effects in other modules MUST do so via events, not direct calls.
+    - The Builder MUST generate Outbox table entries for all event producers.
+    
+    ## Universal Type Mapping
+    To ensure interoperability between different language implementations, the mapping defined in `@shared/skills/meta/type-mapping` MUST be followed by the Builder.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared
+    </Path>
+    <Name>presentation.md
+    </Name>
+    <Content><![CDATA[# Shared Presentation: API Standards
+    
+    This document defines the global HTTP and JSON standards for the Debt Manager API. All module-specific presentation specs inherit these rules.
+    
+    ## JSON Envelopes
+    
+    To maintain consistency for API consumers, all responses must follow these structural rules.
+    
+    ### Success & Error Responses
+    All endpoints MUST adhere to the standard envelope schemas (e.g., `data` and `error` wrappers) defined entirely within the `@shared/skills/presentation/rest-api` technical skill.
+    
+    ## Pagination
+    
+    Any use case that returns a list of items should support standard pagination query parameters (`page`, `size`) and respond with the standard pagination `meta` envelope as dictated by the `@shared/skills/presentation/rest-api` skill.
+    ## API Documentation
+    
+    Every implementation MUST provide automated API documentation using the `@shared/skills/presentation/openapi` skill. This documentation must be accessible at `/api/docs/ui` and serve as the contract for frontend and third-party integrations.
+    
+    ## HTTP Methods
+    
+    - `GET`: Retrieve data (Idempotent).
+    - `POST`: Create new resources.
+    - `PUT`: Update existing resources (Full update).
+    - `PATCH`: Partial update (Optional).
+    - `DELETE`: Remove or Archive resources.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared
+    </Path>
+    <Name>events.md
+    </Name>
+    <Content><![CDATA[# Shared: Event Standards
+    
+    ## Event Envelope
+    All domain events MUST strictly follow the schema defined in [[models/EventEnvelope]].
+    
+    ## Event Naming Convention
+    - Format: `[ModuleName].[PastTenseVerb]`
+    - Examples: `Debt.Registered`, `Person.Created`, `Payment.Applied`
+    
+    ## Event Versioning
+    - The `version` field starts at 1.
+    - Breaking schema changes require a new event type (e.g., `Debt.RegisteredV2`).
+    - Old event versions MUST be supported by consumers for at least 2 deployment cycles.
+    
+    ## Event Idempotency
+    - Consumers MUST handle duplicate events gracefully.
+    - The `eventId` is the idempotency key.
+    
+    ## Event Ordering
+    - Events within the same aggregate MUST be processed in order.
+    - Cross-aggregate event ordering is not guaranteed.
+    
+    ## Event Persistence
+    - Events MUST be persisted to the Outbox store before being published to the message broker.
+    - The Outbox pattern is mandatory for all event producers.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared/models
+    </Path>
+    <Name>Email.md
+    </Name>
+    <Content><![CDATA[# Value Object: Email
+    
+    Represents a valid electronic mail address.
+    
+    ## Properties
+    - `value`: The string representation of the email address.
+    
+    ## Constraints
+    - Must not be empty.
+    - Must conform to a standard email regex format (e.g., `^[A-Za-z0-9+_.-]+@(.+)$`).
+    - Must be immutable.
+    - Equality is based on the normalized (lowercase) `value`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared/models
+    </Path>
+    <Name>Currency.md
+    </Name>
+    <Content><![CDATA[# Value Object: Currency
+    
+    Represents an ISO 4217 currency code.
+    
+    ## Properties
+    - `code`: The 3-letter string currency code.
+    
+    ## Constraints
+    - Must be exactly 3 uppercase letters.
+    - Must be a recognized ISO 4217 code (e.g., "USD", "EUR", "GBP").
+    - Must be immutable.
+    - Equality is based on the `code`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared/models
+    </Path>
+    <Name>EventEnvelope.md
+    </Name>
+    <Content><![CDATA[# Model: Event Envelope
+    
+    This model defines the strict JSON wrapper schema that must be used whenever a Domain Event is serialized and dispatched to the Event Bus (e.g., RabbitMQ).
+    
+    ## Properties
+    - `eventId`: UUID (A globally unique identifier for this specific event occurrence, used for Inbox idempotency)
+    - `occurredAt`: Instant (The exact UTC timestamp the event happened)
+    - `eventType`: String (The fully qualified event name, e.g., `people.PersonCreated`)
+    - `metadata`: Object (System-level contextual data)
+      - `tenantId`: UUID (Mandatory. The ID of the Tenant context in which this event occurred. This ID MUST be used in the Messaging Routing Key for tenant isolation).
+      - `userId`: UUID (The ID of the User who triggered this event).
+      - `correlationId`: UUID (To trace a single flow across multiple modules).
+    - `payload`: Object (The domain-specific data, as defined in the `## Emits` section of the logic specifications)
+    
+    ## Constraints
+    - This envelope guarantees that all distributed modules can correctly parse, route, and deduplicate events without knowing the inner payload structure beforehand.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/shared/events
+    </Path>
+    <Name>ModuleDataPurged.md
+    </Name>
+    <Content><![CDATA[# Shared Event: Module Data Purged
+    
+    ## Description
+    A common event emitted by any module after it has successfully completed a data purge request (e.g., GDPR right to erasure).
+    
+    ## Payload
+    - `eventId`: UUID
+    - `moduleId`: String (The name of the module that performed the purge)
+    - `tenantId`: UUID (The ID of the user whose data was purged)
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[specs/people/presentation/subscribers/OnIdentityPurgeRequested]]
+    - [[specs/debts/presentation/subscribers/OnIdentityPurgeRequested]]
+    
+    ## Consumers
+    - (None yet; used for system-level audit and completion tracking)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts
+    </Path>
+    <Name>README.md
+    </Name>
+    <Content><![CDATA[# Module: Debts
+    
+    ## Purpose
+    Manages financial obligations between users and other people.
+    
+    ## Bounded Context
+    This module owns:
+    - Debt lifecycle (create, update, settle, archive)
+    - Payment tracking
+    - Debt summary projections
+    
+    ## Dependencies
+    - [[specs/people/models/Person]] (read-only identity reference)
+    - [[specs/identity/models/User]] (tenant isolation)
+    - @shared/skills/persistence/postgresql
+    - @shared/skills/messaging/rabbitmq
+    - @shared/skills/security/jwt
+    
+    ## Entry Points
+    - REST: [[presentation/rest/api]], [[presentation/rest/payments]]
+    - Subscribers: (See presentation/subscribers/)
+    - Commands: (See commands/)
+    - Queries: (See queries/)
+    
+    ## Events Produced
+    - [[events/DebtRegistered]]
+    - [[events/DebtSettled]]
+    
+    ## Events Consumed
+    - (None from payments, payments are internal)
+    - [[specs/people/events/PersonCreated]]
+    - [[specs/people/events/PersonUpdated]]
+    - [[specs/identity/events/IdentityPurgeRequested]]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/definitions
+    </Path>
+    <Name>debt.md
+    </Name>
+    <Content><![CDATA[# Definitions: Debt Domain
+    
+    This document defines the Ubiquitous Language for the Debt management domain.
+    
+    ## Core Terms
+    
+    - **Debt**: A financial obligation between the user and another person.
+    - **Direction**: The flow of the debt (`OWED_TO_ME` or `I_OWE`).
+    - **Total Amount**: The initial principal amount of the debt.
+    - **Current Balance**: The remaining amount yet to be settled (updated when payments are registered).
+    - **Settled State**: The status of a debt when its **Current Balance** reaches zero.
+    - **Overdue**: A state where a debt's **Due Date** has passed but it is not yet **Settled**.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/models
+    </Path>
+    <Name>Debt.md
+    </Name>
+    <Content><![CDATA[# Model: Debt
+    
+    Represents a financial obligation.
+    
+    ## Properties
+    
+    - `id`: Unique identifier (String/UUID).
+    - `tenantId`: The ID of the [[specs/identity/models/User]] who owns this record.
+    - `personId`: Reference to [[specs/people/models/Person]].
+    - `name`: Short description or reason for the debt (String, Required).
+    - `totalAmount`: Original amount in smallest currency unit (Integer, e.g., cents, Required).
+    - `currentBalance`: Remaining amount in smallest currency unit (Integer, Required).
+    - `currency`: Currency code ([[specs/shared/models/Currency]], Defaults to "USD").
+    - `direction`: The debt flow, either `OWED_TO_ME` or `I_OWE` (Enum, Required).
+    - `dueDate`: Optional deadline for settlement (DateTime).
+    - `isArchived`: Flag for soft deletion (Boolean, Default False).
+    - `createdAt`: Timestamp.
+    - `updatedAt`: Timestamp.
+    
+    ## Constraints
+    - `totalAmount` must be greater than zero.
+    - `currentBalance` must be between 0 and `totalAmount`.
+    - `personId` must refer to an existing Person.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/models
+    </Path>
+    <Name>Payment.md
+    </Name>
+    <Content><![CDATA[# Model: Payment
+    
+    Represents a financial transaction reducing a debt.
+    
+    ## Properties
+    
+    - `id`: Unique identifier (String/UUID).
+    - `tenantId`: The ID of the [[specs/identity/models/User]] who owns this record.
+    - `debtId`: Reference to [[specs/debts/models/Debt]].
+    - `amount`: Amount paid in smallest currency unit (Integer, Required).
+    - `notes`: Optional description (String).
+    - `paidAt`: Timestamp of the actual payment (DateTime).
+    - `createdAt`: System creation timestamp.
+    
+    ## Constraints
+    - `amount` must be greater than zero.
+    - `debtId` must refer to a valid, non-deleted Debt.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/behaviors
+    </Path>
+    <Name>debt_management.md
+    </Name>
+    <Content><![CDATA[# Behaviors: Debt Management
+    
+    ## Feature: Debt Lifecycle
+    
+    ### Scenario: Creating a debt for an existing person
+    - **Given** a person with ID "person-1" exists.
+    - **When** I request to create a debt for "person-1" with name "Lunch" and totalAmount 1500.
+    - **Then** a new debt should be created.
+    - **And** its currentBalance should be 1500.
+    
+    ### Scenario: Registering a partial payment
+    - **Given** a debt exists with ID "debt-1" and currentBalance 1500.
+    - **When** I register a payment for "debt-1" with amount 500.
+    - **Then** a new payment record should be created.
+    - **And** the debt's currentBalance should become 1000.
+    
+    ### Scenario: Settling a debt with full payment
+    - **Given** a debt exists with ID "debt-2" and currentBalance 1000.
+    - **When** I register a payment for "debt-2" with amount 1000.
+    - **Then** the debt's currentBalance should become 0.
+    
+    ### Scenario: Preventing overpayment
+    - **Given** a debt exists with ID "debt-3" and currentBalance 500.
+    - **When** I attempt to register a payment for "debt-3" with amount 600.
+    - **Then** the system should return a `PaymentExceedsBalance` error.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/behaviors
+    </Path>
+    <Name>sync.md
+    </Name>
+    <Content><![CDATA[# Behavior: Data Synchronization (Hexagonal)
+    
+    This document verifies the eventual consistency behaviors between modules.
+    
+    ## Feature: Person Read Model Sync
+    
+    ### Scenario: Successful synchronization of a new person
+    - **Given** no record exists in `debts.PersonReadModel` for ID "uuid-p1".
+    - **When** a `people.PersonCreated` event is received with ID "uuid-p1" and Name "Charlie".
+    - **Then** a new record should be created in the `debts.PersonReadModel` for "uuid-p1".
+    - **And** the name should be "Charlie".
+    - **And** `isArchived` should be `false`.
+    
+    ### Scenario: Synchronizing a person archival
+    - **Given** a record exists in `debts.PersonReadModel` for ID "uuid-p1" with `isArchived: false`.
+    - **When** a `people.PersonArchived` event is received with ID "uuid-p1".
+    - **Then** the record for "uuid-p1" in `debts.PersonReadModel` should have `isArchived` set to `true`.
+    
+    
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/rest
+    </Path>
+    <Name>api.md
+    </Name>
+    <Content><![CDATA[# Presentation: Debts API
+    
+    Interface for managing financial obligations.
+    
+    > [!IMPORTANT]
+    > All endpoints follow [[specs/shared/presentation]].
+    
+    ## Base Path: `/api/v1/debts`
+    
+    ### Create Debt
+    - **Adapts**: [[commands/CreateDebt]]
+    - **Method**: `POST`
+    - **Path**: `/`
+    - **Request Body**:
+      ```json
+      {
+        "personId": "uuid",
+        "name": "string",
+        "totalAmount": "integer",
+        "direction": "OWED_TO_ME | I_OWE",
+        "currency": "string?",
+        "dueDate": "datetime?"
+      }
+      ```
+    - **Success Response**: `201 Created` with the generated `id` in `data`.
+    
+    ### Get Debt Details
+    - **Adapts**: [[queries/GetDebt]]
+    - **Method**: `GET`
+    - **Path**: `/{id}`
+    - **Success Response**: `200 OK` with [[models/Debt]] in `data`.
+    
+    ### List Debts
+    - **Adapts**: [[queries/ListDebts]]
+    - **Method**: `GET`
+    - **Path**: `/`
+    - **Query Parameters**:
+      - `personId`: `uuid?`
+      - `isSettled`: `boolean?`
+      - `direction`: `string?`
+      - `page`, `size` (standard pagination)
+    - **Success Response**: `200 OK` with array of [[models/Debt]] in `data` and pagination in `meta`.
+    
+    ### Update Debt
+    - **Adapts**: [[commands/UpdateDebt]]
+    - **Method**: `PUT`
+    - **Path**: `/{id}`
+    - **Request Body**:
+      ```json
+      {
+        "name": "string?",
+        "dueDate": "datetime?"
+      }
+      ```
+    - **Success Response**: `200 OK` with the `id` in `data`.
+    
+    ### Delete Debt
+    - **Adapts**: [[commands/DeleteDebt]]
+    - **Method**: `DELETE`
+    - **Path**: `/{id}`
+    - **Success Response**: `204 No Content`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/rest
+    </Path>
+    <Name>projections.md
+    </Name>
+    <Content><![CDATA[# Presentation: Debt Projections API
+    
+    ## Base Path: `/api/v1/projections/debts`
+    
+    ### List Debt Summary
+    - **Adapts**: [[../../queries/ListDebtSummary]]
+    - **Method**: `GET`
+    - **Path**: `/summary`
+    - **Success Response**: `200 OK` with paginated [[../../projections/DebtSummaryProjection]] in `data`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/rest
+    </Path>
+    <Name>payments.md
+    </Name>
+    <Content><![CDATA[# Presentation: Payments API
+    
+    Standard REST interface for managing payments.
+    
+    > [!IMPORTANT]
+    > All endpoints follow the shared standards in [[specs/shared/presentation]].
+    
+    ## Base Path: `/api/v1/payments`
+    
+    ### Register Payment
+    - **Adapts**: [[commands/RegisterPayment]]
+    - **Method**: `POST`
+    - **Path**: `/`
+    - **Request Body**:
+      ```json
+      {
+        "debtId": "uuid",
+        "amount": "integer",
+        "notes": "string?",
+        "paidAt": "datetime?"
+      }
+      ```
+    - **Success Response**: `201 Created` with the generated `id` in `data`.
+    - **Error Responses**:
+      - `400 Bad Request`: `InvalidAmount`, `PaymentExceedsBalance`.
+      - `404 Not Found`: `DebtNotFound`.
+    
+    ### Get Payment Details
+    - **Adapts**: [[queries/GetPayment]]
+    - **Method**: `GET`
+    - **Path**: `/{id}`
+    - **Success Response**: `200 OK` with [[models/Payment]] in `data`.
+    
+    ### List Payments
+    - **Adapts**: [[queries/ListPayments]]
+    - **Method**: `GET`
+    - **Path**: `/`
+    - **Query Parameters**:
+      - `debtId`: `uuid?`
+      - `page`, `size` (pagination)
+    - **Success Response**: `200 OK` with paginated array of [[models/Payment]].
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/subscribers
+    </Path>
+    <Name>ProcessDebtBackfill.md
+    </Name>
+    <Content><![CDATA[# Event Handler: Process Debt Backfill Request
+    
+    ## Goal
+    To serve historical Debt data to new subscribers by replaying Domain Events.
+    
+    ## Subscribes To
+    - `payments.RequestDebtBackfill`
+    
+    ## Flow
+    1. Receive event payload.
+    2. Query the Store for all [[../../models/Debt]] records.
+    3. For each record, emit a `DebtRegistered` event with the debt's `id`, `totalAmount`, and `currentBalance`.
+    4. If the debt `isSettled` is true, also emit a `DebtSettled` event immediately after.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/subscribers
+    </Path>
+    <Name>RequestPersonBackfill.md
+    </Name>
+    <Content><![CDATA[# Use Case: Request Person Backfill
+    
+    ## Goal
+    To trigger the hydration of the local `PersonReadModel` upon initial deployment or catastrophic data loss.
+    
+    ## Flow
+    1. Executed automatically on application startup if the local Person read model store is completely empty.
+    2. Generate a backfill request.
+    3. Emit the request to the central bus.
+    4. Return success.
+    
+    ## Emits
+    - `RequestPersonBackfill` (payload: empty)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/subscribers
+    </Path>
+    <Name>OnIdentityPurgeRequested.md
+    </Name>
+    <Content><![CDATA[# Subscriber: On Identity Purge Requested
+    
+    ## Goal
+    To delete all financial records for a user who has requested data deletion.
+    
+    ## Subscribes To
+    - `identity.IdentityPurgeRequested`
+    
+    ## Flow
+    1. Receive **`EventEnvelope`**. Extract `targetUserId`.
+    2. Hard-delete all records from:
+       - All Debt aggregates where `tenantId = targetUserId`.
+       - Delete all [[projections/DebtSummaryProjection]] for the `targetUserId`.
+       - All Person read models where `tenantId = targetUserId`.
+    3. Emit **`ModuleDataPurged`** event (payload: `moduleId: "debts", userId: targetUserId`).
+    4. Emit `DebtsPurged` event.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/presentation/subscribers
+    </Path>
+    <Name>SyncPerson.md
+    </Name>
+    <Content><![CDATA[# Subscriber: Sync Person
+    
+    ## Goal
+    To adapt incoming Person events to the local synchronization command.
+    
+    ## Subscribes To
+    - `people.PersonCreated`
+    - `people.PersonUpdated`
+    - `people.PersonArchived`
+    
+    ## Adapts
+    - [[../../commands/UpdatePersonReadModel]]
+    - [[../../commands/PropagatePersonUpdate]]
+    
+    ## Flow (PersonCreated)
+    1. Receive **`EventEnvelope`**. Extract `id` and `name` from `data`.
+    2. Call [[../../commands/UpdatePersonReadModel]] with `id`, `name`, and `isArchived: false`.
+    3. Call [[../../commands/PropagatePersonUpdate]] with `id` and `name`.
+    
+    ## Flow (PersonUpdated)
+    1. Receive **`EventEnvelope`**. Extract `id` and `name` from `data`.
+    2. Call [[../../commands/UpdatePersonReadModel]] with `id`, `name`, and `isArchived: false`.
+    3. Call [[../../commands/PropagatePersonUpdate]] with `id` and `name`.
+    
+    ## Flow (PersonArchived)
+    1. Receive **`EventEnvelope`**. Extract `id` from `data`.
+    2. Call [[../../commands/UpdatePersonReadModel]] with `id` and `isArchived: true`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/implementation
+    </Path>
+    <Name>mapping.md
+    </Name>
+    <Content><![CDATA[# Implementation: Debts Module Mapping
+    
+    Technical mapping for financial data. Inherits [[specs/shared/implementation]].
+    
+    ## 1. Write Database (`WRITE_DB`)
+    Target: **Aggregates Only**
+    
+    ### Table: `debts` (Schema: `debts`)
+    - `id`: `UUID` (PK)
+    - `tenant_id`: `UUID` (Not Null)
+    - `person_id`: `UUID` (Not Null - No Physical FK)
+    - `name`: `VARCHAR(255)`
+    - `total_amount`: `BIGINT`
+    - `current_balance`: `BIGINT`
+    - `is_settled`: `BOOLEAN`
+    - `version`: `INTEGER`
+    
+    ---
+    
+    ## 2. Read Database (`READ_DB`)
+    Target: **All Projections**
+    
+    ### Table: `debt_summary_projections` (Schema: `debts`)
+    - `id`: `UUID` (PK)
+    - `tenant_id`: `UUID` (Not Null)
+    - `person_name`: `VARCHAR(255)`
+    - `debt_name`: `VARCHAR(255)`
+    - `total_amount`: `BIGINT`
+    - `remaining_amount`: `BIGINT`
+    - `is_settled`: `BOOLEAN`
+    
+    ### Table: `person_read_models` (Schema: `debts`)
+    - `id`: `UUID` (PK)
+    - `tenant_id`: `UUID` (Not Null)
+    - `name`: `VARCHAR(255)`
+    - `is_archived`: `BOOLEAN`
+    
+    ## Indexes
+    - `WRITE_DB`: `idx_debts_tenant` on `debts(tenant_id)`
+    - `READ_DB`: `idx_debt_summary_tenant` on `debt_summary_projections(tenant_id)`
+    - `READ_DB`: `idx_person_read_tenant` on `person_read_models(tenant_id)`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>DeleteDebt.md
+    </Name>
+    <Content><![CDATA[# Use Case: Delete Debt (Archive)
+    
+    ## Goal
+    Mark a debt as archived to preserve historical data while removing it from active lists.
+    
+    ## Flow
+    1. Receive `debtId`.
+    2. Find [[models/Debt]] with `debtId`.
+    3. If not found, return `DebtNotFound`.
+    4. Set `isArchived` to `true`.
+    5. Set `updatedAt` to now.
+    6. Store the updated [[models/Debt]].
+    7. Update [[projections/DebtSummaryProjection]] via [[commands/UpdateDebtSummary]] with:
+       - `debtId`: The `debtId`.
+       - `isArchived`: `true`.
+    8. Return nothing (success).
+    
+    ## Emits
+    - `DebtDeleted`
+    
+    ## Errors
+    - `DebtNotFound`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>UpdateDebt.md
+    </Name>
+    <Content><![CDATA[# Use Case: Update Debt
+    
+    ## Goal
+    Modify an existing debt's metadata.
+    
+    ## Flow
+    1. Receive `debtId`, and optional `name`, `dueDate`.
+    2. Find [[models/Debt]] with `debtId`.
+    3. If not found, return `DebtNotFound`.
+    4. Update properties if provided:
+        - `name`
+        - `dueDate`
+    5. Set `updatedAt` to now.
+    6. Store the updated [[models/Debt]].
+    7. Return the updated [[models/Debt]].
+    
+    ## Emits
+    - `DebtUpdated`
+    
+    ## Errors
+    - `DebtNotFound`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>CreateDebt.md
+    </Name>
+    <Content><![CDATA[# Use Case: Create Debt
+    
+    ## Goal
+    Initialize a new debt record in the user's ledger.
+    
+    ## Input
+    - `tenantId`: UUID (Injected from Auth context)
+    - `personId`: UUID
+    - `name`: String
+    - `totalAmount`: Integer
+    - `direction`: OWED_TO_ME | I_OWE
+    - `currency`: String? (Defaults to "USD")
+    - `dueDate`: DateTime?
+    
+    ## Flow
+    1. Validate that `totalAmount` is greater than 0.
+    2. If `currency` is null or empty, set `currency` to "USD".
+    3. Validate that `personId` exists against the local Person integration store (aggregate cache).
+    4. Validate that the person is not archived.
+    5. Generate a unique `id`.
+    6. Create the [[models/Debt]] record with the provided `tenantId`.
+    7. Initialize the [[projections/DebtSummaryProjection]] including the `tenantId`.
+    8. Persist both the Aggregate and the Projection (Atomic Inline Update).
+    9. Emit `DebtRegistered` event (see [[events/DebtRegistered]]).
+    10. Return `id`.
+    
+    ## Emits
+    - `DebtRegistered` — see [[events/DebtRegistered]]
+    
+    ## Errors
+    - `InvalidAmount`: If `totalAmount <= 0`.
+    - `PersonNotFound`: If `personId` does not exist in the local Person integration store (aggregate cache).
+    - `PersonArchived`: If the referenced person is archived.
+    - `CurrencyNotSupported`: If the provided currency code is not recognized by `@shared/skills/standards/data-formats`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>UpdateDebtSummary.md
+    </Name>
+    <Content><![CDATA[# Command: Update Debt Summary Projection
+    
+    ## Goal
+    To keep the denormalized projection in sync with the source aggregates.
+    
+    ## Input
+    - `debtId`: `uuid`
+    - `personName`: `string?`
+    - `remainingAmount`: `integer?`
+    - `paymentDate`: `datetime?`
+    - `isSettled`: `boolean?`
+    - `isArchived`: `boolean?`
+    
+    ## Flow
+    1. Find the [[projections/DebtSummaryProjection]] by `debtId`.
+    2. If not found, skip (or log error if it should exist).
+    3. If `personName` is provided, update it.
+    4. If `remainingAmount` is provided:
+       - Update `remainingAmount`.
+       - Increment `paymentCount`.
+       - Update `lastPaymentDate` with `paymentDate`.
+    5. If `isSettled` is provided, update it.
+    6. If `isArchived` is provided, update it.
+    7. Set `updatedAt` to now.
+    8. Persist to store.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>UpdatePersonReadModel.md
+    </Name>
+    <Content><![CDATA[# Command: Update Person Read Model
+    
+    ## Goal
+    To maintain a local projection of Person data within the Debts context.
+    
+    ## Input
+    - `id`: `uuid`
+    - `name`: `string?`
+    - `isArchived`: `boolean`
+    
+    ## Flow
+    1. Find the [[projections/PersonReadModel]] by `id`.
+    2. If not found:
+       - Otherwise, create a new record.
+    3. Update `name` if provided.
+    4. Set `isArchived` to the provided value.
+    5. Persist to the store.
+    
+    ## Emits
+    - None
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>PropagatePersonUpdate.md
+    </Name>
+    <Content><![CDATA[# Command: Propagate Person Update to Projections
+    
+    ## Goal
+    To update denormalized person details (like name) in all debt projections when a person is updated in the People module.
+    
+    ## Input
+    - `personId`: UUID
+    - `name`: String
+    
+    ## Flow
+    1. Find all [[projections/DebtSummaryProjection]] where `personId` matches.
+    2. For each record:
+       - Update `personName` to the provided `name`.
+       - Set `updatedAt` to now.
+    3. Persist all changes.
+    13. For each projection, trigger `UpdateDebtSummary` internally.
+    
+    ## Emits
+    - None
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/commands
+    </Path>
+    <Name>RegisterPayment.md
+    </Name>
+    <Content><![CDATA[# Use Case: Register Payment
+    
+    ## Goal
+    To record a payment event for a specific debt and synchronously update the debt's balance.
+    
+    ## Input
+    - `tenantId`: UUID (Injected from Auth context)
+    - `debtId`: UUID
+    - `amount`: Integer
+    - `notes`: String?
+    
+    ## Flow
+    1. Receive `debtId`, `amount`, and optional `notes`.
+    2. Find the local [[models/Debt]] aggregate using `debtId`.
+    3. If not found, return `DebtNotFound`.
+    4. Validate that `amount` > 0.
+    5. Validate that `amount` <= `debt.currentBalance`.
+    6. Subtract `amount` from `debt.currentBalance`.
+    7. Generate a unique `id` for the [[models/Payment]].
+    8. Set `createdAt` to current time.
+    9. Store the new [[models/Payment]] AND persist the updated [[models/Debt]] within the same transaction.
+    10. Return the registered `Payment` `id`.
+    
+    ## Emits
+    - `PaymentRegistered` (see [[events/PaymentRegistered]])
+    - `DebtSettled` (if `debt.currentBalance` reached 0, see [[events/DebtSettled]])
+    
+    ## Errors
+    - `DebtNotFound`: Referenced debt does not exist.
+    - `InvalidAmount`: Amount is non-positive.
+    - `PaymentExceedsBalance`: Paying more than the remaining debt balance.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/queries
+    </Path>
+    <Name>GetDebt.md
+    </Name>
+    <Content><![CDATA[# Use Case: Get Debt
+    
+    ## Goal
+    Retrieve details of a specific debt.
+    
+    ## Flow
+    1. Receive `debtId`.
+    2. Query the Store for [[models/Debt]] with the given `debtId`.
+    3. If not found, return `DebtNotFound`.
+    4. Return the [[models/Debt]].
+    
+    ## Errors
+    - `DebtNotFound`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/queries
+    </Path>
+    <Name>ListDebts.md
+    </Name>
+    <Content><![CDATA[# Use Case: List Debts
+    
+    ## Goal
+    Retrieve a paginated list of debts, with optional filtering.
+    
+    ## Flow
+    1. Receive optional filters: `personId`, `isSettled`, `direction`.
+    2. Receive pagination parameters `page` and `size`.
+    3. Query Store for [[models/Debt]] entries matching filters.
+    4. Calculate total matches and pages.
+    5. Apply pagination (skip/take).
+    6. Return list of [[models/Debt]] and pagination metadata.
+    
+    ## Result
+    - Standard paginated response (as per [[specs/shared/presentation]]).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/queries
+    </Path>
+    <Name>ListDebtSummary.md
+    </Name>
+    <Content><![CDATA[# Query: List Debt Summary
+    
+    ## Goal
+    Retrieve the paginated, denormalized dashboard view.
+    
+    ## Flow
+    1. Receive optional filters: `personId`, `isSettled`.
+    2. Query the [[projections/DebtSummaryProjection]] read model.
+    3. Apply standard pagination.
+    4. Return list of [[projections/DebtSummaryProjection]].
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/queries
+    </Path>
+    <Name>GetPayment.md
+    </Name>
+    <Content><![CDATA[# Use Case: Get Payment
+    
+    ## Goal
+    Retrieve details of a specific payment.
+    
+    ## Flow
+    1. Receive `paymentId`.
+    2. Query the Store for [[models/Payment]] with the given `paymentId`.
+    3. If not found, return `PaymentNotFound`.
+    4. Return the [[models/Payment]].
+    
+    ## Errors
+    - `PaymentNotFound`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/queries
+    </Path>
+    <Name>ListPayments.md
+    </Name>
+    <Content><![CDATA[# Use Case: List Payments
+    
+    ## Goal
+    Retrieve a paginated list of payments, optionally filtered by debt.
+    
+    ## Flow
+    1. Receive optional filter `debtId`.
+    2. Receive pagination parameters `page` and `size`.
+    3. Query the Store for [[models/Payment]] entries matching the filter.
+    4. Apply sorting by `paidAt` descending.
+    5. Apply pagination (skip and take).
+    6. Return the paginated list and metadata.
+    
+    ## Result
+    - Standard paginated response (as per [[specs/shared/presentation]]).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/projections
+    </Path>
+    <Name>DebtSummaryProjection.md
+    </Name>
+    <Content><![CDATA[# Model: Debt Summary Projection
+    
+    ## Goal
+    A denormalized, ready-to-render view of a debt and its related data (Person, Payments).
+    
+    ## Properties
+    - `id`: `uuid` (Primary Key, matches Debt ID)
+    - `tenantId`: `uuid` (Owner of this record)
+    - `personId`: `uuid`
+    - `personName`: `string` (Denormalized from People module)
+    - `debtName`: `string`
+    - `totalAmount`: `integer`
+    - `remainingAmount`: `integer` (Computed)
+    - `paymentCount`: `integer` (Computed)
+    - `lastPaymentDate`: `datetime?` (Computed)
+    - `isSettled`: `boolean`
+    - `isArchived`: `boolean` (Default: `false`)
+    - `updatedAt`: `datetime`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/projections
+    </Path>
+    <Name>PersonReadModel.md
+    </Name>
+    <Content><![CDATA[# Model: Person Read Model
+    
+    This model is a local, replicated representation of a Person, maintained entirely by the Debts module to decouple validation from the People module.
+    
+    ## Properties
+    - `id`: UUID (Primary Key, matches the original Person ID)
+    - `tenantId`: UUID (The owner of the original Person)
+    - `name`: String (Replicated for easy display on Debts)
+    - `isArchived`: Boolean (To prevent creating debts for deleted users)
+    
+    ## Constraints
+    - This model is strictly read-only for the core domain. It is only mutated by the `SyncPerson` event handler.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/events
+    </Path>
+    <Name>DebtRegistered.md
+    </Name>
+    <Content><![CDATA[# Event: Debt Registered
+    
+    ## Description
+    Emitted when a new debt is successfully created.
+    
+    ## Payload
+    - `eventId`: UUID (unique identifier for this event instance)
+    - `debtId`: UUID
+    - `tenantId`: UUID
+    - `personId`: UUID
+    - `totalAmount`: Integer
+    - `currency`: String
+    - `direction`: OWED_TO_ME | I_OWE
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[commands/CreateDebt]]
+    
+    ## Consumers
+    - [[commands/UpdateDebtSummary]]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/events
+    </Path>
+    <Name>DebtSettled.md
+    </Name>
+    <Content><![CDATA[# Event: Debt Settled
+    
+    ## Description
+    Emitted when a debt's currentBalance reaches zero.
+    
+    ## Payload
+    - `eventId`: UUID
+    - `debtId`: UUID
+    - `tenantId`: UUID
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[commands/RegisterPayment]]
+    
+    ## Consumers
+    - (None yet; reserved for future analytics/notifications)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/debts/events
+    </Path>
+    <Name>PaymentRegistered.md
+    </Name>
+    <Content><![CDATA[# Event: Payment Registered
+    
+    ## Description
+    Emitted when a payment is registered against a debt.
+    
+    ## Payload
+    - `eventId`: UUID
+    - `paymentId`: UUID
+    - `debtId`: UUID
+    - `tenantId`: UUID
+    - `amount`: Integer
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[commands/RegisterPayment]]
+    
+    ## Consumers
+    - None yet
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity
+    </Path>
+    <Name>README.md
+    </Name>
+    <Content><![CDATA[# Module: Identity
+    
+    ## Purpose
+    Manages user authentication, authorization, and account lifecycle.
+    
+    ## Bounded Context
+    This module owns:
+    - User registration and authentication
+    - JWT token management
+    - Account purge / GDPR deletion
+    
+    ## Dependencies
+    - @shared/skills/security/jwt
+    - @shared/skills/security/hashing
+    - @shared/skills/security/oauth-integration
+    
+    ## Entry Points
+    - REST: [[presentation/rest/api]]
+    - Commands: (See commands/)
+    - Queries: (See queries/)
+    
+    ## Events Produced
+    - [[events/UserRegistered]]
+    - [[events/IdentityPurgeRequested]]
+    
+    ## Events Consumed
+    - (None)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/presentation/rest
+    </Path>
+    <Name>auth.md
+    </Name>
+    <Content><![CDATA[# Presentation: Identity REST API
+    
+    ## Base Path: `/api/v1/auth`
+    
+    ### Register
+    - **Adapts**: [[commands/RegisterUser]]
+    - **Method**: `POST`
+    - **Path**: `/register`
+    - **Request Body**:
+      ```json
+      {
+        "email": "string",
+        "password": "string",
+        "provider": "LOCAL"
+      }
+      ```
+    - **Success Response**: `201 Created` with `userId`.
+    
+    ### Login (Local)
+    - **Adapts**: [[commands/AuthenticateUser]]
+    - **Method**: `POST`
+    - **Path**: `/login`
+    - **Request Body**:
+      ```json
+      {
+        "email": "string",
+        "password": "string",
+        "provider": "LOCAL"
+      }
+      ```
+    - **Success Response**: `200 OK` with `accessToken` and `refreshToken`.
+    
+    ### Get Current User (Me)
+    - **Adapts**: [[queries/GetCurrentUser]]
+    - **Method**: `GET`
+    - **Path**: `/me`
+    - **Success Response**: `200 OK` with user profile in `data`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/presentation/rest
+    </Path>
+    <Name>backoffice.md
+    </Name>
+    <Content><![CDATA[# Presentation: Identity Backoffice REST API
+    
+    ## Base Path: `/api/v1/backoffice/identity`
+    
+    ### Create Shard
+    - **Adapts**: [[commands/CreateShard]]
+    - **Method**: `POST`
+    - **Path**: `/shards`
+    - **Request Body**:
+      ```json
+      {
+        "name": "string",
+        "capacity": 10000,
+        "region": "us-east-1"
+      }
+      ```
+    - **Success Response**: `201 Created` with `shardId`.
+    
+    ### Rebalance User
+    - **Adapts**: [[commands/RebalanceUser]]
+    - **Method**: `POST`
+    - **Path**: `/users/{userId}/rebalance`
+    - **Request Body**:
+      ```json
+      {
+        "targetShardId": "uuid"
+      }
+      ```
+    - **Success Response**: `200 OK`.
+    
+    ### Delete User
+    - **Adapts**: [[commands/DeleteUser]]
+    - **Method**: `DELETE`
+    - **Path**: `/users/{userId}`
+    - **Success Response**: `204 No Content`.
+    
+    ### List Shards (Query)
+    - **Method**: `GET`
+    - **Path**: `/shards`
+    - **Success Response**: `200 OK` with list of Shards (Paginated).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/behaviors
+    </Path>
+    <Name>auth.md
+    </Name>
+    <Content><![CDATA[# Behavior: Identity Management
+    
+    ## Registration
+    **Given** a guest user
+    **When** they register with a valid email and password
+    **Then** a new User is created
+    **And** the User is assigned to the active Tenant with the lowest current load
+    **And** a `UserRegistered` event is emitted
+    
+    ## Authentication
+    **Given** an existing user
+    **When** they login with correct credentials
+    **Then** a valid JWT token is returned
+    **And** the token contains `sub` (userId) and `tid` (tenantId) claims
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/commands
+    </Path>
+    <Name>AuthenticateUser.md
+    </Name>
+    <Content><![CDATA[# Command: Authenticate User
+    
+    ## Emits
+    - `UserAuthenticated`
+    
+    ## Errors
+    - `InvalidCredentials`
+    
+    ## Goal
+    Validate credentials and issue tokens containing both user and shard context.
+    
+    ## Input
+    - `email`: `string`
+    - `password`: `string?`
+    - `provider`: `LOCAL | GOOGLE | APPLE`
+    - `externalId`: `string?`
+    
+    ## Flow
+    1. Find the [[models/User]] by `email`.
+    2. If not found or `isActive` is `false`, return `AuthenticationFailed`.
+    3. Find the [[models/Credential]] for this `userId` and `provider`.
+    4. If `LOCAL`:
+       - Verify `password` against the hashed secret (using `@shared/skills/security/hashing`).
+    5. If OAuth:
+       - Verify `externalId` matches the secret.
+    6. Update `lastLoginAt` on [[models/User]].
+    7. Generate Access and Refresh Tokens (using `@shared/skills/security/jwt`).
+       - The token MUST include `userId` (`sub` claim).
+       - The token MUST include `shardId` (`sid` claim) from the [[models/User]] record.
+    8. Return tokens.
+    
+    ## Result
+    - `AccessToken`: `string`
+    - `RefreshToken`: `string`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/commands
+    </Path>
+    <Name>CreateShard.md
+    </Name>
+    <Content><![CDATA[# Command: Create Shard
+    
+    ## Goal
+    Provision a new physical partition (Shard) for the system.
+    
+    ## Input
+    - `name`: `string`
+    - `capacity`: `integer`
+    - `region`: `string`
+    
+    ## Flow
+    1. Verify that a Shard with the same `name` does not already exist.
+    2. Generate a unique `shardId`.
+    3. Create the [[models/Shard]] record with status `ACTIVE` and `currentLoad: 0`.
+    4. Emit `ShardCreated` event.
+    5. Return `shardId`.
+    
+    ## Emits
+    - `ShardCreated` (payload: `shardId`, `name`, `region`)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/commands
+    </Path>
+    <Name>DeleteUser.md
+    </Name>
+    <Content><![CDATA[# Command: Delete User
+    
+    ## Goal
+    To permanently remove a user's identity and trigger the global data purge (GDPR).
+    
+    ## Input
+    - `userId`: `uuid`
+    
+    ## Flow
+    1. Find the [[models/User]] by `userId`.
+    2. Decrement `currentLoad` on the associated [[models/Shard]].
+    3. Delete all [[models/Credential]] associated with the `userId`.
+    4. Delete the [[models/User]] record.
+    5. Emit **`IdentityPurgeRequested`** event.
+    
+    ## Emits
+    - `IdentityPurgeRequested` (payload: `targetUserId: userId`)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/commands
+    </Path>
+    <Name>RebalanceUser.md
+    </Name>
+    <Content><![CDATA[# Command: Rebalance User
+    
+    ## Goal
+    Move a user from one shard (physical partition) to another for load balancing or maintenance.
+    
+    ## Input
+    - `userId`: `uuid`
+    - `targetShardId`: `uuid`
+    
+    ## Flow
+    1. Find the [[models/User]] by `userId`.
+    2. Find the current [[models/Shard]] (Source) and the `targetShardId` [[models/Shard]] (Destination).
+    3. Verify that Destination Shard is `ACTIVE` and has capacity.
+    4. Emit `UserRebalanceStarted` event.
+    5. Update [[models/User]] `shardId` to `targetShardId`.
+    6. Decrement `currentLoad` of Source Shard.
+    7. Increment `currentLoad` of Destination Shard.
+    8. Emit `UserRebalanced` event.
+    
+    ## Emits
+    - `UserRebalanceStarted` (payload: `userId`, `sourceShardId`, `destinationShardId`)
+    - `UserRebalanced` (payload: `userId`, `sourceShardId`, `destinationShardId`)
+    
+    ## Note
+    This is a high-level administrative command. The `UserRebalanced` event triggers data migration subscribers in all other modules to move the isolated user data between physical databases if necessary.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/commands
+    </Path>
+    <Name>RegisterUser.md
+    </Name>
+    <Content><![CDATA[# Command: Register User
+    
+    ## Goal
+    Create a new identity and assign it to an available shard.
+    
+    ## Input
+    - `email`: `string`
+    - `password`: `string?`
+    - `provider`: `LOCAL | GOOGLE | APPLE`
+    - `externalId`: `string?`
+    
+    ## Flow
+    1. **Global Uniqueness Check**:
+       - Query the [[models/UserIndex]] in the Global DB to ensure `email` is not already registered.
+       - If found, return `EmailAlreadyInUse`.
+    2. **Shard Assignment**:
+       - Find an `ACTIVE` [[models/Shard]] with capacity (Atomic increment).
+       - Selected Shard ID becomes the `shardId` for this user.
+    3. Generate a unique `userId`.
+    4. **Local Creation**:
+       - Create the [[models/User]] record in the selected Shard DB.
+    5. **Credential Creation**:
+       - Create a [[models/Credential]] record linked to the `userId`.
+    6. **Index Finalization**:
+       - Create the [[models/UserIndex]] record in the Global DB to lock the email to the generated `userId` and `shardId`.
+    7. Emit `UserRegistered` event.
+    8. Return `userId`.
+    
+    ## Emits
+    - `UserRegistered` (payload: `userId`, `shardId`, `email`)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/definitions
+    </Path>
+    <Name>user.md
+    </Name>
+    <Content><![CDATA[# Definitions: Identity Domain
+    
+    This document defines the core concepts of Identity, Access Management (IAM), and Horizontal Sharding.
+    
+    ## Core Terms
+    - **User**: The technical identity authorized to access the system. A User belongs to exactly one **Shard** for physical data residency.
+    - **Shard**: A physical partition of data. It acts as the primary unit for horizontal scaling. Shards are collections of Users.
+    - **Tenant**: (Synonym for User in this Personal Ledger context). Every User is the sole owner of their own logical "Tenant" (The Ledger). Isolation is enforced at the `userId` level.
+    - **Credential**: A secret (Password, Token, OAuth ID) used to prove identity.
+    - **Provider**: The authority that validates a credential (e.g., LOCAL, GOOGLE, APPLE).
+    - **Session**: A temporary authorized state for a User.
+    - **Access Token**: A signed proof of identity. It must contain `userId` (for isolation) and `shardId` (for routing).
+    
+    ## Scaling & Sharding Terms
+    - **Shard Assignment**: The process of assigning a new User to a Shard based on load or geography.
+    - **Rebalancing**: An administrative operation to move a User (and their isolated data) from one Shard to another.
+    - **Isolation Boundary**: The strict separation of data where one User cannot access another's data, enforced via the `tenantId` (which maps to the `userId`).
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/implementation
+    </Path>
+    <Name>mapping.md
+    </Name>
+    <Content><![CDATA[# Implementation: Identity Module Mapping
+    
+    Technical mapping for Identity and Access Management (IAM) data. Inherits [[specs/shared/implementation]].
+    Target Database: **WRITE_DB**
+    
+    ## Module-Specific Skill Assignments
+    
+    - **Persistence**: `@shared/skills/persistence/postgresql`.
+    - **Security**:
+        - `@shared/skills/security/jwt`
+        - `@shared/skills/security/hashing` (Using Argon2id)
+    
+    ## Data Mapping
+    
+    ### Table: `users` (Schema: `identity`)
+    - `id`: `UUID` (PK)
+    - `shard_id`: `UUID` (FK -> `identity.shards.id`)
+    - `email`: `VARCHAR(255)` (Unique, Not Null)
+    - `is_active`: `BOOLEAN` (Not Null, Default True)
+    - `last_login_at`: `TIMESTAMP WITH TIME ZONE`
+    - `created_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
+    - `updated_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
+    
+    ### Table: `credentials` (Schema: `identity`)
+    - `id`: `UUID` (PK)
+    - `user_id`: `UUID` (FK -> `identity.users.id`)
+    - `provider`: `VARCHAR(50)` (Not Null)
+    - `secret`: `TEXT` (Not Null)
+    - `provider_data`: `JSONB`
+    
+    ### Table: `shards` (Schema: `identity`)
+    - `id`: `UUID` (PK)
+    - `name`: `VARCHAR(255)` (Not Null)
+    - `status`: `VARCHAR(50)` (Not Null)
+    - `capacity`: `INTEGER` (Not Null)
+    - `current_load`: `INTEGER` (Not Null, Default 0)
+    - `region`: `VARCHAR(100)` (Not Null)
+    
+    ## Indexes
+    - `idx_users_email` on `identity.users(email)`
+    - `idx_users_shard_id` on `identity.users(shard_id)`
+    - `idx_shards_status` on `identity.shards(status)`
+    - `idx_credentials_user_id` on `identity.credentials(user_id)`
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/models
+    </Path>
+    <Name>Shard.md
+    </Name>
+    <Content><![CDATA[# Model: Shard Aggregate
+    
+    ## Goal
+    To represent a physical partition of data within the system for extreme horizontal scaling.
+    
+    ## Properties
+    - `id`: `uuid` (Primary Key, the `shardId`)
+    - `name`: `string` (Human-readable identifier, e.g., "Shard-US-01")
+    - `status`: `ACTIVE | FULL | MAINTENANCE | DORMANT`
+    - `capacity`: `integer` (Maximum number of users this shard can handle)
+    - `currentLoad`: `integer` (Current count of users assigned to this shard)
+    - `region`: `string` (Geographic location for data residency)
+    - `createdAt`: `datetime`
+    - `updatedAt`: `datetime`
+    
+    ---
+    
+    # Business Rules
+    - A Shard in `FULL` status cannot accept new User registrations.
+    - A Shard in `MAINTENANCE` status restricts write operations for all users it contains.
+    - `currentLoad` must be tracked whenever a User is assigned or removed.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/models
+    </Path>
+    <Name>User.md
+    </Name>
+    <Content><![CDATA[# Model: User Aggregate
+    
+    ## Goal
+    To represent a unique identity within the system.
+    
+    ## Properties
+    - `id`: `uuid` (Primary Key, global `userId`)
+    - `shardId`: `uuid` (Foreign Key to [[models/Shard]], mandatory for horizontal scaling)
+    - `email`: `string` (Unique)
+    - `isActive`: `boolean` (Default: `true`)
+    - `lastLoginAt`: `datetime?`
+    - `createdAt`: `datetime`
+    - `updatedAt`: `datetime`
+    
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/models
+    </Path>
+    <Name>Credential.md
+    </Name>
+    <Content><![CDATA[# Model: Credential
+    
+    ## Goal
+    To store the secrets required for authentication.
+    
+    ## Properties
+    - `id`: `uuid` (Primary Key)
+    - `userId`: `uuid` (Foreign Key to [[models/User]])
+    - `provider`: `LOCAL | GOOGLE | APPLE`
+    - `secret`: `string` (Hashed password or external subject ID)
+    - `providerData`: `Dictionary?` (Extra data like Google profile info)
+    - `createdAt`: `datetime`
+    
+    ## Constraints
+    - A User can have multiple Credentials (e.g., LOCAL and GOOGLE).
+    - `secret` must be hashed if `provider` is `LOCAL`.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/models
+    </Path>
+    <Name>UserIndex.md
+    </Name>
+    <Content><![CDATA[# Model: User Index
+    
+    ## Goal
+    To maintain a global, cross-shard registry of all registered emails to ensure global uniqueness and facilitate shard discovery during authentication.
+    
+    ## Properties
+    - `email`: `string` (Primary Key / Unique)
+    - `userId`: `uuid` (Link to the User in their respective Shard)
+    - `shardId`: `uuid` (The physical location of the User's data)
+    - `createdAt`: `datetime`
+    
+    ## Constraints
+    - This model MUST reside in the **Global Identity Database**.
+    - It is the source of truth for "Email already in use" checks.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/queries
+    </Path>
+    <Name>GetCurrentUser.md
+    </Name>
+    <Content><![CDATA[# Query: GetCurrentUser
+    
+    ## Intent
+    Retrieve the profile of the currently authenticated user.
+    
+    ## Inputs
+    - `context.userId`: `UUID` (Mandatory)
+    
+    ## Outputs
+    - `id`: `UUID`
+    - `email`: `String`
+    - `tenantId`: `UUID`
+    
+    ## Logic
+    1. Fetch the User from the database using the `userId` from context.
+    2. If not found, return `UserNotFound` error.
+    3. Return the user data.
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/events
+    </Path>
+    <Name>UserRegistered.md
+    </Name>
+    <Content><![CDATA[# Event: User Registered
+    
+    ## Description
+    Emitted when a new user completes registration.
+    
+    ## Payload
+    - `eventId`: UUID (unique identifier for this event instance)
+    - `userId`: UUID
+    - `email`: String
+    - `occurredAt`: DateTime
+    
+    ## Producers
+    - [[commands/RegisterUser]]
+    
+    ## Consumers
+    - (None yet; reserved for future onboarding flows)
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>docs/specs/identity/events
+    </Path>
+    <Name>IdentityPurgeRequested.md
+    </Name>
+    <Content><![CDATA[# Event: Identity Purge Requested
+    
+    ## Description
+    Emitted when a user requests complete data deletion (GDPR right to erasure).
+    
+    ## Payload
+    - `eventId`: UUID
+    - `userId`: UUID
+    - `tenantId`: UUID
+    - `requestedAt`: DateTime
+    
+    ## Producers
+    - [[commands/DeleteUser]]
+    
+    ## Consumers
+    - [[specs/debts/presentation/subscribers/OnIdentityPurgeRequested]]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/kotlin
+    </Path>
+    <Name>sync
+    </Name>
+    <Content>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/kotlin
+    </Path>
+    <Name>tech_assumptions.md
+    </Name>
+    <Content>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/kotlin
+    </Path>
+    <Name>config
+    </Name>
+    <Content><![CDATA[Target Stack: Kotlin / Ktor / Postgres
+    Persistence: PostgreSQL
+    Platform: Ktor
+    Base Package: com.dsibars.debtmanager
+    Output: build/libs/ (JAR)
+    Skills:
+    - @shared/skills/languages/kotlin
+    - @shared/skills/platforms/ktor
+    - @shared/skills/persistence/postgresql
+    - @shared/skills/devops/dockerization
+    - @shared/skills/testing/strategy
+    - @shared/skills/presentation/openapi
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/java
+    </Path>
+    <Name>sync
+    </Name>
+    <Content><![CDATA[Sync State
+    Target Stack: Java 21 / Spring Boot
+    Last Global Sync: 1970-01-01T00:00:00Z
+    
+    Module Status:
+    [Debts]: OUTDATED (Pending initialization)
+    [Payments]: OUTDATED (Pending initialization)
+    [People]: OUTDATED (Pending initialization)
+    
+    Implementation Plan:
+    
+    Task 1
+    - Description: Do the initial project skeleton without any functionality. Generate the Spring Boot pom.xml, .gitignore, and basic Application entry point.
+    - Status: PENDING TO CODE
+    
+    Task 2
+    - Description: Generate the Makefile to support `make build`, `make test`, and `make run` according to the DevOps skills.
+    - Status: PENDING TO CODE
+    
+    Task 3
+    - Description: Setup local infrastructure. Generate `docker-compose.yml` for PostgreSQL and RabbitMQ, and configure application properties.
+    - Status: PENDING TO CODE
+    
+    Task 4
+    - Description: Configure Testcontainers in a base integration test class to spin up PostgreSQL and RabbitMQ automatically for tests.
+    - Status: PENDING TO CODE
+    
+    Task 5
+    - Description: Configure Flyway for database migrations. Setup the baseline migration strategy.
+    - Status: PENDING TO CODE
+    
+    Task 6
+    - Description: Implement Global Exception Handler to translate domain errors into the standard JSON Error Envelope defined in REST API skills.
+    - Status: PENDING TO CODE
+    
+    Task 7
+    - Description: Implement the API JSON Envelope wrapper (the `data` and `meta` fields) for all successful REST responses.
+    - Status: PENDING TO CODE
+    
+    Task 8
+    - Description: Implement Security Context Filter to extract `sub` and `sid` from JWT and inject them into a ThreadLocal or Request-Scoped context object.
+    - Status: PENDING TO CODE
+    
+    Task 9
+    - Description: Implement the Shared Domain Models (`Currency`, `Email`, `EventEnvelope`).
+    - Status: PENDING TO CODE
+    
+    Task 10
+    - Description: Implement the Outbox Pattern foundation (Outbox Entity, Repository, and asynchronous Poller for RabbitMQ dispatch).
+    - Status: PENDING TO CODE
+    
+    Task 11
+    - Description: IDENTITY MODULE: Create the Flyway schema migration for the `identity` module.
+    - Status: PENDING TO CODE
+    
+    Task 12
+    - Description: IDENTITY MODULE: Implement Domain Models (`User`, `Credential`, `Shard`, `UserIndex`).
+    - Status: PENDING TO CODE
+    
+    Task 13
+    - Description: IDENTITY MODULE: Implement Commands (`RegisterUser`, `AuthenticateUser`).
+    - Status: PENDING TO CODE
+    
+    Task 14
+    - Description: IDENTITY MODULE: Implement Commands (`CreateShard`, `RebalanceUser`, `DeleteUser`).
+    - Status: PENDING TO CODE
+    
+    Task 15
+    - Description: IDENTITY MODULE: Implement Queries (`GetCurrentUser`).
+    - Status: PENDING TO CODE
+    
+    Task 16
+    - Description: IDENTITY MODULE: Implement REST API Controllers (`auth` and `backoffice` endpoints).
+    - Status: PENDING TO CODE
+    
+    Task 17
+    - Description: IDENTITY MODULE: Implement Event Publications (`UserRegistered`, `UserAuthenticated`, `IdentityPurgeRequested`).
+    - Status: PENDING TO CODE
+    
+    Task 18
+    - Description: IDENTITY MODULE: Write Unit and Integration Tests for all Identity logic.
+    - Status: PENDING TO CODE
+    
+    Task 19
+    - Description: PEOPLE MODULE: Create the Flyway schema migration for the `people` module.
+    - Status: PENDING TO CODE
+    
+    Task 20
+    - Description: PEOPLE MODULE: Implement Domain Model (`Person`).
+    - Status: PENDING TO CODE
+    
+    Task 21
+    - Description: PEOPLE MODULE: Implement Commands (`CreatePerson`, `UpdatePerson`).
+    - Status: PENDING TO CODE
+    
+    Task 22
+    - Description: PEOPLE MODULE: Implement Commands (`DeletePerson`, `ReplayActivePeople`, `DeleteAllPeopleForUser`).
+    - Status: PENDING TO CODE
+    
+    Task 23
+    - Description: PEOPLE MODULE: Implement Queries (`GetPerson`, `ListPeople`).
+    - Status: PENDING TO CODE
+    
+    Task 24
+    - Description: PEOPLE MODULE: Implement REST API Controller for People endpoints.
+    - Status: PENDING TO CODE
+    
+    Task 25
+    - Description: PEOPLE MODULE: Implement Event Subscribers (`OnIdentityPurgeRequested`, `ProcessPersonBackfill`, `SyncPerson`).
+    - Status: PENDING TO CODE
+    
+    Task 26
+    - Description: PEOPLE MODULE: Write Unit and Integration Tests for all People logic.
+    - Status: PENDING TO CODE
+    
+    Task 27
+    - Description: DEBTS MODULE: Create the Flyway schema migration for the `debts` module.
+    - Status: PENDING TO CODE
+    
+    Task 28
+    - Description: DEBTS MODULE: Implement Domain Model (`Debt`).
+    - Status: PENDING TO CODE
+    
+    Task 29
+    - Description: DEBTS MODULE: Implement Read Models (`DebtSummaryProjection`, `PersonReadModel`).
+    - Status: PENDING TO CODE
+    
+    Task 30
+    - Description: DEBTS MODULE: Implement Commands (`CreateDebt`, `UpdateDebt`).
+    - Status: PENDING TO CODE
+    
+    Task 31
+    - Description: DEBTS MODULE: Implement Commands (`DeleteDebt`, `RegisterPayment`).
+    - Status: PENDING TO CODE
+    
+    Task 32
+    - Description: DEBTS MODULE: Implement Queries (`GetDebt`, `ListDebts`, `ListDebtSummary`, `GetPayment`, `ListPayments`).
+    - Status: PENDING TO CODE
+    
+    Task 33
+    - Description: DEBTS MODULE: Implement REST API Controllers for Debts and Payments endpoints.
+    - Status: PENDING TO CODE
+    
+    Task 34
+    - Description: DEBTS MODULE: Implement Event Subscribers (`OnIdentityPurgeRequested`, `SyncPerson`, `RequestPersonBackfill`).
+    - Status: PENDING TO CODE
+    
+    Task 35
+    - Description: DEBTS MODULE: Write Unit and Integration Tests for all Debts & Payments logic.
+    - Status: PENDING TO CODE
+    
+    Task 36
+    - Description: SYSTEM: Verify OpenAPI/Swagger integration is generating correctly for all REST endpoints at `/api/docs/ui`.
+    - Status: PENDING TO CODE
+    
+    Task 37
+    - Description: SYSTEM: Final End-to-End Acceptance test confirming system stability.
+    - Status: PENDING TO CODE
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/java
+    </Path>
+    <Name>tech_assumptions.md
+    </Name>
+    <Content><![CDATA[# Technical Assumptions Ledger
+    
+    This file contains the "vibe-based" technical choices made by the Builder that are not explicitly defined in the Shared Skills.
+    
+    - [Date] - [Assumption Made] - [Reasoning] - [Affected Modules]
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/java
+    </Path>
+    <Name>config
+    </Name>
+    <Content><![CDATA[Target Stack: Java 21 / Spring Boot / Postgres / RabbitMQ
+    Persistence: PostgreSQL
+    Platform: Spring Boot
+    Base Package: com.dsibars.debtmanager
+    Output: target/ (JAR)
+    Skills:
+    - @shared/skills/languages/java
+    - @shared/skills/platforms/spring
+    - @shared/skills/persistence/postgresql
+    - @shared/skills/persistence/migrations
+    - @shared/skills/messaging/rabbitmq
+    - @shared/skills/devops/dockerization
+    - @shared/skills/devops/maven
+    - @shared/skills/testing/strategy
+    - @shared/skills/presentation/openapi
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/rust
+    </Path>
+    <Name>sync
+    </Name>
+    <Content>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/rust
+    </Path>
+    <Name>tech_assumptions.md
+    </Name>
+    <Content>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/rust
+    </Path>
+    <Name>config
+    </Name>
+    <Content><![CDATA[Target Stack: Rust / Axum / Postgres
+    Persistence: PostgreSQL
+    Platform: Axum
+    Output: target/release/ (Binary)
+    Skills:
+    - @shared/skills/languages/rust
+    - @shared/skills/platforms/axum
+    - @shared/skills/persistence/postgresql
+    - @shared/skills/devops/dockerization
+    - @shared/skills/devops/cargo
+    - @shared/skills/testing/strategy
+    - @shared/skills/presentation/openapi
+    ]]>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/go
+    </Path>
+    <Name>sync
+    </Name>
+    <Content>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/go
+    </Path>
+    <Name>tech_assumptions.md
+    </Name>
+    <Content>
+    </Content>
+  </File>
+  <File>
+    <Path>implementations/go
+    </Path>
+    <Name>config
+    </Name>
+    <Content><![CDATA[Target Stack: Go / Gin / Postgres
+    Persistence: PostgreSQL
+    Platform: Gin
+    Output: bin/ (Binary)
+    Skills:
+    - @shared/skills/languages/go
+    - @shared/skills/platforms/gin
+    - @shared/skills/persistence/postgresql
+    - @shared/skills/devops/dockerization
+    - @shared/skills/devops/go-modules
+    - @shared/skills/testing/strategy
+    - @shared/skills/presentation/openapi
+    ]]>
+    </Content>
+  </File>
+</Project>

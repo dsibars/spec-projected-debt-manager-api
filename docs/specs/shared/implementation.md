@@ -58,6 +58,7 @@ Every module in the `docs/specs/` directory automatically inherits the following
 
 ## Event-Driven Architecture Rule
 - All modules participating in cross-module workflows MUST declare their events in `events/`.
+- All events must comply with the global rules defined in [[events]].
 - Commands that produce side effects in other modules MUST do so via events, not direct calls.
 - The Builder MUST generate Outbox table entries for all event producers.
 

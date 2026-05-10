@@ -16,8 +16,8 @@ This module owns:
 
 ## Entry Points
 - REST: [[presentation/rest/api]]
-- Commands: [[commands/]]
-- Queries: [[queries/]]
+- Commands: (See commands/)
+- Queries: (See queries/)
 
 ## Events Produced
 - [[events/PersonCreated]]

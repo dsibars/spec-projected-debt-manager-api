@@ -18,4 +18,3 @@ Emitted when a new debt is successfully created.
 
 ## Consumers
 - [[commands/UpdateDebtSummary]]
-- [[presentation/subscribers/SyncPayment]] (for future payment plan initialization)

@@ -10,7 +10,7 @@ Emitted when a debt's currentBalance reaches zero.
 - `occurredAt`: DateTime
 
 ## Producers
-- [[commands/ApplyPaymentToDebt]]
+- [[commands/RegisterPayment]]
 
 ## Consumers
 - (None yet; reserved for future analytics/notifications)

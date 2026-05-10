@@ -1,7 +1,7 @@
-# Event: Payment Applied
+# Event: Payment Registered
 
 ## Description
-Emitted when a payment is applied to a debt in the Payments module.
+Emitted when a payment is registered against a debt.
 
 ## Payload
 - `eventId`: UUID
@@ -15,4 +15,4 @@ Emitted when a payment is applied to a debt in the Payments module.
 - [[commands/RegisterPayment]]
 
 ## Consumers
-- [[specs/debts/commands/ApplyPaymentToDebt]]
+- None yet

@@ -15,8 +15,7 @@ The dependency graph MUST be acyclic. If Module A depends on Module B, Module B 
 ```
 identity -> (none)
 people -> identity
-payments -> debts
-debts -> people, identity, payments (events only)
+debts -> people, identity (events only)
 ```
 
 ## Violation Detection
