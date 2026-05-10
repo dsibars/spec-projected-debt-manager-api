@@ -11,11 +11,11 @@ Implementation Plan:
 
 Task 1
 - Description: Do the initial project skeleton without any functionality. Generate the Spring Boot pom.xml, .gitignore, and basic Application entry point.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 2
 - Description: Generate the Makefile to support `make build`, `make test`, and `make run` according to the DevOps skills.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 3
 - Description: Setup local infrastructure. Generate `docker-compose.yml` for PostgreSQL and RabbitMQ, and configure application properties.
