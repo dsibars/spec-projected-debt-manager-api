@@ -32,3 +32,27 @@ This skill defines the technical laws for projecting a RESTful HTTP server.
 ## API Documentation
 - Every implementation MUST provide automated OpenAPI v3 documentation.
 - The UI MUST be served at `/api/docs/ui`.
+
+## Route Mapping Rule
+Each file in `presentation/rest/` defines one route group.
+
+### File: `api.md`
+MUST declare:
+- Base path (e.g., `/api/v1/debts`)
+- HTTP methods per endpoint
+- Request/response DTO references
+- Auth requirements
+- Rate limiting rules (if any)
+
+### File: `projections.md`
+MUST declare:
+- Read endpoint paths
+- Query parameter mapping to query specs
+- Response envelope format (must follow [[specs/shared/presentation]])
+
+## Controller Naming
+- Source: `presentation/rest/api.md`
+- Target: `[Module]Controller.[ext]` or `[Module]Routes.[ext]`
+
+## Security Injection
+The adapter MUST extract `sub` (userId) and `sid` (shardId) from JWT and inject them into the Context object before calling any command or query.

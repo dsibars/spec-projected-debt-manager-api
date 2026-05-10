@@ -7,5 +7,184 @@ Module Status:
 [Payments]: OUTDATED (Pending initialization)
 [People]: OUTDATED (Pending initialization)
 
-Pending Diffs:
-Awaiting Builder synchronization.
+Implementation Plan:
+
+Task 1
+- Description: Do the initial project skeleton without any functionality. Generate the Spring Boot pom.xml, .gitignore, and basic Application entry point.
+- Status: PENDING TO CODE
+
+Task 2
+- Description: Generate the Makefile to support `make build`, `make test`, and `make run` according to the DevOps skills.
+- Status: PENDING TO CODE
+
+Task 3
+- Description: Setup local infrastructure. Generate `docker-compose.yml` for PostgreSQL and RabbitMQ, and configure application properties.
+- Status: PENDING TO CODE
+
+Task 4
+- Description: Configure Testcontainers in a base integration test class to spin up PostgreSQL and RabbitMQ automatically for tests.
+- Status: PENDING TO CODE
+
+Task 5
+- Description: Configure Flyway for database migrations. Setup the baseline migration strategy.
+- Status: PENDING TO CODE
+
+Task 6
+- Description: Implement Global Exception Handler to translate domain errors into the standard JSON Error Envelope defined in REST API skills.
+- Status: PENDING TO CODE
+
+Task 7
+- Description: Implement the API JSON Envelope wrapper (the `data` and `meta` fields) for all successful REST responses.
+- Status: PENDING TO CODE
+
+Task 8
+- Description: Implement Security Context Filter to extract `sub` and `sid` from JWT and inject them into a ThreadLocal or Request-Scoped context object.
+- Status: PENDING TO CODE
+
+Task 9
+- Description: Implement the Shared Domain Models (`Currency`, `Email`, `EventEnvelope`).
+- Status: PENDING TO CODE
+
+Task 10
+- Description: Implement the Outbox Pattern foundation (Outbox Entity, Repository, and asynchronous Poller for RabbitMQ dispatch).
+- Status: PENDING TO CODE
+
+Task 11
+- Description: IDENTITY MODULE: Create the Flyway schema migration for the `identity` module.
+- Status: PENDING TO CODE
+
+Task 12
+- Description: IDENTITY MODULE: Implement Domain Models (`User`, `Credential`, `Shard`, `UserIndex`).
+- Status: PENDING TO CODE
+
+Task 13
+- Description: IDENTITY MODULE: Implement Commands (`RegisterUser`, `AuthenticateUser`).
+- Status: PENDING TO CODE
+
+Task 14
+- Description: IDENTITY MODULE: Implement Commands (`CreateShard`, `RebalanceUser`, `DeleteUser`).
+- Status: PENDING TO CODE
+
+Task 15
+- Description: IDENTITY MODULE: Implement Queries (`GetCurrentUser`).
+- Status: PENDING TO CODE
+
+Task 16
+- Description: IDENTITY MODULE: Implement REST API Controllers (`auth` and `backoffice` endpoints).
+- Status: PENDING TO CODE
+
+Task 17
+- Description: IDENTITY MODULE: Implement Event Publications (`UserRegistered`, `UserAuthenticated`, `IdentityPurgeRequested`).
+- Status: PENDING TO CODE
+
+Task 18
+- Description: IDENTITY MODULE: Write Unit and Integration Tests for all Identity logic.
+- Status: PENDING TO CODE
+
+Task 19
+- Description: PEOPLE MODULE: Create the Flyway schema migration for the `people` module.
+- Status: PENDING TO CODE
+
+Task 20
+- Description: PEOPLE MODULE: Implement Domain Model (`Person`).
+- Status: PENDING TO CODE
+
+Task 21
+- Description: PEOPLE MODULE: Implement Commands (`CreatePerson`, `UpdatePerson`).
+- Status: PENDING TO CODE
+
+Task 22
+- Description: PEOPLE MODULE: Implement Commands (`DeletePerson`, `ReplayActivePeople`, `DeleteAllPeopleForUser`).
+- Status: PENDING TO CODE
+
+Task 23
+- Description: PEOPLE MODULE: Implement Queries (`GetPerson`, `ListPeople`).
+- Status: PENDING TO CODE
+
+Task 24
+- Description: PEOPLE MODULE: Implement REST API Controller for People endpoints.
+- Status: PENDING TO CODE
+
+Task 25
+- Description: PEOPLE MODULE: Implement Event Subscribers (`OnIdentityPurgeRequested`, `ProcessPersonBackfill`, `SyncPerson`).
+- Status: PENDING TO CODE
+
+Task 26
+- Description: PEOPLE MODULE: Write Unit and Integration Tests for all People logic.
+- Status: PENDING TO CODE
+
+Task 27
+- Description: DEBTS MODULE: Create the Flyway schema migration for the `debts` module.
+- Status: PENDING TO CODE
+
+Task 28
+- Description: DEBTS MODULE: Implement Domain Model (`Debt`).
+- Status: PENDING TO CODE
+
+Task 29
+- Description: DEBTS MODULE: Implement Read Models (`DebtSummaryProjection`, `PersonReadModel`).
+- Status: PENDING TO CODE
+
+Task 30
+- Description: DEBTS MODULE: Implement Commands (`CreateDebt`, `UpdateDebt`).
+- Status: PENDING TO CODE
+
+Task 31
+- Description: DEBTS MODULE: Implement Commands (`DeleteDebt`, `ApplyPaymentToDebt`).
+- Status: PENDING TO CODE
+
+Task 32
+- Description: DEBTS MODULE: Implement Queries (`GetDebt`, `ListDebts`, `ListDebtSummary`).
+- Status: PENDING TO CODE
+
+Task 33
+- Description: DEBTS MODULE: Implement REST API Controllers for Debts endpoints.
+- Status: PENDING TO CODE
+
+Task 34
+- Description: DEBTS MODULE: Implement Event Subscribers (`OnIdentityPurgeRequested`, `SyncPerson`, `RequestPersonBackfill`).
+- Status: PENDING TO CODE
+
+Task 35
+- Description: DEBTS MODULE: Write Unit and Integration Tests for all Debts logic.
+- Status: PENDING TO CODE
+
+Task 36
+- Description: PAYMENTS MODULE: Create the Flyway schema migration for the `payments` module.
+- Status: PENDING TO CODE
+
+Task 37
+- Description: PAYMENTS MODULE: Implement Domain Model (`Payment`).
+- Status: PENDING TO CODE
+
+Task 38
+- Description: PAYMENTS MODULE: Implement Read Model (`DebtReadModel`).
+- Status: PENDING TO CODE
+
+Task 39
+- Description: PAYMENTS MODULE: Implement Commands (`RegisterPayment`, `UpdateDebtReadModel`).
+- Status: PENDING TO CODE
+
+Task 40
+- Description: PAYMENTS MODULE: Implement Queries (`GetPayment`, `ListPayments`).
+- Status: PENDING TO CODE
+
+Task 41
+- Description: PAYMENTS MODULE: Implement REST API Controller for Payments endpoints.
+- Status: PENDING TO CODE
+
+Task 42
+- Description: PAYMENTS MODULE: Implement Event Subscribers (`SyncDebt`, `RequestDebtBackfill`).
+- Status: PENDING TO CODE
+
+Task 43
+- Description: PAYMENTS MODULE: Write Unit and Integration Tests for all Payments logic.
+- Status: PENDING TO CODE
+
+Task 44
+- Description: SYSTEM: Verify OpenAPI/Swagger integration is generating correctly for all REST endpoints at `/api/docs/ui`.
+- Status: PENDING TO CODE
+
+Task 45
+- Description: SYSTEM: Final End-to-End Acceptance test confirming cross-module event propagation between Debts and Payments.
+- Status: PENDING TO CODE

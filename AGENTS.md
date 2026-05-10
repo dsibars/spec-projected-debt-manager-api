@@ -98,6 +98,19 @@ Pending Diffs:
 [Combat/logic/Attack]: Delta -> "Added critical hit logic". Not yet projected to src.
 ```
 
+### 4.1. The Planning Section
+For initial development or major refactoring, the `sync` file must include a step-by-step task list to guide the Builder.
+Each task must follow this exact format:
+
+Task [N]
+- Description: [Granular explanation of what needs to be implemented]
+- Status: [PENDING TO CODE | PENDING TO ARCHITECTURE REVIEW | DONE]
+
+**Status Lifecycle:**
+- `PENDING TO CODE`: The task has not been started. The Builder must write the code and verify it compiles/tests pass. Once completed, the Builder MUST update the status in the `sync` file to `PENDING TO ARCHITECTURE REVIEW`.
+- `PENDING TO ARCHITECTURE REVIEW`: The Builder must pause writing new features and explicitly review the implemented code for this specific task against the declarative specs and shared skills to ensure "Zero Technical Leakage" and 100% compliance. If deviations are found, the Builder must fix the implementation. Once perfectly aligned, the Builder MUST update the status to `DONE`.
+- `DONE`: The task is fully completed and verified.
+
 ---
 
 ## 5. Agent Behavioral Laws
@@ -162,6 +175,7 @@ When communicating with the agents, humans or CI/CD pipelines will use these dir
 
 - **`INITIALIZE [Context]`**: Generate the `docs` folder structure, base text files, initial shared skills, and base `.gitignore`.
 - **`SYNCHRONIZE [Target]`**: Trigger The Builder. Update the implementation `src`, `sync` state, `Makefile`, and `.gitignore` to match the latest specs.
+- **`ADVANCE [Target]`**: Instructs the Builder agent to open the target's `sync` file, pick the first task (by numerical order) that is NOT in `DONE` status, and execute the necessary action based on its current lifecycle state (Code or Architecture Review).
 - **`AUDIT`**: Compare `docs/` against all `implementations/` and report **OUTDATED** modules or broken assumptions.
 - **`BENCHMARK [Target A] vs [Target B]`**: Generate both implementations and output a comparison report (performance, complexity).
 - **`REFACTOR SKILL [Skill Path]`**: Update a technical law and systematically propagate the architectural change to all dependent target implementations.

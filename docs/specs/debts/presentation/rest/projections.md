@@ -6,4 +6,4 @@
 - **Adapts**: [[../../queries/ListDebtSummary]]
 - **Method**: `GET`
 - **Path**: `/summary`
-- **Success Response**: `200 OK` with paginated [[../../models/DebtSummaryProjection]] in `data`.
+- **Success Response**: `200 OK` with paginated [[../../projections/DebtSummaryProjection]] in `data`.

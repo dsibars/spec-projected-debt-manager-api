@@ -16,7 +16,7 @@ To record a payment event for a specific debt.
 10. Return the registered `id`.
 
 ## Emits
-- `PaymentRegistered` (payload: `id`, `debtId`, `amount`)
+- `PaymentApplied` (payload: `id`, `debtId`, `amount`)
 
 ## Errors
 - `DebtNotFound`: Referenced debt does not exist in the local read model.

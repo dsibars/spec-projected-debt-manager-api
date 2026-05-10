@@ -25,3 +25,16 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
 6.  **Persistence Segregation Law**:
     - `WRITE_DB` (Aggregates) vs `READ_DB` (Projections).
     - No physical coupling (FKs) between Write and Read sides.
+
+## 7. Event-First Design Law
+- Every state change in an Aggregate MUST produce at least one Domain Event.
+- Events are the source of truth for cross-module communication.
+- Aggregates MUST NOT directly call other aggregates. They emit events instead.
+- The `events/` folder in each module is a first-class spec layer.
+- Event consumers MUST be idempotent.
+- Event producers MUST use the Outbox pattern for atomic consistency.
+
+## 8. Aggregate Isolation Law
+- Aggregates MUST NOT hold direct references to other aggregate roots.
+- Cross-aggregate relationships MUST use foreign identity (UUID) only.
+- Cross-aggregate consistency MUST be eventual, driven by events.

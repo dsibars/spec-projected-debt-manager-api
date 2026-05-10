@@ -5,7 +5,7 @@ To represent a unique identity within the system.
 
 ## Properties
 - `id`: `uuid` (Primary Key, global `userId`)
-- `shardId`: `uuid` (Foreign Key to [[Shard]], mandatory for horizontal scaling)
+- `shardId`: `uuid` (Foreign Key to [[models/Shard]], mandatory for horizontal scaling)
 - `email`: `string` (Unique)
 - `isActive`: `boolean` (Default: `true`)
 - `lastLoginAt`: `datetime?`

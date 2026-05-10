@@ -4,7 +4,7 @@
 To adapt incoming Payment events to the debt aggregate update command.
 
 ## Subscribes To
-- `payments.PaymentRegistered`
+- `payments.PaymentApplied`
 
 ## Adapts
 - [[../../commands/ApplyPaymentToDebt]]

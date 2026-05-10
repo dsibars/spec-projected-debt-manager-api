@@ -1,18 +1,25 @@
 # Use Case: List People
 
 ## Goal
-Retrieve a collection of all registered persons, supporting filtering and pagination.
+Retrieve a paginated list of people in the user's directory.
+
+## Input
+- `tenantId`: UUID (from Auth context)
+- `page`: Integer (default: 1)
+- `size`: Integer (default: 20, max: 100)
+- `includeArchived`: Boolean (default: false)
 
 ## Flow
-1. Receive optional filter `includeArchived` (default: `false`).
-2. Receive optional pagination parameters `page` and `size` (defaults as per [[specs/shared/presentation]]).
-3. Query the Store for all [[models/Person]] entries.
-4. If `includeArchived` is `false`, exclude entries where `isArchived` is `true`.
-5. Sort the remaining entries by `name` alphabetically.
-6. Calculate the total count of filtered entries.
-7. Apply pagination (skip and take) based on `page` and `size`.
-8. Return the paginated list of [[models/Person]] entries and the pagination metadata.
+1. Validate `page` >= 1 and `size` between 1 and 100.
+2. Query the Person aggregate store for records matching `tenantId`.
+3. If `includeArchived` is false, filter out archived records.
+4. Order by `name` ascending.
+5. Calculate total matches and pages.
+6. Apply pagination (skip/take).
+7. Return list of [[models/Person]] and pagination metadata.
 
 ## Result
-- A list of [[models/Person]] objects.
-- Pagination metadata (total items, total pages, etc.).
+- Standard paginated response (as per [[specs/shared/presentation]]).
+
+## Errors
+- `InvalidPagination`: If `page` or `size` are out of bounds.

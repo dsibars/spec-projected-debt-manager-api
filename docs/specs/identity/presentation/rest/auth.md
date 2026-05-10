@@ -3,7 +3,7 @@
 ## Base Path: `/api/v1/auth`
 
 ### Register
-- **Adapts**: [[../../commands/RegisterUser]]
+- **Adapts**: [[commands/RegisterUser]]
 - **Method**: `POST`
 - **Path**: `/register`
 - **Request Body**:
@@ -17,7 +17,7 @@
 - **Success Response**: `201 Created` with `userId`.
 
 ### Login (Local)
-- **Adapts**: [[../../commands/AuthenticateUser]]
+- **Adapts**: [[commands/AuthenticateUser]]
 - **Method**: `POST`
 - **Path**: `/login`
 - **Request Body**:
@@ -29,3 +29,9 @@
   }
   ```
 - **Success Response**: `200 OK` with `accessToken` and `refreshToken`.
+
+### Get Current User (Me)
+- **Adapts**: [[queries/GetCurrentUser]]
+- **Method**: `GET`
+- **Path**: `/me`
+- **Success Response**: `200 OK` with user profile in `data`.

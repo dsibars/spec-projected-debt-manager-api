@@ -5,10 +5,10 @@ To store the secrets required for authentication.
 
 ## Properties
 - `id`: `uuid` (Primary Key)
-- `userId`: `uuid` (Foreign Key to [[User]])
+- `userId`: `uuid` (Foreign Key to [[models/User]])
 - `provider`: `LOCAL | GOOGLE | APPLE`
 - `secret`: `string` (Hashed password or external subject ID)
-- `providerData`: `json?` (Extra data like Google profile info)
+- `providerData`: `Dictionary?` (Extra data like Google profile info)
 - `createdAt`: `datetime`
 
 ## Constraints

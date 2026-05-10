@@ -3,7 +3,7 @@
 ## Base Path: `/api/v1/backoffice/identity`
 
 ### Create Shard
-- **Adapts**: [[../../commands/CreateShard]]
+- **Adapts**: [[commands/CreateShard]]
 - **Method**: `POST`
 - **Path**: `/shards`
 - **Request Body**:
@@ -17,7 +17,7 @@
 - **Success Response**: `201 Created` with `shardId`.
 
 ### Rebalance User
-- **Adapts**: [[../../commands/RebalanceUser]]
+- **Adapts**: [[commands/RebalanceUser]]
 - **Method**: `POST`
 - **Path**: `/users/{userId}/rebalance`
 - **Request Body**:
@@ -29,7 +29,7 @@
 - **Success Response**: `200 OK`.
 
 ### Delete User
-- **Adapts**: [[../../commands/DeleteUser]]
+- **Adapts**: [[commands/DeleteUser]]
 - **Method**: `DELETE`
 - **Path**: `/users/{userId}`
 - **Success Response**: `204 No Content`.

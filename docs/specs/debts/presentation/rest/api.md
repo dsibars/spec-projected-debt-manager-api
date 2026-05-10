@@ -8,7 +8,7 @@ Interface for managing financial obligations.
 ## Base Path: `/api/v1/debts`
 
 ### Create Debt
-- **Adapts**: [[../../commands/CreateDebt]]
+- **Adapts**: [[commands/CreateDebt]]
 - **Method**: `POST`
 - **Path**: `/`
 - **Request Body**:
@@ -25,13 +25,13 @@ Interface for managing financial obligations.
 - **Success Response**: `201 Created` with the generated `id` in `data`.
 
 ### Get Debt Details
-- **Adapts**: [[../../queries/GetDebt]]
+- **Adapts**: [[queries/GetDebt]]
 - **Method**: `GET`
 - **Path**: `/{id}`
-- **Success Response**: `200 OK` with [[../../models/Debt]] in `data`.
+- **Success Response**: `200 OK` with [[models/Debt]] in `data`.
 
 ### List Debts
-- **Adapts**: [[../../queries/ListDebts]]
+- **Adapts**: [[queries/ListDebts]]
 - **Method**: `GET`
 - **Path**: `/`
 - **Query Parameters**:
@@ -39,10 +39,10 @@ Interface for managing financial obligations.
   - `isSettled`: `boolean?`
   - `direction`: `string?`
   - `page`, `size` (standard pagination)
-- **Success Response**: `200 OK` with array of [[../../models/Debt]] in `data` and pagination in `meta`.
+- **Success Response**: `200 OK` with array of [[models/Debt]] in `data` and pagination in `meta`.
 
 ### Update Debt
-- **Adapts**: [[../../commands/UpdateDebt]]
+- **Adapts**: [[commands/UpdateDebt]]
 - **Method**: `PUT`
 - **Path**: `/{id}`
 - **Request Body**:
@@ -55,7 +55,7 @@ Interface for managing financial obligations.
 - **Success Response**: `200 OK` with the `id` in `data`.
 
 ### Delete Debt
-- **Adapts**: [[../../commands/DeleteDebt]]
+- **Adapts**: [[commands/DeleteDebt]]
 - **Method**: `DELETE`
 - **Path**: `/{id}`
 - **Success Response**: `204 No Content`.

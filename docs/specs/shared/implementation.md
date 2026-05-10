@@ -19,7 +19,9 @@ Every module in the `docs/specs/` directory automatically inherits the following
     - @shared/skills/persistence/migrations
     - @shared/skills/persistence/read-write-split
     - @shared/skills/persistence/repository-pattern
-6.  **Messaging**: `@shared/skills/messaging/rabbitmq`
+6.  **Messaging**: 
+    - `@shared/skills/messaging/rabbitmq`
+    - `@shared/skills/messaging/contracts`
 7.  **Security**:
     - `@shared/skills/security/jwt`
     - `@shared/skills/security/hashing`
@@ -34,6 +36,13 @@ Every module in the `docs/specs/` directory automatically inherits the following
 10. **Observability**:
     - `@shared/skills/observability/opentelemetry`
     - `@shared/skills/observability/signoz`
+11. **Meta**:
+    - `@shared/skills/meta/type-mapping`
+    - `@shared/skills/patterns/module-boundaries`
+12. **Testing**:
+    - `@shared/skills/testing/behavior-projection`
+13. **Presentation**:
+    - `@shared/skills/presentation/rest-api`
 
 ## Technical Composition Rules
 
@@ -47,14 +56,10 @@ Every module in the `docs/specs/` directory automatically inherits the following
   - For example, in Java, it maps to `src/main/java/{base_package}/[module]/[layer]/[filename].[ext]`.
 - **Makefile Integrity**: Each implementation must provide a Makefile that supports `infra-up`, `build`, `test`, and `run` as defined in the DevOps and Testing skills.
 
-## Universal Type Mapping
-To ensure interoperability between different language implementations, the following mappings are mandated for the Builder:
+## Event-Driven Architecture Rule
+- All modules participating in cross-module workflows MUST declare their events in `events/`.
+- Commands that produce side effects in other modules MUST do so via events, not direct calls.
+- The Builder MUST generate Outbox table entries for all event producers.
 
-| Spec Type | Java / Kotlin | Go | Rust |
-| :--- | :--- | :--- | :--- |
-| `String` | `String` | `string` | `String` / `&str` |
-| `Integer` | `Long` (64-bit) | `int64` | `i64` |
-| `Decimal` | `BigDecimal` | `decimal.Decimal` | `Decimal` |
-| `Boolean` | `boolean` | `bool` | `bool` |
-| `DateTime` | `OffsetDateTime` | `time.Time` | `DateTime<Utc>` |
-| `UUID` | `java.util.UUID` | `uuid.UUID` | `uuid::Uuid` |
+## Universal Type Mapping
+To ensure interoperability between different language implementations, the mapping defined in `@shared/skills/meta/type-mapping` MUST be followed by the Builder.

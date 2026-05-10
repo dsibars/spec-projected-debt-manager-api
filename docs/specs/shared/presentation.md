@@ -6,45 +6,12 @@ This document defines the global HTTP and JSON standards for the Debt Manager AP
 
 To maintain consistency for API consumers, all responses must follow these structural rules.
 
-### Success Response
-All successful responses must wrap the result in a `data` field.
-```json
-{
-  "data": { ... }
-}
-```
-*For list operations, `data` is an array.*
-
-### Error Response
-All error responses must use a 4xx or 5xx status code and return a standardized error object.
-```json
-{
-  "error": {
-    "code": "DomainErrorCode",
-    "message": "Human-readable explanation of the error."
-  }
-}
-```
+### Success & Error Responses
+All endpoints MUST adhere to the standard envelope schemas (e.g., `data` and `error` wrappers) defined entirely within the `@shared/skills/presentation/rest-api` technical skill.
 
 ## Pagination
 
-Any use case that returns a list of items should support the following query parameters:
-- `page`: The page number (default: 1).
-- `size`: The number of items per page (default: 20, max: 100).
-
-Paginated responses should include a `meta` field:
-```json
-{
-  "data": [...],
-  "meta": {
-    "totalItems": 150,
-    "totalPages": 8,
-    "currentPage": 1,
-    "pageSize": 20
-  }
-}
-```
-
+Any use case that returns a list of items should support standard pagination query parameters (`page`, `size`) and respond with the standard pagination `meta` envelope as dictated by the `@shared/skills/presentation/rest-api` skill.
 ## API Documentation
 
 Every implementation MUST provide automated API documentation using the `@shared/skills/presentation/openapi` skill. This documentation must be accessible at `/api/docs/ui` and serve as the contract for frontend and third-party integrations.
