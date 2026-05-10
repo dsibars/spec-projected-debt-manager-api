@@ -15,7 +15,7 @@ Initialize a new debt record in the user's ledger.
 ## Flow
 1. Validate that `totalAmount` is greater than 0.
 2. If `currency` is null or empty, set `currency` to "USD".
-3. Validate that `personId` exists by querying the local [[projections/PersonReadModel]].
+3. Validate that `personId` exists against the local Person integration store (aggregate cache).
 4. Validate that the person is not archived.
 5. Generate a unique `id`.
 6. Create the [[models/Debt]] record with the provided `tenantId`.

@@ -7,3 +7,6 @@ To broadcast creation events for all current non-archived people.
 1. Query Store for all [[models/Person]] where `isArchived` is `false`.
 2. For each record:
    - Emit `PersonCreated` with `id` and `name`.
+
+## Emits
+- `PersonCreated` (multiple)

@@ -14,7 +14,10 @@ Modify the details of an existing person.
 8. Persist the changes to the Store.
 9. Return the updated [[models/Person]].
 
+## Emits
+- `PersonUpdated`
+
 ## Errors
-- `PersonNotFound`: If the `id` does not match any existing person.
+- `PersonNotFound`: If `id` does not exist.
 - `InvalidName`: If the provided name is empty.
-- `DuplicateEmail`: If the new email is already taken by another person.
+- `DuplicateEmail`: If the new email is already used by another non-archived person **for this user**.

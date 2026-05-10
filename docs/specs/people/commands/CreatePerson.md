@@ -19,5 +19,8 @@ To register a new person in the user's private directory.
 6. Emit `PersonCreated` event (carrying `tenantId` in envelope metadata).
 7. Return `id`.
 
+## Emits
+- `PersonCreated`
+
 ## Errors
 - `DuplicateEmail`: If another person already exists with the same email **for this user**.

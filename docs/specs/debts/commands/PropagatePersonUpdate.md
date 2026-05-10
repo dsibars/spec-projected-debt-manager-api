@@ -13,3 +13,7 @@ To update denormalized person details (like name) in all debt projections when a
    - Update `personName` to the provided `name`.
    - Set `updatedAt` to now.
 3. Persist all changes.
+13. For each projection, trigger `UpdateDebtSummary` internally.
+
+## Emits
+- None

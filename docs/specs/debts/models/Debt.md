@@ -13,7 +13,6 @@ Represents a financial obligation.
 - `currency`: Currency code ([[specs/shared/models/Currency]], Defaults to "USD").
 - `direction`: The debt flow, either `OWED_TO_ME` or `I_OWE` (Enum, Required).
 - `dueDate`: Optional deadline for settlement (DateTime).
-- `isSettled`: Flag derived from balance, but can be persisted for performance (Boolean).
 - `isArchived`: Flag for soft deletion (Boolean, Default False).
 - `createdAt`: Timestamp.
 - `updatedAt`: Timestamp.

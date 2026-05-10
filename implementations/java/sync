@@ -130,15 +130,15 @@ Task 30
 - Status: PENDING TO CODE
 
 Task 31
-- Description: DEBTS MODULE: Implement Commands (`DeleteDebt`, `ApplyPaymentToDebt`).
+- Description: DEBTS MODULE: Implement Commands (`DeleteDebt`, `RegisterPayment`).
 - Status: PENDING TO CODE
 
 Task 32
-- Description: DEBTS MODULE: Implement Queries (`GetDebt`, `ListDebts`, `ListDebtSummary`).
+- Description: DEBTS MODULE: Implement Queries (`GetDebt`, `ListDebts`, `ListDebtSummary`, `GetPayment`, `ListPayments`).
 - Status: PENDING TO CODE
 
 Task 33
-- Description: DEBTS MODULE: Implement REST API Controllers for Debts endpoints.
+- Description: DEBTS MODULE: Implement REST API Controllers for Debts and Payments endpoints.
 - Status: PENDING TO CODE
 
 Task 34
@@ -146,45 +146,13 @@ Task 34
 - Status: PENDING TO CODE
 
 Task 35
-- Description: DEBTS MODULE: Write Unit and Integration Tests for all Debts logic.
+- Description: DEBTS MODULE: Write Unit and Integration Tests for all Debts & Payments logic.
 - Status: PENDING TO CODE
 
 Task 36
-- Description: PAYMENTS MODULE: Create the Flyway schema migration for the `payments` module.
-- Status: PENDING TO CODE
-
-Task 37
-- Description: PAYMENTS MODULE: Implement Domain Model (`Payment`).
-- Status: PENDING TO CODE
-
-Task 38
-- Description: PAYMENTS MODULE: Implement Read Model (`DebtReadModel`).
-- Status: PENDING TO CODE
-
-Task 39
-- Description: PAYMENTS MODULE: Implement Commands (`RegisterPayment`, `UpdateDebtReadModel`).
-- Status: PENDING TO CODE
-
-Task 40
-- Description: PAYMENTS MODULE: Implement Queries (`GetPayment`, `ListPayments`).
-- Status: PENDING TO CODE
-
-Task 41
-- Description: PAYMENTS MODULE: Implement REST API Controller for Payments endpoints.
-- Status: PENDING TO CODE
-
-Task 42
-- Description: PAYMENTS MODULE: Implement Event Subscribers (`SyncDebt`, `RequestDebtBackfill`).
-- Status: PENDING TO CODE
-
-Task 43
-- Description: PAYMENTS MODULE: Write Unit and Integration Tests for all Payments logic.
-- Status: PENDING TO CODE
-
-Task 44
 - Description: SYSTEM: Verify OpenAPI/Swagger integration is generating correctly for all REST endpoints at `/api/docs/ui`.
 - Status: PENDING TO CODE
 
-Task 45
-- Description: SYSTEM: Final End-to-End Acceptance test confirming cross-module event propagation between Debts and Payments.
+Task 37
+- Description: SYSTEM: Final End-to-End Acceptance test confirming system stability.
 - Status: PENDING TO CODE

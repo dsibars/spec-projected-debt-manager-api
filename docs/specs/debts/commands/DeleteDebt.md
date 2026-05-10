@@ -15,5 +15,8 @@ Mark a debt as archived to preserve historical data while removing it from activ
    - `isArchived`: `true`.
 8. Return nothing (success).
 
+## Emits
+- `DebtDeleted`
+
 ## Errors
 - `DebtNotFound`

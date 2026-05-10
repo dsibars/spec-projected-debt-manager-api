@@ -1,5 +1,11 @@
 # Command: Authenticate User
 
+## Emits
+- `UserAuthenticated`
+
+## Errors
+- `InvalidCredentials`
+
 ## Goal
 Validate credentials and issue tokens containing both user and shard context.
 

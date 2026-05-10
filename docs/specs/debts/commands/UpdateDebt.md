@@ -14,5 +14,8 @@ Modify an existing debt's metadata.
 6. Store the updated [[models/Debt]].
 7. Return the updated [[models/Debt]].
 
+## Emits
+- `DebtUpdated`
+
 ## Errors
 - `DebtNotFound`
