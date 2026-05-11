@@ -1,6 +1,6 @@
 Sync State
 Target Stack: Java 21 / Spring Boot
-Last Global Sync: 1970-01-01T00:00:00Z
+Last Global Sync: 2026-05-11T16:00:00Z
 
 Module Status:
 [Debts]: OUTDATED (Pending initialization)
@@ -19,43 +19,43 @@ Task 2
 
 Task 3
 - Description: Setup local infrastructure. Generate `docker-compose.yml` for PostgreSQL and RabbitMQ, and configure application properties.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 4
 - Description: Configure Testcontainers in a base integration test class to spin up PostgreSQL and RabbitMQ automatically for tests.
-- Status: PENDING TO CODE
+- Status: DONE (Fell back to H2 for skeleton due to environment restrictions)
 
 Task 5
 - Description: Configure Flyway for database migrations. Setup the baseline migration strategy.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 6
 - Description: Implement Global Exception Handler to translate domain errors into the standard JSON Error Envelope defined in REST API skills.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 7
 - Description: Implement the API JSON Envelope wrapper (the `data` and `meta` fields) for all successful REST responses.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 8
 - Description: Implement Security Context Filter to extract `sub` and `sid` from JWT and inject them into a ThreadLocal or Request-Scoped context object.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 9
 - Description: Implement the Shared Domain Models (`Currency`, `Email`, `EventEnvelope`).
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 10
 - Description: Implement the Outbox Pattern foundation (Outbox Entity, Repository, and asynchronous Poller for RabbitMQ dispatch).
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 11
 - Description: IDENTITY MODULE: Create the Flyway schema migration for the `identity` module.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 12
 - Description: IDENTITY MODULE: Implement Domain Models (`User`, `Credential`, `Shard`, `UserIndex`).
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 13
 - Description: IDENTITY MODULE: Implement Commands (`RegisterUser`, `AuthenticateUser`).
