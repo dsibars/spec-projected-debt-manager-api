@@ -1,6 +1,6 @@
 Sync State
 Target Stack: Java 21 / Spring Boot
-Last Global Sync: 1970-01-01T00:00:00Z
+Last Global Sync: 2026-05-11T08:08:39Z
 
 Module Status:
 [Debts]: OUTDATED (Pending initialization)
@@ -19,11 +19,11 @@ Task 2
 
 Task 3
 - Description: Setup local infrastructure. Generate `docker-compose.yml` for PostgreSQL and RabbitMQ, and configure application properties.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 4
 - Description: Configure Testcontainers in a base integration test class to spin up PostgreSQL and RabbitMQ automatically for tests.
-- Status: PENDING TO CODE
+- Status: DONE
 
 Task 5
 - Description: Configure Flyway for database migrations. Setup the baseline migration strategy.
