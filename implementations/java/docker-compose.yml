@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db-write:
+    image: postgres:16-alpine
+    container_name: debtmanager-db-write
+    environment:
+      POSTGRES_DB: spd_debt_manager
+      POSTGRES_USER: spd_user
+      POSTGRES_PASSWORD: spd_pass
+    ports:
+      - "5432:5432"
+    networks:
+      - spd_network
+
+  db-read:
+    image: postgres:16-alpine
+    container_name: debtmanager-db-read
+    environment:
+      POSTGRES_DB: spd_debt_manager
+      POSTGRES_USER: spd_user
+      POSTGRES_PASSWORD: spd_pass
+    ports:
+      - "5433:5432"
+    networks:
+      - spd_network
+
+  broker:
+    image: rabbitmq:3-management-alpine
+    container_name: debtmanager-broker
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - spd_network
+
+networks:
+  spd_network:
+    driver: bridge
