@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: debtmanager
+  profiles:
+    active: local
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+  flyway:
+    enabled: true
+  datasource:
+    write:
+      jdbc-url: jdbc:postgresql://localhost:5432/spd_debt_manager
+      username: spd_user
+      password: spd_pass
+      driver-class-name: org.postgresql.Driver
+    read:
+      jdbc-url: jdbc:postgresql://localhost:5433/spd_debt_manager
+      username: spd_user
+      password: spd_pass
+      driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 8080
+  shutdown: graceful
+
+db:
+  write:
+    url: ${spring.datasource.write.jdbc-url}
+    user: ${spring.datasource.write.username}
+    password: ${spring.datasource.write.password}
+  read:
+    url: ${spring.datasource.read.jdbc-url}
+    user: ${spring.datasource.read.username}
+    password: ${spring.datasource.read.password}
+
+messaging:
+  url: amqp://${spring.rabbitmq.host}:${spring.rabbitmq.port}
+  user: ${spring.rabbitmq.username}
+  password: ${spring.rabbitmq.password}
