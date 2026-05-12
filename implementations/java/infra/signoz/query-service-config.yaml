@@ -1,0 +1,2 @@
+clickhouse:
+  datasource: tcp://clickhouse:9000/?database=signoz_calls
