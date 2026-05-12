@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: debtmanager
+  profiles:
+    active: local
+  jpa:
+    open-in-view: false
+  flyway:
+    enabled: true
+  docker:
+    compose:
+      enabled: false
+
+server:
+  port: 8080
+  shutdown: graceful
+
+logging:
+  level:
+    com.dsibars.debtmanager: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
