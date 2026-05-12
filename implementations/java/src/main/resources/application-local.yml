@@ -1,0 +1,18 @@
+db:
+  write:
+    url: ${SPD_DB_WRITE_URL:jdbc:postgresql://localhost:5432/spd_write}
+    username: ${SPD_DB_WRITE_USER:spd_user}
+    password: ${SPD_DB_WRITE_PASSWORD:spd_pass}
+    driver-class-name: org.postgresql.Driver
+  read:
+    url: ${SPD_DB_READ_URL:jdbc:postgresql://localhost:5433/spd_read}
+    username: ${SPD_DB_READ_USER:spd_user}
+    password: ${SPD_DB_READ_PASSWORD:spd_pass}
+    driver-class-name: org.postgresql.Driver
+
+spring:
+  rabbitmq:
+    host: ${SPD_BROKER_HOST:localhost}
+    port: ${SPD_BROKER_PORT:5672}
+    username: ${SPD_BROKER_USER:guest}
+    password: ${SPD_BROKER_PASSWORD:guest}

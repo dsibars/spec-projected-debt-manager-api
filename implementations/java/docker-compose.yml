@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  db-write:
+    image: postgres:16
+    container_name: spd-db-write
+    environment:
+      POSTGRES_DB: spd_write
+      POSTGRES_USER: spd_user
+      POSTGRES_PASSWORD: spd_pass
+    ports:
+      - "5432:5432"
+    networks:
+      - spd_network
+
+  db-read:
+    image: postgres:16
+    container_name: spd-db-read
+    environment:
+      POSTGRES_DB: spd_read
+      POSTGRES_USER: spd_user
+      POSTGRES_PASSWORD: spd_pass
+    ports:
+      - "5433:5432"
+    networks:
+      - spd_network
+
+  broker:
+    image: rabbitmq:3-management
+    container_name: spd-broker
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - spd_network
+
+  # Minimal SigNoz components (Using logging exporter for simplicity in this task)
+  signoz-collector:
+    image: signoz/signoz-otel-collector:0.88.0
+    container_name: spd-signoz-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./infra/signoz/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # OTLP HTTP receiver
+    networks:
+      - spd_network
+
+  signoz-ui:
+    image: signoz/frontend:0.88.0
+    container_name: spd-signoz-ui
+    ports:
+      - "3301:3301"
+    networks:
+      - spd_network
+
+networks:
+  spd_network:
+    driver: bridge

@@ -19,7 +19,7 @@ Task 2
 
 Task 3
 - Description: Setup local infrastructure. Generate `docker-compose.yml` for PostgreSQL and RabbitMQ, and configure application properties.
-- Status: PENDING TO CODE
+- Status: PENDING TO ARCHITECTURE REVIEW
 
 Task 4
 - Description: Configure Testcontainers in a base integration test class to spin up PostgreSQL and RabbitMQ automatically for tests.
