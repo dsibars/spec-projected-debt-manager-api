@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spd_write
+    username: spd_user
+    password: spd_pass
+
+db:
+  write:
+    url: jdbc:postgresql://localhost:5432/spd_write
+    user: spd_user
+    password: spd_pass
+  read:
+    url: jdbc:postgresql://localhost:5433/spd_read
+    user: spd_user
+    password: spd_pass
+
+messaging:
+  url: amqp://guest:guest@localhost:5672
+  user: guest
+  password: guest

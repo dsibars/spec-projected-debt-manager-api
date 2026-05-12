@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  db-write:
+    image: postgres:16
+    container_name: db-write
+    environment:
+      POSTGRES_DB: spd_write
+      POSTGRES_USER: spd_user
+      POSTGRES_PASSWORD: spd_pass
+    ports:
+      - "5432:5432"
+    networks:
+      - spd_network
+
+  db-read:
+    image: postgres:16
+    container_name: db-read
+    environment:
+      POSTGRES_DB: spd_read
+      POSTGRES_USER: spd_user
+      POSTGRES_PASSWORD: spd_pass
+    ports:
+      - "5433:5432"
+    networks:
+      - spd_network
+
+  broker:
+    image: rabbitmq:3-management
+    container_name: broker
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - spd_network
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.1.2-alpine
+    container_name: clickhouse
+    tty: true
+    ports:
+      - "9000:9000"
+      - "8123:8123"
+      - "9440:9440"
+    networks:
+      - spd_network
+
+  signoz-query-service:
+    image: signoz/query-service:0.38.1
+    container_name: signoz-query-service
+    command: [ "-config=/root/config/config.yaml" ]
+    volumes:
+      - ./infra/signoz/query-service-config.yaml:/root/config/config.yaml
+    depends_on:
+      - clickhouse
+    networks:
+      - spd_network
+
+  signoz-frontend:
+    image: signoz/frontend:0.38.1
+    container_name: signoz-frontend
+    depends_on:
+      - signoz-query-service
+    ports:
+      - "3301:3301"
+    networks:
+      - spd_network
+
+  otel-collector:
+    image: signoz/signoz-otel-collector:0.88.8
+    container_name: signoz-otel-collector
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./infra/signoz/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    depends_on:
+      - clickhouse
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - spd_network
+
+networks:
+  spd_network:
+    driver: bridge
