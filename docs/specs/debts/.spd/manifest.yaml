@@ -2,7 +2,19 @@ manifest_version: 1.0.0
 module: debts
 frozen_at: null
 spec_hash: null
-dependencies: []
-events_produced: []
-events_consumed: []
-
+dependencies:
+  - specs/people/models/Person
+  - specs/identity/models/User
+events_produced:
+  - DebtRegistered
+  - DebtSettled
+  - PaymentRegistered
+  - DebtUpdated
+  - DebtDeleted
+  - DebtsPurged
+  - RequestPersonBackfill
+events_consumed:
+  - people.PersonCreated
+  - people.PersonUpdated
+  - people.PersonArchived
+  - identity.IdentityPurgeRequested

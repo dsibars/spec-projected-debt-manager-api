@@ -11,3 +11,6 @@ Retrieve details of a specific payment.
 
 ## Errors
 - `PaymentNotFound`
+
+## Result
+- [[models/Payment]]

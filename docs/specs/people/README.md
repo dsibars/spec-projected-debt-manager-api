@@ -22,8 +22,10 @@ This module owns:
 ## Events Produced
 - [[events/PersonCreated]]
 - [[events/PersonUpdated]]
+- [[events/PersonArchived]]
 - [[events/PeoplePurged]]
 - [[specs/shared/events/ModuleDataPurged]]
 
 ## Events Consumed
 - [[specs/identity/events/IdentityPurgeRequested]]
+- [[specs/debts/events/RequestPersonBackfill]]

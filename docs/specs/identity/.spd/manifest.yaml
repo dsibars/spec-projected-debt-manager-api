@@ -3,6 +3,11 @@ module: identity
 frozen_at: null
 spec_hash: null
 dependencies: []
-events_produced: []
+events_produced:
+  - UserRegistered
+  - IdentityPurgeRequested
+  - ShardCreated
+  - UserAuthenticated
+  - UserRebalanced
+  - UserRebalanceStarted
 events_consumed: []
-

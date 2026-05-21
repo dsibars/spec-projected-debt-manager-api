@@ -55,8 +55,9 @@ Missing required files are **errors**.
 - Extra columns without spec origin are **warnings**.
 
 ### R6: Return Type Consistency
-- If the module declares CQRS strictness (via skill or shared implementation), commands MUST return `void` or at most an identifier.
-- If a command spec says "Return X" and the module is in strict mode, this is a **warning**.
+- Commands MUST return `void` or at most an identifier of the created resource (e.g., `userId`, `debtId`). This aligns with `@shared/skills/patterns/cqrs-and-events`.
+- Commands MUST NOT return full Domain Entities or DTOs.
+- If a command spec declares a `## Result` section, it MUST contain only an identifier or `void`.
 - Queries MUST return the type declared in their spec.
 
 ### R7: Circular Dependency Detection

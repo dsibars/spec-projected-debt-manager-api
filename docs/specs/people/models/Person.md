@@ -9,6 +9,7 @@ This model represents an individual in the system.
 - `name`: Full name of the person (String, Required).
 - `email`: Contact email ([[specs/shared/models/Email]], Optional).
 - `phone`: Contact phone (String, Optional).
+- `externalRef`: Optional reference to an external entity ID (e.g., User ID), used for linking.
 - `isArchived`: Soft deletion flag (Boolean, Defaults to false).
 - `createdAt`: Timestamp of creation (DateTime).
 - `updatedAt`: Timestamp of last modification (DateTime).

@@ -9,10 +9,13 @@ Create a new identity and assign it to an available shard.
 - `provider`: `LOCAL | GOOGLE | APPLE`
 - `externalId`: `string?`
 
+## Preconditions
+- The `email` must not already be registered in the global `UserIndex`.
+
 ## Flow
 1. **Global Uniqueness Check**:
    - Query the [[models/UserIndex]] in the Global DB to ensure `email` is not already registered.
-   - If found, return `EmailAlreadyInUse`.
+   - If found, raise `EmailAlreadyInUse`.
 2. **Shard Assignment**:
    - Find an `ACTIVE` [[models/Shard]] with capacity (Atomic increment).
    - Selected Shard ID becomes the `shardId` for this user.
@@ -24,7 +27,18 @@ Create a new identity and assign it to an available shard.
 6. **Index Finalization**:
    - Create the [[models/UserIndex]] record in the Global DB to lock the email to the generated `userId` and `shardId`.
 7. Emit `UserRegistered` event.
-8. Return `userId`.
 
-## Emits
-- `UserRegistered` (payload: `userId`, `shardId`, `email`)
+## Postconditions
+- A `User` aggregate exists in the assigned Shard.
+- A `Credential` exists for the user.
+- The global `UserIndex` contains the email mapping.
+
+## Effects
+- Emits: `UserRegistered` (payload: `userId`, `shardId`, `email`)
+
+## Errors
+- `EmailAlreadyInUse`: If `email` is already registered.
+- `SystemOverloaded`: If no active shard has available capacity.
+
+## Result
+- `userId`: UUID of the created user.

@@ -1,4 +1,4 @@
-# Use Case: Create Debt
+# Command: Create Debt
 
 ## Goal
 Initialize a new debt record in the user's ledger.
@@ -8,27 +8,36 @@ Initialize a new debt record in the user's ledger.
 - `personId`: UUID
 - `name`: String
 - `totalAmount`: Integer
-- `direction`: OWED_TO_ME | I_OWE
+- `direction`: `OWED_TO_ME` | `I_OWE`
 - `currency`: String? (Defaults to "USD")
 - `dueDate`: DateTime?
 
-## Flow
-1. Validate that `totalAmount` is greater than 0.
-2. If `currency` is null or empty, set `currency` to "USD".
-3. Validate that `personId` exists against the local Person integration store (aggregate cache).
-4. Validate that the person is not archived.
-5. Generate a unique `id`.
-6. Create the [[models/Debt]] record with the provided `tenantId`.
-7. Initialize the [[projections/DebtSummaryProjection]] including the `tenantId`.
-8. Persist both the Aggregate and the Projection (Atomic Inline Update).
-9. Emit `DebtRegistered` event (see [[events/DebtRegistered]]).
-10. Return `id`.
+## Preconditions
+- `totalAmount` must be greater than 0.
+- `personId` must refer to an existing `PersonReadModel` in the local integration store.
+- The referenced `PersonReadModel` must not be archived.
 
-## Emits
-- `DebtRegistered` — see [[events/DebtRegistered]]
+## Flow
+1. If `currency` is null or empty, set `currency` to "USD".
+2. Validate that `currency` is recognized by `@shared/skills/standards/data-formats`.
+3. Generate a unique `id`.
+4. Create the [[models/Debt]] record with the provided `tenantId`.
+5. Initialize the [[projections/DebtSummaryProjection]] including the `tenantId`.
+6. Persist both the Aggregate and the Projection (Atomic Inline Update).
+7. Emit `DebtRegistered` event (see [[events/DebtRegistered]]).
+
+## Postconditions
+- A `Debt` aggregate exists with `currentBalance == totalAmount`.
+- A `DebtSummaryProjection` exists for this debt.
+
+## Effects
+- Emits: [[events/DebtRegistered]]
 
 ## Errors
 - `InvalidAmount`: If `totalAmount <= 0`.
-- `PersonNotFound`: If `personId` does not exist in the local Person integration store (aggregate cache).
+- `PersonNotFound`: If `personId` does not exist in the local Person integration store.
 - `PersonArchived`: If the referenced person is archived.
-- `CurrencyNotSupported`: If the provided currency code is not recognized by `@shared/skills/standards/data-formats`.
+- `CurrencyNotSupported`: If the provided currency code is not recognized.
+
+## Result
+- `id`: UUID of the created debt.

@@ -25,9 +25,14 @@ This module owns:
 ## Events Produced
 - [[events/DebtRegistered]]
 - [[events/DebtSettled]]
+- [[events/PaymentRegistered]]
+- [[events/DebtUpdated]]
+- [[events/DebtDeleted]]
+- [[events/DebtsPurged]]
+- [[events/RequestPersonBackfill]]
 
 ## Events Consumed
-- (None from payments, payments are internal)
 - [[specs/people/events/PersonCreated]]
 - [[specs/people/events/PersonUpdated]]
+- [[specs/people/events/PersonArchived]]
 - [[specs/identity/events/IdentityPurgeRequested]]

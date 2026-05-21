@@ -7,19 +7,32 @@ Move a user from one shard (physical partition) to another for load balancing or
 - `userId`: `uuid`
 - `targetShardId`: `uuid`
 
+## Preconditions
+- The user must exist.
+- The destination shard must be `ACTIVE` and have available capacity.
+
 ## Flow
 1. Find the [[models/User]] by `userId`.
 2. Find the current [[models/Shard]] (Source) and the `targetShardId` [[models/Shard]] (Destination).
 3. Verify that Destination Shard is `ACTIVE` and has capacity.
-4. Emit `UserRebalanceStarted` event.
-5. Update [[models/User]] `shardId` to `targetShardId`.
-6. Decrement `currentLoad` of Source Shard.
-7. Increment `currentLoad` of Destination Shard.
+4. Update [[models/User]] `shardId` to `targetShardId`.
+5. Decrement `currentLoad` of Source Shard.
+6. Increment `currentLoad` of Destination Shard.
+7. Update the [[models/UserIndex]] to reflect the new `shardId`.
 8. Emit `UserRebalanced` event.
 
-## Emits
-- `UserRebalanceStarted` (payload: `userId`, `sourceShardId`, `destinationShardId`)
-- `UserRebalanced` (payload: `userId`, `sourceShardId`, `destinationShardId`)
+## Postconditions
+- The user's `shardId` points to the destination shard.
+- Shard loads are updated accordingly.
 
-## Note
-This is a high-level administrative command. The `UserRebalanced` event triggers data migration subscribers in all other modules to move the isolated user data between physical databases if necessary.
+## Effects
+- Emits: `UserRebalanced` (payload: `userId`, `sourceShardId`, `destinationShardId`)
+
+## Errors
+- `UserNotFound`
+- `ShardNotFound`
+- `ShardFull`: If destination shard has no available capacity.
+- `ShardUnderMaintenance`: If destination shard is not ACTIVE.
+
+## Result
+- `void`

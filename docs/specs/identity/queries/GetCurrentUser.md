@@ -1,17 +1,18 @@
-# Query: GetCurrentUser
+# Query: Get Current User
 
-## Intent
+## Goal
 Retrieve the profile of the currently authenticated user.
 
-## Inputs
-- `context.userId`: `UUID` (Mandatory)
+## Input
+- `tenantId`: UUID (Injected from Auth context, equivalent to `userId`)
 
-## Outputs
-- `id`: `UUID`
-- `email`: `String`
-- `tenantId`: `UUID`
+## Flow
+1. Fetch the [[models/User]] from the database using the `tenantId`.
+2. If not found, raise `UserNotFound`.
+3. Return the user profile.
 
-## Logic
-1. Fetch the User from the database using the `userId` from context.
-2. If not found, return `UserNotFound` error.
-3. Return the user data.
+## Errors
+- `UserNotFound`
+
+## Result
+- [[models/User]] profile (sanitized, no credentials)

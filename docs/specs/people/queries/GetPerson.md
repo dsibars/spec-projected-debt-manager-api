@@ -11,3 +11,6 @@ Retrieve the details of a specific person using their unique identifier.
 
 ## Errors
 - `PersonNotFound`: If no person exists with the provided `id`.
+
+## Result
+- [[models/Person]]

@@ -17,6 +17,7 @@ Target Database: **WRITE_DB**
     - `name`: `VARCHAR(255)` (Not Null)
     - `email`: `VARCHAR(255)` (Unique, Nullable)
     - `phone`: `VARCHAR(50)` (Nullable)
+- `external_ref`: `VARCHAR(255)` (Nullable)
     - `is_archived`: `BOOLEAN` (Not Null, Default False)
     - `created_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
     - `updated_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
