@@ -1,5 +1,14 @@
 # Skill: Messaging - RabbitMQ
 
+## Category: messaging
+## Provides:
+- Rabbitmq
+## Conflicts With:
+- contracts
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the technical implementation for a distributed, highly available, asynchronous messaging broker using RabbitMQ.
 
 ## Technical Requirements

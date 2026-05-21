@@ -1,5 +1,16 @@
 # Platform Skill: Ktor
 
+## Category: platforms
+## Provides:
+- Ktor
+## Conflicts With:
+- axum
+- gin
+- spring
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Ktor 2.3.x.
 - **Engine**: Netty (default).

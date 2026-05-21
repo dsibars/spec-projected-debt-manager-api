@@ -1,5 +1,20 @@
 # Skill: Clean Code & Maintainability
 
+## Category: patterns
+## Provides:
+- Clean Code
+## Conflicts With:
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- resilience
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the mandatory coding standards for all code synthesized by the Builder agent, ensuring the output reads like hand-written, maintainable code authored by a senior engineer.
 
 ## 1. No Hardcoding

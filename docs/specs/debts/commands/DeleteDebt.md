@@ -1,22 +1,31 @@
-# Use Case: Delete Debt (Archive)
+# Command: Delete Debt (Archive)
 
 ## Goal
 Mark a debt as archived to preserve historical data while removing it from active lists.
 
-## Flow
-1. Receive `debtId`.
-2. Find [[models/Debt]] with `debtId`.
-3. If not found, return `DebtNotFound`.
-4. Set `isArchived` to `true`.
-5. Set `updatedAt` to now.
-6. Store the updated [[models/Debt]].
-7. Update [[projections/DebtSummaryProjection]] via [[commands/UpdateDebtSummary]] with:
-   - `debtId`: The `debtId`.
-   - `isArchived`: `true`.
-8. Return nothing (success).
+## Input
+- `tenantId`: UUID (Injected from Auth context)
+- `debtId`: UUID
 
-## Emits
-- `DebtDeleted`
+## Preconditions
+- The referenced debt must exist and belong to the `tenantId`.
+
+## Flow
+1. Find [[models/Debt]] with `debtId` and `tenantId`.
+2. If not found, raise `DebtNotFound`.
+3. Set `isArchived` to `true`.
+4. Set `updatedAt` to now.
+5. Persist the updated [[models/Debt]].
+
+## Postconditions
+- The debt's `isArchived` flag is `true`.
+- The debt does not appear in default list queries once the projection is updated.
+
+## Effects
+- Emits: `DebtDeleted`
 
 ## Errors
 - `DebtNotFound`
+
+## Result
+- `void`

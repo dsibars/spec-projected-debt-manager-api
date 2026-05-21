@@ -1,5 +1,16 @@
 # Language Skill: Go
 
+## Category: languages
+## Provides:
+- Go
+## Conflicts With:
+- java
+- kotlin
+- rust
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Go 1.22+.
 - **Style Guide**: Follow `gofmt` and [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments).

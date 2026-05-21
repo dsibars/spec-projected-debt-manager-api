@@ -1,5 +1,16 @@
 # Language Skill: Java
 
+## Category: languages
+## Provides:
+- Java
+## Conflicts With:
+- go
+- kotlin
+- rust
+## Depends On:
+- None explicitly declared
+
+
 ## Best Practices
 - **Records**: For DTOs and Value Objects.
 - **Mutable Aggregates**: Standard classes with private fields and domain-rich methods.

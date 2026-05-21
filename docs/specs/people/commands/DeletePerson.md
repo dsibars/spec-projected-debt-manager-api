@@ -1,19 +1,32 @@
-# Use Case: Delete Person (Archive)
+# Command: Delete Person (Archive)
 
 ## Goal
 Mark a person as archived so they no longer appear in active lists, while preserving their historical data.
 
-## Flow
-1. Receive `id`.
-2. Find the existing [[models/Person]] in the Store.
-3. If not found, return an error.
-4. Set `isArchived` to `true`.
-5. Set `updatedAt` to the current system time.
-6. Persist the changes to the Store.
-7. Return the `id`.
+## Input
+- `tenantId`: `uuid` (Injected from Auth context)
+- `id`: `uuid`
 
-## Emits
-- `PersonArchived` (payload: `id`)
+## Preconditions
+- The referenced person must exist and belong to the `tenantId`.
+
+## Flow
+1. Find the existing [[models/Person]] by `id` and `tenantId`.
+2. If not found, raise `PersonNotFound`.
+3. Set `isArchived` to `true`.
+4. Set `updatedAt` to the current system time.
+5. Persist the changes to the Store.
+6. Emit `PersonArchived` event.
+
+## Postconditions
+- The person's `isArchived` flag is `true`.
+- The person does not appear in default list queries.
+
+## Effects
+- Emits: `PersonArchived` (payload: `id`)
 
 ## Errors
-- `PersonNotFound`: If the `id` does not match any existing person.
+- `PersonNotFound`: If the `id` does not match any existing person for this tenant.
+
+## Result
+- `void`

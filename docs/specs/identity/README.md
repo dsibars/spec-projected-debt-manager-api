@@ -15,13 +15,14 @@ This module owns:
 - @shared/skills/security/oauth-integration
 
 ## Entry Points
-- REST: [[presentation/rest/api]]
+- REST: [[presentation/rest/auth]], [[presentation/rest/backoffice]]
 - Commands: (See commands/)
 - Queries: (See queries/)
 
 ## Events Produced
 - [[events/UserRegistered]]
 - [[events/IdentityPurgeRequested]]
+- [[events/UserAuthenticated]]
 
 ## Events Consumed
 - (None)

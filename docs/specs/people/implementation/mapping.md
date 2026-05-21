@@ -1,7 +1,7 @@
 # Implementation: People Module Mapping
 
 This document maps the business specifications of the People module to the technical Shared Skills. It inherits global baselines from [[specs/shared/implementation]].
-Target Database: **WRITE_DB**
+Target Database: **Primary PostgreSQL**
 
 ## Module-Specific Skill Assignments
 
@@ -17,6 +17,7 @@ Target Database: **WRITE_DB**
     - `name`: `VARCHAR(255)` (Not Null)
     - `email`: `VARCHAR(255)` (Unique, Nullable)
     - `phone`: `VARCHAR(50)` (Nullable)
+- `external_ref`: `VARCHAR(255)` (Nullable)
     - `is_archived`: `BOOLEAN` (Not Null, Default False)
     - `created_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
     - `updated_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)

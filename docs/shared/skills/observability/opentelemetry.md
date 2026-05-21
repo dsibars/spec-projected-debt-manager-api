@@ -1,5 +1,14 @@
 # Skill: OpenTelemetry & Observability
 
+## Category: observability
+## Provides:
+- Opentelemetry
+## Conflicts With:
+- signoz
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the law for instrumenting the system with traces, metrics, and logs.
 
 ## Principles
@@ -12,7 +21,7 @@ All applications MUST produce logs in **Structured JSON** format to facilitate a
 - **Mandatory Fields**: `timestamp`, `level`, `traceId`, `spanId`, `tenantId`, `message`.
 - **Log Levels**:
     - `INFO`: Business milestones (e.g., "User Registered", "Debt Created").
-    - `WARN`: Recoverable errors (e.g., "Shard in Maintenance - retrying").
+    - `WARN`: Recoverable errors (e.g., "Rate limit exceeded - throttling").
     - `ERROR`: System failures or unhandled exceptions.
 - **PII Protection**: Never log sensitive data (passwords, PII) in plain text.
 

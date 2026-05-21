@@ -20,4 +20,4 @@ Represents a financial obligation.
 ## Constraints
 - `totalAmount` must be greater than zero.
 - `currentBalance` must be between 0 and `totalAmount`.
-- `personId` must refer to an existing Person.
+- `personId` must refer to an existing `PersonReadModel` in the local integration store (replicated from the People module).

@@ -1,5 +1,20 @@
 # Skill: CQRS and Event-Driven Architecture
 
+## Category: patterns
+## Provides:
+- Cqrs And Events
+## Conflicts With:
+- clean-code
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- resilience
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the technical laws for implementing Command Query Responsibility Segregation (CQRS) and inter-module communication via Eventual Consistency.
 
 ## 1. Strict CQRS Laws
@@ -38,6 +53,6 @@ To maintain high availability and decoupling, the system uses Eventual Consisten
     *   The requesting module uses its existing Event Handlers to ingest this historical data idempotently.
 
 ## 4. Specification Syntax
-When writing declarative logic specs in `docs/specs/[module]/logic/`, use the following sections:
+When writing declarative command specs in `docs/specs/[module]/commands/`, use the following sections:
 - `## Emits`: List the events triggered by the command.
 - `## Subscribes To`: List the external events this handler listens to.

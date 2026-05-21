@@ -1,5 +1,20 @@
 # Skill: Simplified DDD Approach
 
+## Category: patterns
+## Provides:
+- Simplified Ddd
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- resilience
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the architectural patterns for a "Simplified Domain Driven Design" (DDD).
 
 ## Core Principles
@@ -20,10 +35,10 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
 
 5.  **Multi-Tenancy Isolation Law**: 
     - Functionally: `tenantId` == `userId`.
-    - Sharding: `sid` identifying the physical partition.
+    - Routing: `tenantId` extracted from the JWT `sub` claim for data isolation.
 
 6.  **Persistence Segregation Law**:
-    - `WRITE_DB` (Aggregates) vs `READ_DB` (Projections).
+    - Primary schema (Aggregates) vs Projection schema (Read Models) within the same database instance.
     - No physical coupling (FKs) between Write and Read sides.
 
 ## 7. Event-First Design Law

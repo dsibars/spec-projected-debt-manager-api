@@ -1,5 +1,14 @@
 # Skill: API Documentation - OpenAPI (Swagger)
 
+## Category: presentation
+## Provides:
+- Openapi
+## Conflicts With:
+- rest-api
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the requirements for automated API documentation and discovery.
 
 ## 1. Core Principles

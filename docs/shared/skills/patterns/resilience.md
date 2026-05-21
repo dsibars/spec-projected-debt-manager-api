@@ -1,6 +1,21 @@
 # Skill: Resilience & Consistency Patterns
 
-This skill defines the laws for maintaining data integrity and recovering from failures in a distributed, sharded ecosystem.
+## Category: patterns
+## Provides:
+- Resilience
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
+This skill defines the laws for maintaining data integrity and recovering from failures in a distributed, multi-tenant ecosystem.
 
 ## 1. Transactional Outbox Law
 To prevent data loss between the Database and the Message Broker:
@@ -14,6 +29,7 @@ Projections are eventually consistent. If events are lost or a new projection is
 - Every module MUST provide a "Replay" command (e.g., `ReplayActivePeople`) that emits current-state events for a specific `tenantId`.
 - Subscribers MUST implement the **Idempotent Consumer** pattern using an `inbox` table to prevent duplicate processing.
 
-## 3. Shard-Aware Routing Law
-- Repositories MUST be aware of the `shardId` provided in the context.
-- In a multi-database environment, the `ShardPort` is responsible for selecting the correct database connection/pool based on the `shardId`.
+## 3. Circuit Breaker Law
+- External service calls (e.g., email providers, payment gateways) MUST be wrapped in circuit breakers.
+- After a configurable failure threshold, the circuit MUST open and fail fast.
+- When the circuit is open, the system SHOULD degrade gracefully (e.g., queue the operation for retry).

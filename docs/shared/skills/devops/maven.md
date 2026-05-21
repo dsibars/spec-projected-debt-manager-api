@@ -1,5 +1,18 @@
 # DevOps Skill: Maven
 
+## Category: devops
+## Provides:
+- Maven
+## Conflicts With:
+- cargo
+- configuration-management
+- dockerization
+- go-modules
+- health-probes
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Wrapper**: Always use the Maven Wrapper (`mvnw`) to ensure consistent build environments.
 - **pom.xml**: Maintain a clean `pom.xml`. Group dependencies logically (e.g., Spring Boot starters, persistence, testing).

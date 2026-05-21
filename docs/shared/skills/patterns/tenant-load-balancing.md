@@ -1,19 +1,30 @@
-# Skill: Tenant Load Balancing Strategy
+# Skill: Tenant Isolation & Scaling Strategy
 
-This skill defines the deterministic algorithm for assigning new users to tenants (shards).
+## Category: patterns
+## Provides:
+- Tenant Isolation
+## Conflicts With:
+- None
+## Depends On:
+- @shared/skills/persistence/postgresql
+
+This skill defines how multi-tenant isolation and horizontal scaling are achieved at the infrastructure level, without polluting the domain model.
 
 ## Principles
-1.  **Capacity Awareness**: Never assign a user to a tenant that has reached its capacity.
-2.  **Even Distribution**: Distribute users across available tenants.
+1.  **Domain Purity**: The domain model MUST NOT contain infrastructure scaling concepts (shards, partitions, cells). Tenant isolation is achieved via the `tenantId` column on every aggregate.
+2.  **Infrastructure Scaling**: Horizontal scaling is handled by:
+    - **PostgreSQL Read Replicas**: For scaling read-heavy query workloads.
+    - **Connection Pooling**: Per-tenant or per-application connection pools.
+    - **Application Caching**: Redis for hot data (user profiles, session data).
+    - **Database Partitioning**: If needed, use PostgreSQL native table partitioning by `tenantId` (declarative partitioning) or external tools like Citus.
 
-## Atomic Load Increment Law
-To prevent over-provisioning in a distributed system without needing global locks:
-- The Shard Assignment MUST use an atomic database update on the Global Identity DB.
-- **Query**: `UPDATE shards SET current_load = current_load + 1 WHERE id = :id AND current_load < capacity AND status = 'ACTIVE'`.
-- If the rows affected is 0, the operation must retry with the next available shard or return `SystemOverloaded`.
+## Tenant Isolation Law
+- Every table MUST include a `tenant_id` column.
+- Every query MUST filter by `tenant_id`.
+- No cross-tenant queries are permitted at the application level.
+- Foreign keys MUST never span tenants.
 
-## Selection Algorithm
-1. Filter `ACTIVE` shards.
-2. Sort by `currentLoad` (Ascending).
-3. Attempt Atomic Increment on the top shard.
-4. If successful, that shard is assigned.
+## Query Routing
+- The Presentation layer extracts `tenantId` from the JWT `sub` claim.
+- The application routes queries to read replicas transparently (via connection pool configuration).
+- There is NO application-level shard selection logic.

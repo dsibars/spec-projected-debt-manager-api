@@ -1,12 +1,11 @@
 # Model: User Index
 
 ## Goal
-To maintain a global, cross-shard registry of all registered emails to ensure global uniqueness and facilitate shard discovery during authentication.
+To maintain a global registry of all registered emails to ensure global uniqueness during registration and authentication.
 
 ## Properties
 - `email`: `string` (Primary Key / Unique)
-- `userId`: `uuid` (Link to the User in their respective Shard)
-- `shardId`: `uuid` (The physical location of the User's data)
+- `userId`: `uuid` (Link to the User)
 - `createdAt`: `datetime`
 
 ## Constraints

@@ -1,21 +1,32 @@
-# Skill: Read/Write Persistence Split (Strict CQRS)
+# Skill: Read/Write Persistence Split (CQRS)
 
-This skill defines the law for separating the physical storage of Write Models (Aggregates) and Read Models (Projections).
+## Category: persistence
+## Provides:
+- Read Write Split
+## Conflicts With:
+- None
+## Depends On:
+- @shared/skills/patterns/cqrs-and-events
+
+This skill defines the law for separating Write Models (Aggregates) and Read Models (Projections) in a CQRS architecture.
 
 ## Principles
-1.  **Physical Separation**: The system MUST connect to two distinct database instances: `WRITE_DB` and `READ_DB`.
-2.  **Connection Segregation**:
-    - **Command Layer**: MUST use the `WRITE_DB` connection for aggregate persistence.
-    - **Query Layer**: MUST only use the `READ_DB`.
-    - **Dual-Write (Inline)**: If a projection is marked for inline updates, the Command Layer is granted permission to use a `READ_DB` connection within its execution context.
-3.  **Schema Segregation**:
-    - The `WRITE_DB` schema contains the Normalized Relational Model (Aggregates).
-    - The `READ_DB` schema contains the Denormalized View Model (Projections).
+1.  **Logical Separation**: Write Models and Read Models are separate conceptual layers.
+2.  **Physical Options**:
+    - **Same Database, Separate Schemas**: Read models live in a `projections` schema within the same PostgreSQL instance as aggregates. This is the recommended starting point for most SaaS.
+    - **Read Replica**: Read models are served from PostgreSQL read replicas fed by streaming replication. Suitable for read-heavy workloads.
+    - **Dedicated Read Store**: Read models are materialized in a separate store (e.g., Elasticsearch, ClickHouse, or a separate PostgreSQL instance) via CDC or event consumption.
+3.  **No Inline Updates**: Command Handlers MUST NOT write to Read Models. Read Models are updated exclusively by:
+    - Event subscribers reacting to domain events.
+    - CDC pipelines (e.g., Debezium) streaming changes from the write model.
+    - Database triggers or materialized view refreshes (infrastructure concern).
 
 ## Synchronization Mechanics
-1.  **Application-Level Sync (Event-Driven)**: Cross-module projections are updated by Domain Events via subscribers writing to the `READ_DB`.
-2.  **Inline Sync (Atomic)**: High-priority projections are updated by the Command Layer directly to the `READ_DB` to ensure read-your-own-write consistency.
+1.  **Event-Driven Projections (Primary)**: Read Models are updated by event subscribers within the same module. The subscriber consumes a domain event and writes to the projection table.
+2.  **CDC Projections (Advanced)**: For cross-module or analytical projections, use Change Data Capture (Debezium) to stream aggregate changes to a dedicated read store.
+3.  **Consistency**: Read Models are eventually consistent. The typical latency between write and read model update is milliseconds.
 
 ## Technical Requirements
-- **Postgres Instances**: Two separate containers (`db-write` and `db-read`).
-- **Connection Pools**: The application MUST maintain distinct connection pools for `WRITE_DB` and `READ_DB`.
+- **PostgreSQL**: Single primary instance with optional read replicas.
+- **Projections Schema**: Read model tables SHOULD reside in a dedicated schema (e.g., `projections`) within the primary database for operational simplicity.
+- **Connection Pools**: If using read replicas, the Query Layer MUST use the replica connection pool.

@@ -11,3 +11,6 @@ Retrieve details of a specific debt.
 
 ## Errors
 - `DebtNotFound`
+
+## Result
+- [[models/Debt]]

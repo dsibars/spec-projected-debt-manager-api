@@ -1,5 +1,14 @@
 # Skill: Messaging - Event Contracts
 
+## Category: messaging
+## Provides:
+- Contracts
+## Conflicts With:
+- rabbitmq
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the structural laws and naming conventions for all asynchronous messages dispatched via the Event Bus.
 
 ## 1. The Global Envelope Law

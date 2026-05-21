@@ -1,5 +1,17 @@
 # Skill: Data Seeding and Bootstrapping
 
+## Category: persistence
+## Provides:
+- Seeding
+## Conflicts With:
+- migrations
+- postgresql
+- read-write-split
+- repository-pattern
+## Depends On:
+- None explicitly declared
+
+
 This skill defines how the system initializes its state for development, testing, and production environments.
 
 ## 1. Principles
@@ -11,7 +23,7 @@ This skill defines how the system initializes its state for development, testing
 For the system to allow registration, at least one ACTIVE tenant must exist (as per the Tenant Load Balancing strategy).
 
 - **The Seed Migration**: Each implementation MUST provide a `V0__seed_initial_tenant.sql` migration or a code-based seeder that inserts a "Default Tenant" into the `identity.tenants` table if it is empty.
-- **Local Dev**: `make infra-up` must result in a database with at least one tenant ready.
+- **Local Dev**: `make start-core` must result in a database with at least one tenant ready.
 
 ## 3. Environment-Specific Seeding
 - **Development**: Seeding should include a range of dummy users, people, and debts to allow immediate manual testing.
@@ -24,4 +36,4 @@ For the system to allow registration, at least one ACTIVE tenant must exist (as 
 - **Idempotency**: Seeding scripts MUST use `INSERT ... ON CONFLICT DO NOTHING` or similar logic to prevent duplicate data errors on restarts.
 - **Makefile Interface**:
     - `make seed`: Executes the seeder for the current environment.
-    - `make infra-up` should automatically trigger seeding in the `dev` profile.
+    - `make start-core` should automatically trigger seeding in the `dev` profile.

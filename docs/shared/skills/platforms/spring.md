@@ -1,5 +1,16 @@
 # Platform Skill: Spring Boot
 
+## Category: platforms
+## Provides:
+- Spring
+## Conflicts With:
+- axum
+- gin
+- ktor
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Spring Boot 3.2.x.
 - **Dependency Injection**: Constructor-based injection is required. Avoid `@Autowired` on fields.

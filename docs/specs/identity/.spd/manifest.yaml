@@ -1,0 +1,10 @@
+manifest_version: 1.0.0
+module: identity
+frozen_at: null
+spec_hash: null
+dependencies: []
+events_produced:
+  - UserRegistered
+  - IdentityPurgeRequested
+  - UserAuthenticated
+events_consumed: []

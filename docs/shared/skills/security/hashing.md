@@ -1,5 +1,17 @@
 # Skill: Secure Password Hashing
 
+## Category: security
+## Provides:
+- Hashing
+## Conflicts With:
+- jwt
+- oauth-integration
+- pii-management
+- traffic-governance
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the technical law for protecting user credentials at rest.
 
 ## Principles

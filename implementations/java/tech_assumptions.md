@@ -1,5 +1,7 @@
 # Technical Assumptions Ledger
 
-This file contains the "vibe-based" technical choices made by the Builder that are not explicitly defined in the Shared Skills.
+Format: [Date] - [Assumption Made] - [Reasoning] - [Affected Modules]
 
-- [Date] - [Assumption Made] - [Reasoning] - [Affected Modules]
+> Assumptions are for skill gaps only, not creative freedom.
+> Once validated, assumptions MUST be promoted to formal skills via PROMOTE directive.
+

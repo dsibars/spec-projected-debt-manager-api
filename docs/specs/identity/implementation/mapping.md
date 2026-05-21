@@ -1,7 +1,7 @@
 # Implementation: Identity Module Mapping
 
 Technical mapping for Identity and Access Management (IAM) data. Inherits [[specs/shared/implementation]].
-Target Database: **WRITE_DB**
+Target Database: **Primary PostgreSQL**
 
 ## Module-Specific Skill Assignments
 
@@ -14,7 +14,6 @@ Target Database: **WRITE_DB**
 
 ### Table: `users` (Schema: `identity`)
 - `id`: `UUID` (PK)
-- `shard_id`: `UUID` (FK -> `identity.shards.id`)
 - `email`: `VARCHAR(255)` (Unique, Not Null)
 - `is_active`: `BOOLEAN` (Not Null, Default True)
 - `last_login_at`: `TIMESTAMP WITH TIME ZONE`
@@ -28,16 +27,11 @@ Target Database: **WRITE_DB**
 - `secret`: `TEXT` (Not Null)
 - `provider_data`: `JSONB`
 
-### Table: `shards` (Schema: `identity`)
-- `id`: `UUID` (PK)
-- `name`: `VARCHAR(255)` (Not Null)
-- `status`: `VARCHAR(50)` (Not Null)
-- `capacity`: `INTEGER` (Not Null)
-- `current_load`: `INTEGER` (Not Null, Default 0)
-- `region`: `VARCHAR(100)` (Not Null)
+### Table: `user_index` (Schema: `identity`)
+- `email`: `VARCHAR(255)` (PK)
+- `user_id`: `UUID` (Not Null)
+- `created_at`: `TIMESTAMP WITH TIME ZONE` (Not Null)
 
 ## Indexes
 - `idx_users_email` on `identity.users(email)`
-- `idx_users_shard_id` on `identity.users(shard_id)`
-- `idx_shards_status` on `identity.shards(status)`
 - `idx_credentials_user_id` on `identity.credentials(user_id)`
