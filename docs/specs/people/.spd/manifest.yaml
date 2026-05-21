@@ -1,0 +1,8 @@
+manifest_version: 1.0.0
+module: people
+frozen_at: null
+spec_hash: null
+dependencies: []
+events_produced: []
+events_consumed: []
+
