@@ -1,5 +1,16 @@
 # Language Skill: Kotlin
 
+## Category: languages
+## Provides:
+- Kotlin
+## Conflicts With:
+- go
+- java
+- rust
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Kotlin 1.9.22+.
 - **Runtime**: JVM 21.

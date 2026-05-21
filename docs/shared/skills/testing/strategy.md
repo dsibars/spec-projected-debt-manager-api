@@ -1,5 +1,14 @@
 # Skill: Testing Strategy
 
+## Category: testing
+## Provides:
+- Strategy
+## Conflicts With:
+- behavior-projection
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the architectural requirements and standards for testing all API implementations.
 
 ## Core Principles: The Testing Pyramid

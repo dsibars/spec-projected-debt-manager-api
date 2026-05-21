@@ -1,5 +1,18 @@
 # Skill: External OAuth Integration (Google & Apple)
 
+## Category: security
+## Provides:
+- Oauth Integration
+## Conflicts With:
+- hashing
+- jwt
+- pii-management
+- token-cache
+- traffic-governance
+## Depends On:
+- None explicitly declared
+
+
 This skill defines how the system interacts with external Identity Providers (IdP).
 
 ## Principles

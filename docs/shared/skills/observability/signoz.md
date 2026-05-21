@@ -1,5 +1,14 @@
 # Skill: SigNoz Observability Stack
 
+## Category: observability
+## Provides:
+- Signoz
+## Conflicts With:
+- opentelemetry
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the deployment and integration with the SigNoz observability platform.
 
 ## Architecture

@@ -1,5 +1,18 @@
 # Skill: DevOps - Health & Probes
 
+## Category: devops
+## Provides:
+- Health Probes
+## Conflicts With:
+- cargo
+- configuration-management
+- dockerization
+- go-modules
+- maven
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the mandatory health monitoring endpoints for production readiness.
 
 ## 1. Mandatory Endpoints

@@ -1,5 +1,18 @@
 # Skill: DevOps - Configuration Management
 
+## Category: devops
+## Provides:
+- Configuration Management
+## Conflicts With:
+- cargo
+- dockerization
+- go-modules
+- health-probes
+- maven
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the environment-based configuration management and the "Configuration Contract" for all shared skills.
 
 ## 1. The Configuration Contract

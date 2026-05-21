@@ -1,5 +1,16 @@
 # Platform Skill: Axum
 
+## Category: platforms
+## Provides:
+- Axum
+## Conflicts With:
+- gin
+- ktor
+- spring
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Axum 0.7.x.
 - **Runtime**: Tokio.

@@ -1,5 +1,17 @@
 # Skill: Persistence - Repository & DataSource Strategy
 
+## Category: persistence
+## Provides:
+- Repository Pattern
+## Conflicts With:
+- migrations
+- postgresql
+- read-write-split
+- seeding
+## Depends On:
+- None explicitly declared
+
+
 This skill defines how the Builder should generate the data access layer for a sharded, split-DB architecture.
 
 ## 1. DataSource Strategy

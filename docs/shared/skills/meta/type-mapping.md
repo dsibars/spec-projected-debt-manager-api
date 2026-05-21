@@ -1,5 +1,14 @@
 # Skill: Universal Type Mapping
 
+## Category: meta
+## Provides:
+- Type Mapping
+## Conflicts With:
+- None
+## Depends On:
+- None
+
+
 ## Purpose
 Defines how abstract spec types map to concrete types in each target language.
 

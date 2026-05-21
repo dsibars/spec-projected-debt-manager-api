@@ -1,5 +1,20 @@
 # Skill: Resilience & Consistency Patterns
 
+## Category: patterns
+## Provides:
+- Resilience
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the laws for maintaining data integrity and recovering from failures in a distributed, sharded ecosystem.
 
 ## 1. Transactional Outbox Law

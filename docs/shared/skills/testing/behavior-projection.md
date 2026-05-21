@@ -1,5 +1,14 @@
 # Skill: Behavior-to-Test Projection
 
+## Category: testing
+## Provides:
+- Behavior Projection
+## Conflicts With:
+- strategy
+## Depends On:
+- None explicitly declared
+
+
 ## Purpose
 Defines how natural language behaviors in `docs/specs/[module]/behaviors/` are projected into executable tests.
 

@@ -1,5 +1,18 @@
 # Skill: DevOps - Go Modules
 
+## Category: devops
+## Provides:
+- Go Modules
+## Conflicts With:
+- cargo
+- configuration-management
+- dockerization
+- health-probes
+- maven
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the standards for dependency management and build orchestration in Go-based implementations.
 
 ## Standards

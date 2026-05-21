@@ -1,5 +1,16 @@
 # Platform Skill: Gin
 
+## Category: platforms
+## Provides:
+- Gin
+## Conflicts With:
+- axum
+- ktor
+- spring
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Gin v1.9.x.
 

@@ -1,5 +1,20 @@
 # Skill: Pattern - Outbox & Inbox Schema
 
+## Category: patterns
+## Provides:
+- Outbox Inbox Schema
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- resilience
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the standard SQL schema for implementing the Outbox and Inbox patterns consistently across all modules.
 
 ## 1. Outbox Table Schema

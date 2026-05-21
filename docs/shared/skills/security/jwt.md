@@ -1,5 +1,18 @@
 # Skill: JWT Management (Issuance & Validation)
 
+## Category: security
+## Provides:
+- Jwt
+## Conflicts With:
+- hashing
+- oauth-integration
+- pii-management
+- token-cache
+- traffic-governance
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the technical law for generating and validating JSON Web Tokens (JWT) for authentication and tenant isolation.
 
 ## Principles

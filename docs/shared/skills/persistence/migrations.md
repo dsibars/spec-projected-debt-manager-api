@@ -1,5 +1,17 @@
 # Skill: Migrations
 
+## Category: persistence
+## Provides:
+- Migrations
+## Conflicts With:
+- postgresql
+- read-write-split
+- repository-pattern
+- seeding
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the abstract, technology-agnostic philosophy and requirements for managing structural or data state changes over time across any persistence layer.
 
 ## Core Concepts

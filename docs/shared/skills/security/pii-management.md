@@ -1,5 +1,18 @@
 # Skill: PII Management & GDPR Compliance
 
+## Category: security
+## Provides:
+- Pii Management
+## Conflicts With:
+- hashing
+- jwt
+- oauth-integration
+- token-cache
+- traffic-governance
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the law for handling Personally Identifiable Information (PII) across the distributed ecosystem.
 
 ## Principles

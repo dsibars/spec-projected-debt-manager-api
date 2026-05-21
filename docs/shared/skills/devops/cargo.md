@@ -1,5 +1,18 @@
 # Skill: DevOps - Cargo (Rust)
 
+## Category: devops
+## Provides:
+- Cargo
+## Conflicts With:
+- configuration-management
+- dockerization
+- go-modules
+- health-probes
+- maven
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the standards for dependency management and build orchestration in Rust-based implementations.
 
 ## Standards

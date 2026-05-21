@@ -1,5 +1,18 @@
 # Skill: Security - Traffic Governance (Rate Limiting)
 
+## Category: security
+## Provides:
+- Traffic Governance
+## Conflicts With:
+- hashing
+- jwt
+- oauth-integration
+- pii-management
+- token-cache
+## Depends On:
+- None explicitly declared
+
+
 This skill defines how the system protects itself from resource exhaustion and "Noisy Neighbor" effects.
 
 ## 1. Tenant-Level Rate Limiting

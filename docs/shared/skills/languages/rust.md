@@ -1,5 +1,16 @@
 # Language Skill: Rust
 
+## Category: languages
+## Provides:
+- Rust
+## Conflicts With:
+- go
+- java
+- kotlin
+## Depends On:
+- None explicitly declared
+
+
 ## Standards
 - **Version**: Rust 1.76+ (Stable).
 - **Edition**: 2021.

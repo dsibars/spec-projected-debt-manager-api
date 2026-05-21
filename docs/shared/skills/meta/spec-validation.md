@@ -1,5 +1,14 @@
 # Meta Skill: Spec Validation (LINT)
 
+## Category: meta
+## Provides:
+- Spec Validation
+## Conflicts With:
+- None
+## Depends On:
+- None
+
+
 This skill defines the formal validation rules for the `LINT` directive. It operates exclusively on the Formal Layer (Section 1 of AGENTS.md).
 
 ## Purpose

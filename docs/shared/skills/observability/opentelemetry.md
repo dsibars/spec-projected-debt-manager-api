@@ -1,5 +1,14 @@
 # Skill: OpenTelemetry & Observability
 
+## Category: observability
+## Provides:
+- Opentelemetry
+## Conflicts With:
+- signoz
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the law for instrumenting the system with traces, metrics, and logs.
 
 ## Principles

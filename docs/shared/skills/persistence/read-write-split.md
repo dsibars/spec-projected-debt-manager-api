@@ -1,5 +1,17 @@
 # Skill: Read/Write Persistence Split (Strict CQRS)
 
+## Category: persistence
+## Provides:
+- Read Write Split
+## Conflicts With:
+- migrations
+- postgresql
+- repository-pattern
+- seeding
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the law for separating the physical storage of Write Models (Aggregates) and Read Models (Projections).
 
 ## Principles

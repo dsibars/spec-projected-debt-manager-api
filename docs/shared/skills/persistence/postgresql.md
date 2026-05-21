@@ -1,5 +1,17 @@
 # Skill: Persistence - PostgreSQL
 
+## Category: persistence
+## Provides:
+- Postgresql
+## Conflicts With:
+- migrations
+- read-write-split
+- repository-pattern
+- seeding
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the technical "laws" for persisting data using a PostgreSQL database.
 
 ## Technical Requirements

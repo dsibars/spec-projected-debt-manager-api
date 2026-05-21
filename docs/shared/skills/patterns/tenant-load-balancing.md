@@ -1,5 +1,20 @@
 # Skill: Tenant Load Balancing Strategy
 
+## Category: patterns
+## Provides:
+- Tenant Load Balancing
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- resilience
+- simplified-ddd
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the deterministic algorithm for assigning new users to tenants (shards).
 
 ## Principles

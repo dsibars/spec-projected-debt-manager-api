@@ -1,5 +1,14 @@
 # Skill: Global Data Standards
 
+## Category: standards
+## Provides:
+- Data Formats
+## Conflicts With:
+- None
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the mandatory data formats and serialization standards to ensure technical interoperability across all projected modules and implementations.
 
 ## 1. Temporal Standards (Date & Time)

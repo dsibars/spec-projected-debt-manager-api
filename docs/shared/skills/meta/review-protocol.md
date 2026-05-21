@@ -1,5 +1,14 @@
 # Meta Skill: Review Protocol
 
+## Category: meta
+## Provides:
+- Review Protocol
+## Conflicts With:
+- None
+## Depends On:
+- None
+
+
 This skill defines the exact validation procedures for the Reviewer agent (Section 9.3 of AGENTS.md).
 
 ## Purpose

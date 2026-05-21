@@ -1,5 +1,20 @@
 # Skill: Data Replication & Read Models
 
+## Category: patterns
+## Provides:
+- Data Replication
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- module-boundaries
+- outbox-inbox-schema
+- resilience
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the strategy for cross-module data consistency using Event-Driven Data Replication and Read Models.
 
 ## 1. Architectural Philosophy

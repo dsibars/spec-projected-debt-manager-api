@@ -1,5 +1,14 @@
 # Meta Skill: Compilation Algorithm
 
+## Category: meta
+## Provides:
+- Compilation Algorithm
+## Conflicts With:
+- None
+## Depends On:
+- None
+
+
 This skill provides the operational detail for the 4-Phase Compilation Algorithm defined in AGENTS.md Section 2.
 
 ## Purpose

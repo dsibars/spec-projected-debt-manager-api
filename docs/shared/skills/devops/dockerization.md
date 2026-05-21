@@ -1,5 +1,18 @@
 # Skill: DevOps - Dockerization
 
+## Category: devops
+## Provides:
+- Dockerization
+## Conflicts With:
+- cargo
+- configuration-management
+- go-modules
+- health-probes
+- maven
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the standards for containerizing the application and its environment.
 
 ## Container Standards

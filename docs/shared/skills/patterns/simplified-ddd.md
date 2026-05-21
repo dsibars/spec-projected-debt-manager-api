@@ -1,5 +1,20 @@
 # Skill: Simplified DDD Approach
 
+## Category: patterns
+## Provides:
+- Simplified Ddd
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- module-boundaries
+- outbox-inbox-schema
+- resilience
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the architectural patterns for a "Simplified Domain Driven Design" (DDD).
 
 ## Core Principles

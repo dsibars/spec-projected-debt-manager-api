@@ -1,5 +1,14 @@
 # Skill: Presentation - REST API
 
+## Category: presentation
+## Provides:
+- Rest Api
+## Conflicts With:
+- openapi
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the technical laws for projecting a RESTful HTTP server.
 
 ## Technical Requirements

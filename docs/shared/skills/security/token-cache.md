@@ -1,5 +1,18 @@
 # Skill: Security - Token Cache (High Performance)
 
+## Category: security
+## Provides:
+- Token Cache
+## Conflicts With:
+- hashing
+- jwt
+- oauth-integration
+- pii-management
+- traffic-governance
+## Depends On:
+- None explicitly declared
+
+
 This skill defines the law for caching security metadata to avoid expensive database lookups during stateless authentication.
 
 ## 1. The Requirement

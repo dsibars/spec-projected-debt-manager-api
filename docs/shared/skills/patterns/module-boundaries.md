@@ -1,5 +1,20 @@
 # Skill: Module Boundaries
 
+## Category: patterns
+## Provides:
+- Module Boundaries
+## Conflicts With:
+- clean-code
+- cqrs-and-events
+- data-replication
+- outbox-inbox-schema
+- resilience
+- simplified-ddd
+- tenant-load-balancing
+## Depends On:
+- None explicitly declared
+
+
 ## Purpose
 Defines the rules for cross-module communication and dependency management.
 

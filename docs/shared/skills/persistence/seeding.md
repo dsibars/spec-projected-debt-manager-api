@@ -1,5 +1,17 @@
 # Skill: Data Seeding and Bootstrapping
 
+## Category: persistence
+## Provides:
+- Seeding
+## Conflicts With:
+- migrations
+- postgresql
+- read-write-split
+- repository-pattern
+## Depends On:
+- None explicitly declared
+
+
 This skill defines how the system initializes its state for development, testing, and production environments.
 
 ## 1. Principles
