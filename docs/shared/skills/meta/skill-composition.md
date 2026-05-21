@@ -78,7 +78,7 @@ Every operational skill MUST declare its interface in its header:
 ```markdown
 # Skill: PostgreSQL Persistence
 
-## Category: persistence
+## Category: meta
 ## Provides:
 - Table schema syntax
 - Column type mapping

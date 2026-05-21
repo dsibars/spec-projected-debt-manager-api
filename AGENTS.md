@@ -266,6 +266,10 @@ Every implementation MUST be "ready-to-run" for a human developer. The Builder i
 - `make logs`: Tails logs from all running containers and services.
 - `make clean`: Removes build artifacts, Docker volumes, and resets the local environment.
 
+#### Benchmarking
+- `make benchmark`: Executes the standardized benchmark protocol defined in `@shared/skills/testing/benchmarking` against a fresh local environment. Emits `benchmark-report.json`.
+- `make benchmark-compare BASE=[TargetA] TARGET=[TargetB]`: Compares two benchmark reports and outputs a diff analysis.
+
 > [!NOTE]
 > The specific underlying commands are determined by the config and the Shared Skills. If a build tool is chosen but not strictly defined, log it in `tech_assumptions`.
 
@@ -321,7 +325,7 @@ When communicating with the agents, humans or CI/CD pipelines will use these dir
 - **`ADVANCE [Target] [TaskId?]`**: Instruct the Builder to execute tasks. If `TaskId` is omitted, the Builder picks the first non-`DONE` task. Multiple Builders MAY operate on different tasks in parallel.
 - **`REVIEW [Target] [TaskId?]`**: Trigger The Reviewer. If `TaskId` is omitted, review all `PENDING_REVIEW` tasks.
 - **`AUDIT`**: Compare `docs/` against all `implementations/` and report **OUTDATED** modules or broken assumptions.
-- **`BENCHMARK [Target A] vs [Target B]`**: Generate both implementations and output a comparison report (performance, complexity).
+- **`BENCHMARK [Target A] vs [Target B]`**: Execute the standardized benchmark protocol on both targets (or reuse existing `benchmark-report.json` files), validate schema compatibility, and output a comparison report analyzing latency, throughput, and event propagation across all 5 phases.
 - **`REFACTOR SKILL [Skill Path]`**: Update a technical law and systematically propagate the architectural change to all dependent target implementations.
 - **`PROMOTE [AssumptionId]`**: Move an assumption from `tech_assumptions.md` to a formal `@shared/skills/` file.
 

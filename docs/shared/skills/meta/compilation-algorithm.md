@@ -91,7 +91,14 @@ For each generated artifact, inject technical boilerplate:
 - Security skill → JWT extraction filters, context injection.
 - Messaging skill → Outbox entity, event publishers, subscriber adapters.
 
-### Step 3.4: Assumption Recording
+### Step 3.4: Benchmark Harness Generation
+The Builder MUST generate a benchmark harness conforming to `@shared/skills/testing/benchmarking`:
+1. Generate the benchmark entrypoint (e.g., `cmd/benchmark/main.go`, `src/bin/benchmark.rs`).
+2. Generate deterministic data generators using seed `42`.
+3. Generate HTTP client calls for all 5 benchmark phases.
+4. Generate the report writer that emits `benchmark-report.json`.
+
+### Step 3.5: Assumption Recording
 If a technical choice has no covering skill:
 1. Check `tech_assumptions.md` for an existing entry.
 2. If found, apply it.
@@ -152,4 +159,6 @@ If all retries exhausted, HALT. Task status becomes `BUILD_FAILURE`.
 | I | `dependency-graph.json` | `implementations/[target]/.spd/` |
 | II | `contract-check.log` | `implementations/[target]/.spd/` |
 | III | Source code | `implementations/[target]/src/` |
+| III | Benchmark harness | `implementations/[target]/src/` (or `cmd/benchmark/`) |
 | IV | `build-report.yaml` | `implementations/[target]/.spd/` |
+| IV | `benchmark-report.json` | `implementations/[target]/` (gitignored, retained locally) |

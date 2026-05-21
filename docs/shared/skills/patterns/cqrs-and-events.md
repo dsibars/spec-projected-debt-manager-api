@@ -26,6 +26,7 @@ The Application Layer must strictly segregate intent into Commands and Queries.
     *   **Routing**: Must be dispatched via a `CommandBus` to exactly one `CommandHandler`.
 *   **Queries**:
     *   **Intent**: Read the state of the system. MUST NOT produce any side effects.
+    *   **Return Type**: Queries return the requested data shape (DTO/Projection).
     *   **Routing**: Must be dispatched via a `QueryBus` to exactly one `QueryHandler`.
 
 ## 2. The Decoupling Law (Banning Synchronous Calls & Model Sharing)
@@ -41,18 +42,31 @@ To maintain high availability and decoupling, the system uses Eventual Consisten
     *   **Payload Law**: Every Event Subscriber MUST receive the **`EventEnvelope`** (as defined in `specs/shared/models/EventEnvelope.md`) as its input. The Subscriber MUST NOT expect the raw domain payload alone.
     *   **Tenant Filtering Law**: Before processing an event, the Subscriber MUST verify that the `tenantId` in the `EventEnvelope.metadata` matches a valid tenant it is responsible for. This ensures that even with shared infrastructure, cross-tenant data leakage is prevented at the application level.
     *   Module B must use the `payload` portion of the envelope to construct its own isolated "Read Model" of the data.
-    *   **Idempotency Law (Inbox Pattern)**: Because distributed messaging systems guarantee *at-least-once* delivery, every Event Subscriber MUST be strictly idempotent. 
+    *   **Idempotency Law (Inbox Pattern)**: Because distributed messaging systems guarantee *at-least-once* delivery, every Event Subscriber MUST be strictly idempotent.
         *   Before processing the event logic, the implementation MUST check if the `eventId` from the `EventEnvelope` already exists in the `processed_events` table (Inbox Pattern).
         *   If it exists, the event MUST be discarded (ACK'd but not processed).
         *   If it does not exist, the `eventId` must be stored in the same transaction as the Read Model update.
     *   **Read Model Law (Immutability)**: Read Models MUST be treated as strictly read-only by the Logic layer. They are projections of external state and MUST ONLY be updated by Event Handlers in response to Domain Events. Manual modification of a Read Model by a Command Handler is strictly forbidden.
-*   **The Hydration Protocol (Cold Starts)**: 
+*   **The Hydration Protocol (Cold Starts)**:
     *   If a module boots with an empty Read Model, it cannot process new commands.
     *   To solve this, the module MUST emit a "Backfill Request" Command to the Event Bus (e.g., `RequestPersonBackfill`).
     *   The owning module (e.g., `People`) subscribes to this request, queries its entire database, and re-publishes the creation events (e.g., `PersonCreated`) for all active records.
     *   The requesting module uses its existing Event Handlers to ingest this historical data idempotently.
 
-## 4. Specification Syntax
+## 4. Per-Platform Bus Implementation
+
+The `CommandBus`, `QueryBus`, and `EventBus` are architectural concepts. Their concrete implementation depends on the target stack:
+
+| Stack | CommandBus | QueryBus | EventBus (Internal) | EventBus (External / AMQP) |
+|---|---|---|---|---|
+| **Java / Spring** | In-memory dispatch via `ApplicationEventPublisher` or custom registry | In-memory dispatch via custom registry | `ApplicationEventPublisher` (sync) | `RabbitTemplate` + `@RabbitListener` |
+| **Kotlin / Ktor** | Manual registry map or Koin-managed singleton | Manual registry map or Koin-managed singleton | Ktor Events or custom | `RabbitMQ` client + coroutine consumer |
+| **Go / Gin** | Interface with map of `CommandHandler` registrations | Interface with map of `QueryHandler` registrations | Custom in-memory pub/sub | `amqp091-go` channel consumer |
+| **Rust / Axum** | `Arc<dyn CommandBus>` with `HashMap<TypeId, Handler>` | `Arc<dyn QueryBus>` with `HashMap<TypeId, Handler>` | `tokio::sync::broadcast` or custom | `lapin` consumer + `tokio::spawn` |
+
+**Important**: The internal EventBus (within a single process) MUST be decoupled from the external AMQP broker. Events are first committed to the Outbox table; the Outbox Poller then publishes to RabbitMQ.
+
+## 5. Specification Syntax
 When writing declarative command specs in `docs/specs/[module]/commands/`, use the following sections:
 - `## Emits`: List the events triggered by the command.
 - `## Subscribes To`: List the external events this handler listens to.

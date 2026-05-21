@@ -78,6 +78,12 @@ A review report in `.spd/reviews/` containing:
 - [ ] Tests use the target language's standard framework.
 - [ ] Tests compile and execute without failure.
 
+### 10. Benchmark Harness
+- [ ] The `make benchmark` target exists and executes without error.
+- [ ] The benchmark harness follows the 5-phase protocol defined in `@shared/skills/testing/benchmarking`.
+- [ ] The emitted `benchmark-report.json` conforms to the schema (all required fields present, correct units).
+- [ ] Deterministic data generation is implemented (seeded PRNG, seed = `42`).
+
 ---
 
 ## Verdict Rules

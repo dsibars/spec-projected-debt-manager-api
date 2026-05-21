@@ -18,19 +18,27 @@ Every Shared Skill that requires external settings MUST define a **Configuration
 | Category | Spec Key | Environment Variable | Default (Local) |
 | :--- | :--- | :--- | :--- |
 | **Server** | `server.port` | `SPD_SERVER_PORT` | `8080` |
-| **Database** | `db.primary.url` | `SPD_DB_PRIMARY_URL` | `jdbc:postgresql://localhost:5432/spd_db` |
+| **Database** | `db.primary.url` | `SPD_DB_PRIMARY_URL` | `postgresql://localhost:5432/spd_db` |
 | **Broker** | `messaging.url` | `SPD_BROKER_URL` | `amqp://guest:guest@localhost:5672` |
 | **Cache** | `cache.redis.url` | `SPD_CACHE_REDIS_URL` | `redis://localhost:6379` |
 | **Observability** | `otel.exporter.url` | `SPD_OTEL_EXPORTER_URL` | `http://localhost:4317` |
 
 ## 3. Profile-Based Configuration
 
-The Builder MUST generate environment-specific configuration files:
+The Builder MUST generate environment-specific configuration files. The file format and naming convention depends on the target stack, but the semantic profiles are universal:
 
-- **`application.yml`** (or `config.yml` / `.env`): Skeleton with defaults and shared settings.
-- **`application-local.yml`**: Dev-ready connection strings pointing to Docker Compose services on `localhost`.
-- **`application-test.yml`**: In-memory or Testcontainer overrides for CI/test execution.
-- **`application-prod.yml`**: Production settings (secrets injected via environment variables).
+- **`default`** (or `application.yml` / `config.toml` / `.env`): Skeleton with defaults and shared settings.
+- **`local`**: Dev-ready connection strings pointing to Docker Compose services on `localhost`.
+- **`test`**: In-memory or Testcontainer overrides for CI/test execution.
+- **`prod`**: Production settings (secrets injected via environment variables).
+
+#### Per-Stack Configuration Files
+| Stack | Default File | Local File | Test File | Prod File |
+|---|---|---|---|---|
+| Java / Spring | `application.yml` | `application-local.yml` | `application-test.yml` | `application-prod.yml` |
+| Kotlin / Ktor | `application.conf` (HOCON) | `application-local.conf` | `application-test.conf` | `application-prod.conf` |
+| Go / Gin | `.env` | `.env.local` | `.env.test` | `.env.prod` |
+| Rust / Axum | `config/default.toml` | `config/local.toml` | `config/test.toml` | `config/prod.toml` |
 
 ## 4. Secret Injection & Security Law
 - **No Secrets in Specs**: Specifications MUST NOT contain actual passwords or keys.
