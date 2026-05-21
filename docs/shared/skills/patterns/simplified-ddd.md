@@ -38,7 +38,7 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
     - Routing: `tenantId` extracted from the JWT `sub` claim for data isolation.
 
 6.  **Persistence Segregation Law**:
-    - `WRITE_DB` (Aggregates) vs `READ_DB` (Projections).
+    - Primary schema (Aggregates) vs Projection schema (Read Models) within the same database instance.
     - No physical coupling (FKs) between Write and Read sides.
 
 ## 7. Event-First Design Law

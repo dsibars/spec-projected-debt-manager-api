@@ -1,0 +1,139 @@
+# Skill: DevOps - Local Development Environment
+
+## Category: devops
+## Provides:
+- Local Development Environment
+## Conflicts With:
+- None
+## Depends On:
+- @shared/skills/devops/dockerization
+- @shared/skills/devops/configuration-management
+
+This skill defines the standard local development environment that every implementation MUST provide. A human developer should be able to go from `git clone` to `curl localhost:8080/api/v1/health/ready` in under 5 minutes.
+
+## Principles
+1.  **One Command to Everything**: `make start` must bring up a fully functional local stack.
+2.  **Infrastructure as Code**: All local dependencies are defined in `docker-compose.yml`.
+3.  **Hot Reload**: The application service MUST support hot reload / live reload in local mode.
+4.  **Idempotent Setup**: Running `make start` multiple times must not fail or duplicate resources.
+5.  **Isolated Networking**: All services communicate via a dedicated Docker network (e.g., `spd_network`).
+
+## Docker Compose Services
+
+Every implementation MUST provide a `docker-compose.yml` with the following services:
+
+### `postgres` (Primary Database)
+- **Image**: `postgres:16-alpine`
+- **Ports**: `5432:5432`
+- **Volumes**: `spd_postgres_data` for persistence
+- **Environment**: `POSTGRES_USER=spd_user`, `POSTGRES_PASSWORD=spd_pass`, `POSTGRES_DB=spd_db`
+- **Healthcheck**: `pg_isready -U spd_user -d spd_db`
+
+### `rabbitmq` (Message Broker)
+- **Image**: `rabbitmq:3-management-alpine`
+- **Ports**: `5672:5672` (AMQP), `15672:15672` (Management UI)
+- **Environment**: `RABBITMQ_DEFAULT_USER=guest`, `RABBITMQ_DEFAULT_PASS=guest`
+- **Healthcheck**: `rabbitmq-diagnostics -q ping`
+
+### `redis` (Cache)
+- **Image**: `redis:7-alpine`
+- **Ports**: `6379:6379`
+- **Healthcheck**: `redis-cli ping | grep PONG`
+
+### `signoz` (Observability - Optional but Recommended)
+- **Image**: SigNoz collector + query service
+- **Ports**: `4317:4317` (OTLP gRPC), `3301:3301` (UI)
+- **Volumes**: `spd_signoz_data`
+
+### `api` (Application Service - Optional in Compose)
+- The application MAY run inside Docker Compose or natively on the host.
+- **If inside Compose**: Build from local Dockerfile, mount source for hot reload, expose `8080`.
+- **If outside Compose** (recommended for JVM/Rust): Run natively with `make start-api`, connected to Compose services via `host.docker.internal` or shared network.
+
+## Configuration for Local Development
+
+The Builder MUST generate configuration files that point to the Docker Compose services:
+
+### `application-local.yml` (or equivalent)
+```yaml
+server:
+  port: 8080
+
+db:
+  primary:
+    url: jdbc:postgresql://localhost:5432/spd_db
+    user: spd_user
+    password: spd_pass
+
+messaging:
+  url: amqp://guest:guest@localhost:5672
+
+cache:
+  redis:
+    url: redis://localhost:6379
+
+observability:
+  otel:
+    exporter:
+      url: http://localhost:4317
+```
+
+## Makefile Targets in Detail
+
+### `make build`
+- Install dependencies.
+- Compile the source code.
+- Run static analysis / linting if applicable.
+- Must pass before `make start` is allowed.
+
+### `make start-core`
+```bash
+# Equivalent to:
+docker-compose -f docker-compose.yml up -d postgres rabbitmq redis
+sleep 5  # Wait for healthchecks
+make migrate
+make seed  # Optional: seed demo data
+```
+- After this command, the developer can run the application in their IDE or via `make start-api`.
+
+### `make start`
+```bash
+# Equivalent to:
+make start-core
+make build
+make start-api
+# Optionally: make start-worker in background
+```
+- After this command, the API is available at `http://localhost:8080`.
+- The OpenAPI docs are available at `http://localhost:8080/api/docs/ui`.
+
+### `make stop`
+```bash
+# Stops application service(s) gracefully, then infrastructure
+docker-compose -f docker-compose.yml down
+# Kill local api/worker processes if running
+```
+
+### `make clean`
+```bash
+# Destructive: removes all data and build artifacts
+make stop
+docker-compose -f docker-compose.yml down -v
+rm -rf target/ build/ bin/ node_modules/
+```
+
+## Health Verification
+
+After `make start`, the following MUST respond successfully:
+- `curl http://localhost:8080/health/live` → `200 OK`
+- `curl http://localhost:8080/health/ready` → `200 OK`
+- `curl http://localhost:8080/api/docs/ui` → OpenAPI Swagger UI
+- `curl http://localhost:15672` → RabbitMQ Management UI (guest/guest)
+
+## Demo Data Seeding
+
+The Builder MUST generate a seed script or flyway callback that inserts:
+- At least one demo user with known credentials (`demo@example.com` / `password`).
+- At least one demo person.
+- At least one demo debt with payments.
+This allows immediate API exploration after `make start`.

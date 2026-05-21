@@ -41,11 +41,11 @@ This skill defines the technical "laws" for persisting data using a PostgreSQL d
 
 ## Configuration Contract
 This skill consumes the following keys from `@shared/skills/devops/configuration-management`:
-- **Write Aggregates**: `db.write.url`, `db.write.user`, `db.write.password`
-- **Read Projections**: `db.read.url`, `db.read.user`, `db.read.password`
+- **Primary Database**: `db.primary.url`, `db.primary.user`, `db.primary.password`
+- **Read Replica** (optional): `db.replica.url`, `db.replica.user`, `db.replica.password`
 
 ## Connection Credentials (Local Dev)
-- **Host**: `localhost` (or `db-write`/`db-read` within docker-compose).
-- **Port**: `5432` / `5433`.
+- **Host**: `localhost` (or `postgres` within docker-compose).
+- **Port**: `5432`.
 - **User**: `spd_user`.
 - **Password**: `spd_pass`.

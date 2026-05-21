@@ -17,7 +17,7 @@ This skill defines the deployment and integration with the SigNoz observability 
 - **Frontend**: A modern UI accessible at `http://localhost:3301` (default).
 
 ## Local Development (Docker)
-The local `infra-up` command MUST provision:
+The local `make start-core` command MUST provision:
 1.  `signoz-otel-collector`: The ingestion hub.
 2.  `signoz-query-service`: The API for the UI.
 3.  `signoz-frontend`: The dashboard.

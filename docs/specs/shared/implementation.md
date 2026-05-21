@@ -48,6 +48,8 @@ Every module in the `docs/specs/` directory automatically inherits the following
     - `@shared/skills/patterns/background-jobs`
 15. **Caching**:
     - `@shared/skills/persistence/caching`
+16. **Local Development**:
+    - `@shared/skills/devops/local-development`
 
 ## Technical Composition Rules
 
@@ -59,7 +61,7 @@ Every module in the `docs/specs/` directory automatically inherits the following
 - **Rate Limiting**: All REST endpoints MUST enforce rate limiting per `tenantId` to prevent abuse. Default: 100 requests per minute for standard endpoints, 10 requests per minute for auth endpoints.
 - **Idiomatic Source Root Mirroring**: The "Mirror Rule" dictates that `docs/specs/[module]/[layer]/[filename]` maps to the language's Idiomatic Source Root defined in its language skill file. 
   - For example, in Java, it maps to `src/main/java/{base_package}/[module]/[layer]/[filename].[ext]`.
-- **Makefile Integrity**: Each implementation must provide a Makefile that supports `infra-up`, `build`, `test`, and `run` as defined in the DevOps and Testing skills.
+- **Makefile Integrity**: Each implementation must provide a Makefile that supports `build`, `test`, `start-core`, and `start` as defined in the DevOps and Testing skills.
 
 ## Event-Driven Architecture Rule
 - All modules participating in cross-module workflows MUST declare their events in `events/`.

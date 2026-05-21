@@ -18,7 +18,7 @@
 This skill defines the standard SQL schema for implementing the Outbox and Inbox patterns consistently across all modules.
 
 ## 1. Outbox Table Schema
-- **Location**: MUST reside in the `WRITE_DB` of the module emitting events.
+- **Location**: MUST reside in the primary database schema of the module emitting events (e.g., `debts.outbox_events`).
 - **Goal**: Ensure atomic persistence with the Domain Aggregate change.
 
 ```sql
@@ -34,8 +34,8 @@ CREATE TABLE outbox_events (
 
 ## 2. Inbox Table Schema (Processed Events)
 - **Location**: MUST reside in the same database as the target of the update.
-    - If updating a Projection $\rightarrow$ `READ_DB`.
-    - If updating an Aggregate $\rightarrow$ `WRITE_DB`.
+    - If updating a Projection $\rightarrow$ the projection schema (e.g., `projections.processed_events`).
+    - If updating an Aggregate $\rightarrow$ the module's primary schema (e.g., `debts.processed_events`).
 - **Goal**: Ensure idempotency by tracking processed `event_id` in the same transaction as the state change.
 
 ```sql

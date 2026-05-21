@@ -245,10 +245,26 @@ When multiple skills apply to the same concern, resolve conflicts in this order:
 Every implementation MUST be "ready-to-run" for a human developer. The Builder is responsible for generating and maintaining a standard `Makefile` in the root of `/implementations/[target]/`.
 
 ### Mandatory Makefile Targets
-- `make build`: Compiles, transpiles, or packages the project. Must handle dependency installation.
-- `make test`: Executes all unit and integration tests derived from the specs.
-- `make run`: Starts the application locally.
-- `make infra-up`: (If applicable) Spins up local dependencies (Postgres, RabbitMQ, etc.).
+
+#### Build & Test
+- `make build`: Compiles, transpiles, or packages the project. Must handle dependency installation (e.g., `go mod tidy`, `mvnw compile`, `cargo build`).
+- `make test`: Executes all unit and integration tests derived from the specs. Must spin up Testcontainers or equivalent for integration tests.
+
+#### Local Development Lifecycle
+- `make start-core`: Spins up the core infrastructure (PostgreSQL, RabbitMQ, Redis, observability stack) using Docker Compose. Does NOT start the application service. After this, the environment is ready for a service to connect.
+- `make start`: Starts everything — infrastructure AND the application service(s) — in a single command. The API is ready to receive requests after this completes.
+- `make stop`: Gracefully stops the application service(s) and infrastructure.
+- `make restart`: Equivalent to `make stop && make start`.
+
+#### Individual Service Control (for multi-binary targets)
+- `make start-api`: Starts only the REST API service (ApiRunner).
+- `make start-worker`: Starts only the background worker / event subscriber process (WorkerRunner).
+
+#### Utilities
+- `make migrate`: Runs database migrations (Flyway, golang-migrate, etc.) against the local PostgreSQL.
+- `make seed`: Seeds the local database with demo data for development.
+- `make logs`: Tails logs from all running containers and services.
+- `make clean`: Removes build artifacts, Docker volumes, and resets the local environment.
 
 > [!NOTE]
 > The specific underlying commands are determined by the config and the Shared Skills. If a build tool is chosen but not strictly defined, log it in `tech_assumptions`.
