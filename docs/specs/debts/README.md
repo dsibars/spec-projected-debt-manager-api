@@ -36,3 +36,7 @@ This module owns:
 - [[specs/people/events/PersonUpdated]]
 - [[specs/people/events/PersonArchived]]
 - [[specs/identity/events/IdentityPurgeRequested]]
+- debts.DebtRegistered (internal, for projection update)
+- debts.DebtUpdated (internal, for projection update)
+- debts.PaymentRegistered (internal, for projection update)
+- debts.DebtDeleted (internal, for projection update)

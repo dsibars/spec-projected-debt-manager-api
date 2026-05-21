@@ -22,13 +22,12 @@ Initialize a new debt record in the user's ledger.
 2. Validate that `currency` is recognized by `@shared/skills/standards/data-formats`.
 3. Generate a unique `id`.
 4. Create the [[models/Debt]] record with the provided `tenantId`.
-5. Initialize the [[projections/DebtSummaryProjection]] including the `tenantId`.
-6. Persist both the Aggregate and the Projection (Atomic Inline Update).
-7. Emit `DebtRegistered` event (see [[events/DebtRegistered]]).
+5. Persist the Aggregate.
+6. Emit `DebtRegistered` event (see [[events/DebtRegistered]]).
 
 ## Postconditions
 - A `Debt` aggregate exists with `currentBalance == totalAmount`.
-- A `DebtSummaryProjection` exists for this debt.
+- The debt will appear in read models via eventual consistency.
 
 ## Effects
 - Emits: [[events/DebtRegistered]]

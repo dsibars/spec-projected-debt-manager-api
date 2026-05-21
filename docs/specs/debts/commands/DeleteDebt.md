@@ -16,11 +16,10 @@ Mark a debt as archived to preserve historical data while removing it from activ
 3. Set `isArchived` to `true`.
 4. Set `updatedAt` to now.
 5. Persist the updated [[models/Debt]].
-6. Update [[projections/DebtSummaryProjection]] via [[commands/UpdateDebtSummary]] with `isArchived: true`.
 
 ## Postconditions
 - The debt's `isArchived` flag is `true`.
-- The debt does not appear in default list queries.
+- The debt does not appear in default list queries once the projection is updated.
 
 ## Effects
 - Emits: `DebtDeleted`

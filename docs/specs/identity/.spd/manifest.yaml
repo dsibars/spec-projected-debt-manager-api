@@ -6,8 +6,5 @@ dependencies: []
 events_produced:
   - UserRegistered
   - IdentityPurgeRequested
-  - ShardCreated
   - UserAuthenticated
-  - UserRebalanced
-  - UserRebalanceStarted
 events_consumed: []

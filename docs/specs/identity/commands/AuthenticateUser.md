@@ -1,7 +1,7 @@
 # Command: Authenticate User
 
 ## Goal
-Validate credentials and issue tokens containing both user and shard context.
+Validate credentials and issue tokens containing the user identity.
 
 ## Input
 - `email`: `string`
@@ -24,7 +24,6 @@ Validate credentials and issue tokens containing both user and shard context.
 6. Update `lastLoginAt` on [[models/User]].
 7. Generate Access and Refresh Tokens (using `@shared/skills/security/jwt`).
    - The token MUST include `userId` (`sub` claim).
-   - The token MUST include `shardId` (`sid` claim) from the [[models/User]] record.
 
 ## Postconditions
 - The user's `lastLoginAt` is updated.
@@ -35,6 +34,7 @@ Validate credentials and issue tokens containing both user and shard context.
 
 ## Errors
 - `AuthenticationFailed`: User not found or inactive.
+- `TokenGenerationFailed`: If token issuance fails.
 - `InvalidCredentials`: Password or externalId verification failed.
 
 ## Result

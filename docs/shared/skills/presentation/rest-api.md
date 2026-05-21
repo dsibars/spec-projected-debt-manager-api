@@ -64,4 +64,4 @@ MUST declare:
 - Target: `[Module]Controller.[ext]` or `[Module]Routes.[ext]`
 
 ## Security Injection
-The adapter MUST extract `sub` (userId) and `sid` (shardId) from JWT and inject them into the Context object before calling any command or query.
+The adapter MUST extract `sub` (userId) from JWT and inject it into the Context object as `tenantId` before calling any command or query.

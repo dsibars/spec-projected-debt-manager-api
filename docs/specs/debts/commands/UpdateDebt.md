@@ -21,13 +21,10 @@ Modify an existing debt's metadata.
    - `dueDate`
 4. Set `updatedAt` to now.
 5. Persist the updated [[models/Debt]].
-6. Update [[projections/DebtSummaryProjection]] via [[commands/UpdateDebtSummary]] with:
-   - `debtId`: The debt ID.
-   - `debtName`: The updated name, if changed.
 
 ## Postconditions
 - The `Debt` aggregate reflects the updated fields.
-- The `DebtSummaryProjection` reflects any name change.
+- The read model will be updated via eventual consistency.
 
 ## Effects
 - Emits: `DebtUpdated`

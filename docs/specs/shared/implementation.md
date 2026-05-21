@@ -43,15 +43,20 @@ Every module in the `docs/specs/` directory automatically inherits the following
     - `@shared/skills/testing/behavior-projection`
 13. **Presentation**:
     - `@shared/skills/presentation/rest-api`
+    - `@shared/skills/presentation/api-versioning`
+14. **Background Processing**:
+    - `@shared/skills/patterns/background-jobs`
+15. **Caching**:
+    - `@shared/skills/persistence/caching`
 
 ## Technical Composition Rules
 
 - **Zero Technical Leakage**: Spec files in `commands/`, `queries/`, and `models/` must remain purely declarative.
-- **Security Context Injection**: To ensure multi-tenant isolation, the Presentation layer MUST extract the `sub` (userId) and `sid` (shardId) claims from the JWT and inject them into every Command and Query as a mandatory `Context` argument. Use Cases MUST NOT perform manual token parsing; they should receive pre-validated context. In this multi-tenant architecture, the `tenantId` is functionally equivalent to the `userId` (the JWT `sub` claim).
+- **Security Context Injection**: To ensure multi-tenant isolation, the Presentation layer MUST extract the `sub` (userId) claim from the JWT and inject it into every Command and Query as a mandatory `Context` argument. The `tenantId` is functionally equivalent to the `userId`. Use Cases MUST NOT perform manual token parsing; they should receive pre-validated context.
 - **Projection Consistency Policy**: To balance UX performance and system complexity, a hybrid strategy is used:
   - **Inline Updates (Atomic)**: Primary read models within the same module (e.g., `DebtSummary`) MUST be updated within the same transaction as the command.
   - **Event-Driven Updates (Eventual)**: Cross-module read models or non-critical views MUST be updated via event subscribers.
-- **Shard Maintenance Enforcement**: Before executing any write operation (Commands), the system MUST verify the `status` of the shard identified by `shardId` in the `Context`. If the status is `MAINTENANCE`, the operation MUST be aborted with a `ShardUnderMaintenance` error.
+- **Rate Limiting**: All REST endpoints MUST enforce rate limiting per `tenantId` to prevent abuse. Default: 100 requests per minute for standard endpoints, 10 requests per minute for auth endpoints.
 - **Idiomatic Source Root Mirroring**: The "Mirror Rule" dictates that `docs/specs/[module]/[layer]/[filename]` maps to the language's Idiomatic Source Root defined in its language skill file. 
   - For example, in Java, it maps to `src/main/java/{base_package}/[module]/[layer]/[filename].[ext]`.
 - **Makefile Integrity**: Each implementation must provide a Makefile that supports `infra-up`, `build`, `test`, and `run` as defined in the DevOps and Testing skills.

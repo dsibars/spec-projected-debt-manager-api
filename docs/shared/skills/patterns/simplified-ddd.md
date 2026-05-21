@@ -35,7 +35,7 @@ This skill defines the architectural patterns for a "Simplified Domain Driven De
 
 5.  **Multi-Tenancy Isolation Law**: 
     - Functionally: `tenantId` == `userId`.
-    - Sharding: `sid` identifying the physical partition.
+    - Routing: `tenantId` extracted from the JWT `sub` claim for data isolation.
 
 6.  **Persistence Segregation Law**:
     - `WRITE_DB` (Aggregates) vs `READ_DB` (Projections).

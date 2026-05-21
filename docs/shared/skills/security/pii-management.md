@@ -7,7 +7,6 @@
 - hashing
 - jwt
 - oauth-integration
-- token-cache
 - traffic-governance
 ## Depends On:
 - None explicitly declared

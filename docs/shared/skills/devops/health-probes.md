@@ -20,11 +20,12 @@ The application MUST expose the following endpoints:
 - `/health/live`: Indicates the application process is running (Liveness).
 - `/health/ready`: Indicates the application is ready to accept traffic (Readiness).
 
-## 2. Readiness Logic (Shard-Aware)
+## 2. Readiness Logic
 To be considered "Ready," the application MUST verify:
-- **Write Connectivity**: A successful `SELECT 1` against the `WRITE_DB`.
-- **Read Connectivity**: A successful `SELECT 1` against the `READ_DB`.
+- **Database Connectivity**: A successful `SELECT 1` against the primary PostgreSQL.
+- **Replica Connectivity** (if configured): A successful `SELECT 1` against the read replica.
 - **Broker Connectivity**: A successful heartbeat with RabbitMQ.
+- **Cache Connectivity** (if configured): A successful `PING` against Redis.
 
 ## 3. Telemetry Integration
 - Health check failures MUST be logged as `CRITICAL` events.

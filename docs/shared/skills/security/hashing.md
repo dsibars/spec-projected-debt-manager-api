@@ -7,7 +7,6 @@
 - jwt
 - oauth-integration
 - pii-management
-- token-cache
 - traffic-governance
 ## Depends On:
 - None explicitly declared

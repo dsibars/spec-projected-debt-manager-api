@@ -1,7 +1,7 @@
 # Command: Register User
 
 ## Goal
-Create a new identity and assign it to an available shard.
+Create a new identity with email uniqueness enforcement.
 
 ## Input
 - `email`: `string`
@@ -16,29 +16,26 @@ Create a new identity and assign it to an available shard.
 1. **Global Uniqueness Check**:
    - Query the [[models/UserIndex]] in the Global DB to ensure `email` is not already registered.
    - If found, raise `EmailAlreadyInUse`.
-2. **Shard Assignment**:
-   - Find an `ACTIVE` [[models/Shard]] with capacity (Atomic increment).
-   - Selected Shard ID becomes the `shardId` for this user.
 3. Generate a unique `userId`.
 4. **Local Creation**:
-   - Create the [[models/User]] record in the selected Shard DB.
+   - Create the [[models/User]] record.
 5. **Credential Creation**:
    - Create a [[models/Credential]] record linked to the `userId`.
 6. **Index Finalization**:
-   - Create the [[models/UserIndex]] record in the Global DB to lock the email to the generated `userId` and `shardId`.
+   - Create the [[models/UserIndex]] record in the Global DB to lock the email to the generated `userId`.
 7. Emit `UserRegistered` event.
 
 ## Postconditions
-- A `User` aggregate exists in the assigned Shard.
+- A `User` aggregate exists.
 - A `Credential` exists for the user.
 - The global `UserIndex` contains the email mapping.
 
 ## Effects
-- Emits: `UserRegistered` (payload: `userId`, `shardId`, `email`)
+- Emits: `UserRegistered` (payload: `userId`, `email`)
 
 ## Errors
 - `EmailAlreadyInUse`: If `email` is already registered.
-- `SystemOverloaded`: If no active shard has available capacity.
+- `EmailFormatInvalid`: If `email` is not a valid format.
 
 ## Result
 - `userId`: UUID of the created user.

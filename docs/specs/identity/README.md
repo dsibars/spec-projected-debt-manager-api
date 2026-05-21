@@ -22,10 +22,7 @@ This module owns:
 ## Events Produced
 - [[events/UserRegistered]]
 - [[events/IdentityPurgeRequested]]
-- [[events/ShardCreated]]
 - [[events/UserAuthenticated]]
-- [[events/UserRebalanced]]
-- [[events/UserRebalanceStarted]]
 
 ## Events Consumed
 - (None)

@@ -7,7 +7,6 @@
 - hashing
 - jwt
 - pii-management
-- token-cache
 - traffic-governance
 ## Depends On:
 - None explicitly declared

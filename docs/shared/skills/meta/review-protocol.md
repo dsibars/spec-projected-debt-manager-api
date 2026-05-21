@@ -63,8 +63,8 @@ A review report in `.spd/reviews/` containing:
 - [ ] Event names follow the `[ModuleName].[PastTenseVerb]` convention.
 
 ### 7. Security Context Injection
-- [ ] Every REST controller extracts `sub` (userId) and `sid` (shardId) from the JWT.
-- [ ] Every Command and Query receives these as a mandatory Context argument.
+- [ ] Every REST controller extracts `sub` (userId) from the JWT and injects it as `tenantId`.
+- [ ] Every Command and Query receives `tenantId` as a mandatory Context argument.
 - [ ] No handler performs manual token parsing.
 
 ### 8. Persistence Mapping Accuracy
